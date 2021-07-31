@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
+
     <title>Registrar</title>
+    <link rel="icon" href="../icon.PNG" type="image/x-icon">
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
 
@@ -15,147 +14,134 @@
     <!-- Bootstrap core CSS -->
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
 
     <!-- Custom styles for this template -->
-    <link href="form-validation.css" rel="stylesheet">
+    <link href="registro.css" rel="stylesheet">
   </head>
+  
   <body class="bg-light">
 
-<div class="container">
-  <main>
-    <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-      <h2>Formulario de Registro</h2>
-      <p class="lead">Rellena el formulario.</p>
-    </div>
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="../icon.PNG" alt="" width="72" height="57">
+        <h2>Formulario de Registro</h2>
+        <p class="lead">Rellena el formulario.</p>
+      </div>
 
-      <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Datos Personales</h4>
-        <form class="needs-validation" novalidate>
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">Nombres</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Indica un nombre.
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Apellidos</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Indica un apellido.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="username" class="form-label">Nombre de Usuario</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text">@</span>
-                <input type="text" class="form-control" id="username" placeholder="Nombre de Usuario" required>
-              <div class="invalid-feedback">
-                Indica un nombre de usuario.
+        <div class="col-md-7 col-lg-8 position-relative bottom-20 start-50 translate-middle-x">
+          <h4 class="mb-3">Datos Personales</h4>
+          <form class="needs-validation" novalidate>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="firstName" class="form-label">Nombres</label>
+                <input type="text" class="form-control" id="nombres" placeholder="Nombres" required>
+                <div class="invalid-feedback">
+                  Indica un nombre.
                 </div>
               </div>
-            </div>
 
-            <div class="col-12">
-              <label for="email" class="form-label">Email <span class="text-muted"></span></label>
-              <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
-              <div class="invalid-feedback">
-                Por favor ingrese un email válido.
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" required>
+                <div class="invalid-feedback">
+                  Indica un apellido.
+                </div>
               </div>
-            </div>
 
-            <div class="col-12">
-              <label for="age" class="form-label">Edad</label>
-              <input type="text" class="form-control" id="age" placeholder="edad" required>
-              <div class="invalid-feedback">
-                Ingrese un su edad.
+              <div class="col-12">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text">@</span>
+                  <input type="text" class="form-control" id="username" placeholder="Nombre de Usuario" required>
+                <div class="invalid-feedback">
+                  Indica un nombre de usuario.
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div class="col-12">
-              <label for="password" class="form-label">Contraseña <span class="text-muted"></span></label>
-              <input type="password" class="form-control" id="password" placeholder="********" required>
-              <div class="invalid-feedback">
-                Ingrese una contraseña.
+              <div class="col-12">
+                <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+                <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
+                <div class="invalid-feedback">
+                  Por favor ingrese un email válido.
+                </div>
               </div>
-            </div>
 
-            <div class="col-12">
-              <label for="password2" class="form-label">Confirmación de la Contraseña <span class="text-muted"></span></label>
-              <input type="password" class="form-control" id="password2" placeholder="********" required>
-              <div class="invalid-feedback">
-                Ingrese una contraseña.
+              <div class="col-12">
+                <label for="age" class="form-label">Edad</label>
+                <input type="text" class="form-control" id="age" placeholder="edad" required>
+                <div class="invalid-feedback">
+                  Ingrese una edad.
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-5">
-              <label for="user" class="form-label">Tipo de Usuario</label>
-              <select class="form-select" id="user" required>
-                <option value="">Elegir...</option>
-                <option>Comprador</option>
-                <option>Vendedor</option>
-              </select>
-              <div class="invalid-feedback">
-                Por favor seleccione un tipo de usuario.
+              <div class="col-12">
+                <label for="password" class="form-label">Contraseña <span class="text-muted"></span></label>
+                <input type="password" class="form-control" id="password" placeholder="********" maxlength="16" required>
+                <div class="invalid-feedback">
+                  Ingrese una contraseña.
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-4">
-              <label for="gender" class="form-label">Género</label>
-              <select class="form-select" id="gender" required>
-                <option value="">Elegir...</option>
-                <option>Hombre</option>
-                <option>Mujer</option>
-                <option>Otro</option>
-              </select>
-              <div class="invalid-feedback">
-                Por favor seleccione un género.
+              <div class="col-12">
+                <label for="password2" class="form-label">Confirmación de la Contraseña <span class="text-muted"></span></label>
+                <input type="password" class="form-control" id="password2" placeholder="********" maxlength="16" required>
+                <div class="invalid-feedback">
+                  Ingrese una contraseña.
+                </div>
               </div>
+
+              <div class="col-md-5">
+                <label for="user" class="form-label">Tipo de Usuario</label>
+                <select class="form-select" id="user" required>
+                  <option value="">Elegir...</option>
+                  <option>Comprador</option>
+                  <option>Vendedor</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor seleccione un tipo de usuario.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="gender" class="form-label">Género</label>
+                <select class="form-select" id="gender" required>
+                  <option value="">Elegir...</option>
+                  <option>Hombre</option>
+                  <option>Mujer</option>
+                  <option>Otro</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor seleccione un género.
+                </div>
+              </div>
+
             </div>
 
-          </div>
+            <hr class="my-4">
 
-          <hr class="my-4">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="same-address">
+              <label class="form-check-label" for="same-address">Mostrar contraseña</label>
+            </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Mostrar contraseña</label>
-          </div>
+            </div>
 
-          </div>
+            <hr>
 
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Siguiente</button>
-        </form>
+            <div class="text-center">
+              <button class="w-40 btn btn-primary btn-lg" type="submit">Aceptar</button>
+            </div>  
+          </form>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; BreakBlue Market</p>
-  </footer>
-</div>
+    <footer class="pt-4 text-muted text-center text-small">
+      <p class="mb-1">&copy; BreakBlue Market</p>
+    </footer>
+  </div>
 
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
