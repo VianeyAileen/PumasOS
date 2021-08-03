@@ -40,8 +40,8 @@
 
                     <form class="d-flex">
                         <a type="button" aria-current="page" routerLink="/editar" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <button type="button" aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;">Borrar</button>
-                        <a type="button" aria-current="page" routerLink="/" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;">Cerrar Sesión</a>
+                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="mensajeBorrar()">Borrar</button>
+                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
                     </form>
                 </div>
             </div>

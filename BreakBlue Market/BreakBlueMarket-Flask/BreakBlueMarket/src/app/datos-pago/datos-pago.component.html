@@ -128,14 +128,16 @@
 
                             <hr class="my-4">
 
-                            <button aria-current="page" routerLink="/homeComprador" routerLinkActive="active" class="w-100 btn btn-primary btn-lg" type="submit">Continuar</button>
+                            <a aria-current="page" routerLink="/datosPago" routerLinkActive="active">
+                                <button class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeCompra()">Aceptar</button>
+                            </a>
 
                             <p></p>
                         </form>
                         
-                        <a aria-current="page" routerLink="/informacionComprador" routerLinkActive="active">
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Cancelar</button>
-                        </a>
+                        <!-- <a aria-current="page" routerLink="/informacionComprador" routerLinkActive="active">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Cancelar</button> -->
+                        <!-- </a> -->
 
                     </div>
                 </div>
