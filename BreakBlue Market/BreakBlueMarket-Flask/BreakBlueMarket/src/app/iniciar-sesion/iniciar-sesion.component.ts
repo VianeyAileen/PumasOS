@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component,OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import Swal from 'sweetalert2'
@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
   templateUrl: './iniciar-sesion.component.html',
   styleUrls: ['./iniciar-sesion.component.css']
 })
-export class IniciarSesionComponent {
+export class IniciarSesionComponent implements OnInit{
 
   constructor() { }
 
@@ -19,6 +19,8 @@ export class IniciarSesionComponent {
   mensajeLogin(){
     Swal.fire('Bienvenido/a a BreakBlueMarket :D')
   }
+
+  
 }
 
 // export class IniciarSesionComponent {

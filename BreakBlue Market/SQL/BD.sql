@@ -9,7 +9,7 @@ CREATE TABLE `producto` (
     `marca` varchar(50) NOT NULL,
     `descripcion` varchar(500) NOT NULL,
     `unidadesDisponibles` boolean NOT NULL,
-    `imagen` longblob NOT NULL,
+    `imagen` varchar(2000) NOT NULL,
     `calificacion` float(10) NOT NULL,
     `comentario` varchar(500) NOT NULL,
     `correo` varchar(500) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `producto` (
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (
 	`id` int(11) NOT NULL auto_increment,
-    `imagen` longblob NOT NULL,
+    `imagen` varchar(2000) NOT NULL,
     
     PRIMARY KEY (`id`),
     UNIQUE(`id`)
@@ -52,30 +52,14 @@ CREATE TABLE `vendedor` (
     PRIMARY KEY (`correo`),
     UNIQUE(`correo`)
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-    
-DROP TABLE IF EXISTS `genero`;
-CREATE TABLE `genero` (
-	`correo` varchar(50) NOT NULL,
-	`genero` varchar(10) NOT NULL,
-    
-    PRIMARY KEY (`correo`),
-    UNIQUE(`correo`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-    
-DROP TABLE IF EXISTS `tipoUsuario`;
-CREATE TABLE `tipoUsuario` (
-	`correo` varchar(50) NOT NULL,
-	`tipoUsuario` varchar(20) NOT NULL,
-    
-    PRIMARY KEY (`correo`),
-    UNIQUE(`correo`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+        
     
     SELECT * FROM producto;
     SELECT * FROM comprador;
     SELECT * FROM vendedor;
     SELECT * FROM imagen;
-    SELECT * FROM genero;
-    SELECT * FROM tipoUsuario;
     
 	INSERT INTO `producto` VALUES (1, 'Celular', 20.00, 'Apple', 'Bonito celular 100% calidad', 11, '/home/vianey/Descargas/sample1.jpg', 4.2, 'Estuvo bien chafa, muy pirata', 'micorreito@feliz.com');
+	INSERT INTO `imagen` VALUES (1, '/home/vianey/Descargas/sample1.jpg');
+	INSERT INTO `comprador` VALUES ('micorreito@correo.com', 'Rory', 'García', 'pas123', 'rorgar');
+	INSERT INTO `vendedor` VALUES ('vendedor@correo.com', 'Maria', 'García', 'mipass', 'mary123');
