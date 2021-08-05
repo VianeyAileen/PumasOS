@@ -30,11 +30,26 @@ def add_user():
             return resp
         else:
             return not_found()
+
+
+@app.route('/comprador/<string:correo>')
+def get_comprador(correo):
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM comprador WHERE correo = %s", correo)
+        row = cursor.fetchone()
+        resp = jsonify(row)
+        resp.status_code = 200
+        return resp
     except Exception as e:
         print(e)
     finally:
         cursor.close()
         conn.close()
+
 
 @app.errorhandler(404)
 def not_found(error=None):
