@@ -8,7 +8,7 @@ CREATE TABLE `producto` (
     `precio` float(10) NOT NULL,
     `marca` varchar(50) NOT NULL,
     `descripcion` varchar(500) NOT NULL,
-    `unidadesDisponibles` boolean NOT NULL,
+    `unidadesDisponibles` int(5000) NOT NULL,
     `imagen` varchar(2000) NOT NULL,
     `calificacion` float(10) NOT NULL,
     `comentario` varchar(500) NOT NULL,
