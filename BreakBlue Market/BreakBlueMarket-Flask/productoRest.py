@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import pymysql
 from pymysql.cursors import DictCursor
 from app import app
@@ -59,28 +58,6 @@ def purchase_product(id):
     finally:
         cursor.close()
         conn.close()
-
-
-
-@app.errorhandler(404)
-def not_found(error=None):
-    message = {
-        'status': 404,
-        'message': 'Not Found: ' + request.url,
-    }
-    resp = jsonify(message)
-    resp.status_code = 404
-    return resp
-
-  
-if __name__ == "__main__":
-=======
-
-import pymysql
-from app import app
-from db import mysql
-from flask import jsonify
-from flask import flash, request
 
 #Actualizar un producto
 @app.route('/actualizar/<int:id>', methods=['PUT'])
@@ -242,7 +219,9 @@ def agregar_producto():
         cursor.close()
         conn.close()
         
-        
+
+
+
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
@@ -251,10 +230,8 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
-
     return resp
-        
-        
+
+  
 if __name__ == "__main__":
     app.run()
->>>>>>> ddc56064f7920acf61d58f70b12bda63f483e2e5
