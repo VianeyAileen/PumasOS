@@ -63,3 +63,6 @@ CREATE TABLE `vendedor` (
 	INSERT INTO `imagen` VALUES (1, '/home/vianey/Descargas/sample1.jpg');
 	INSERT INTO `comprador` VALUES ('micorreito@correo.com', 'Rory', 'García', 'pas123', 'rorgar');
 	INSERT INTO `vendedor` VALUES ('vendedor@correo.com', 'Maria', 'García', 'mipass', 'mary123');
+    
+    UPDATE producto
+    SET unidadesDisponibles = 200 WHERE 'id'='1'
