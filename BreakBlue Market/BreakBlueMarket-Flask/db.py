@@ -5,9 +5,7 @@ mysql = MySQL()
  
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-
 app.config['MYSQL_DATABASE_PASSWORD'] = 'bluedolph'
-
 app.config['MYSQL_DATABASE_DB'] = 'BreakBlueMarket'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -20,3 +18,4 @@ mysql.init_app(app)
 
 # # Turn off the Flask-SQLAlchemy event system and warning
 # SQLALCHEMY_TRACK_MODIFICATIONS = False
+
