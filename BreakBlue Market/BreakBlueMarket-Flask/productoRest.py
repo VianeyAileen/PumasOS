@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import pymysql
 from pymysql.cursors import DictCursor
 from app import app
