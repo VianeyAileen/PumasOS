@@ -30,6 +30,11 @@ def add_user():
             return resp
         else:
             return not_found()
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
 
 
 @app.route('/comprador/<string:correo>')
