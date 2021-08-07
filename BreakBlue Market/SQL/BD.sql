@@ -34,7 +34,7 @@ CREATE TABLE `comprador` (
 	`correo` varchar(50) NOT NULL,
 	`nombre` varchar(50) NOT NULL,
     `apellidos` varchar(50) NOT NULL,
-    `contrasena` varchar(8) NOT NULL,
+    `contrasena` varchar(255) NOT NULL,
     `nombreUsuario` varchar(10) NOT NULL,
 
     PRIMARY KEY (`correo`),
@@ -46,7 +46,7 @@ CREATE TABLE `vendedor` (
 	`correo` varchar(50) NOT NULL,
 	`nombre` varchar(50) NOT NULL,
     `apellidos` varchar(50) NOT NULL,
-    `contrasena` varchar(8) NOT NULL,
+    `contrasena` varchar(255) NOT NULL,
     `nombreUsuario` varchar(10) NOT NULL,
 
     PRIMARY KEY (`correo`),
@@ -63,9 +63,6 @@ CREATE TABLE `vendedor` (
 	INSERT INTO `imagen` VALUES (1, '/home/vianey/Descargas/sample1.jpg');
 	INSERT INTO `comprador` VALUES ('micorreito@correo.com', 'Rory', 'García', 'pas123', 'rorgar');
 	INSERT INTO `vendedor` VALUES ('vendedor@correo.com', 'Maria', 'García', 'mipass', 'mary123');
-<<<<<<< HEAD
-    
-    UPDATE producto
-    SET unidadesDisponibles = 200 WHERE 'id'='1'
-=======
->>>>>>> ddc56064f7920acf61d58f70b12bda63f483e2e5
+
+    INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `imagen`, `calificacion`, `comentario`,`correo`)
+    VALUES ('Celular', 20.00, 'Apple', 'Bonito celular 100% calidad', 11, '/home/vianey/Descargas/sample1.jpg', 4.2, 'Estuvo bien chafa, muy pirata', 'micorreito@feliz.com');

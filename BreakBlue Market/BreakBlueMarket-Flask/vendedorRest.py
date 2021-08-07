@@ -19,8 +19,9 @@ def add_user():
 
         if correo and nombre and apellidos and contrasena and nombreUsuario and request.method == 'POST':
             contrasena_hash = generate_password_hash(contrasena)
-            sql = "INSERT INTO comprador(correo, nombre, apellidos, contrasena, nombreUsuario) VALUES (%s, %s, %s, %s, %s)"
-            data(correo, nombre, apellidos, contrasena_hash, nombreUsuario)
+            print(len(contrasena_hash))
+            sql = "INSERT INTO vendedor(correo, nombre, apellidos, contrasena, nombreUsuario) VALUES (%s, %s, %s, %s, %s)"
+            data = (correo, nombre, apellidos, contrasena_hash, nombreUsuario)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -37,7 +38,7 @@ def add_user():
         conn.close()
 
 
-@app.route('/vendedor/<string:correo>')
+@app.route('/vendedor/<string:correo>', methods=["GET"])
 def get_vendedor(correo):
     conn = None
     cursor = None

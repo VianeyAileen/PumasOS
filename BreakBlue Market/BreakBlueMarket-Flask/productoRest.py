@@ -50,7 +50,7 @@ def purchase_product(id):
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute("UPDATE producto SET unidadesDisponibles = unidadesDisponibles - 1 WHERE id = %s", id )
         row = cursor.fetchone()
-        resp = jsonify(row)
+        resp = jsonify("El producto fue comprado exitosamente")
         resp.status_code = 200
         return resp
     except Exception as e:
@@ -233,5 +233,6 @@ def not_found(error=None):
     return resp
 
   
+
 if __name__ == "__main__":
     app.run()

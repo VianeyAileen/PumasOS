@@ -37,7 +37,7 @@ def add_user():
         conn.close()
 
 
-@app.route('/comprador/<string:correo>')
+@app.route('/comprador/<string:correo>', methods=["GET"])
 def get_comprador(correo):
     conn = None
     cursor = None
