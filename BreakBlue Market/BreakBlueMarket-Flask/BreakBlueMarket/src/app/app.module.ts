@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +17,6 @@ import { HomeCompradorComponent } from './home-comprador/home-comprador.componen
 import { ProductoCompradorComponent } from './producto-comprador/producto-comprador.component';
 import { OpinionComponent } from './opinion/opinion.component';
 import { DatosPagoComponent } from './datos-pago/datos-pago.component';
-import { ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { ReactiveFormsModule} from '@angular/forms'
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

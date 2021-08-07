@@ -1,5 +1,5 @@
 import { Component,OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
@@ -9,11 +9,19 @@ import Swal from 'sweetalert2'
   styleUrls: ['./iniciar-sesion.component.css']
 })
 export class IniciarSesionComponent implements OnInit{
+  
+  loginForm!: FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+   }
 
-  constructor() { }
+  ngOnInit(): void { }
 
-  ngOnInit(): void {
-    
+  createForm() {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required ],
+      password: ['', Validators.required]
+    });
   }
   
   mensajeLogin(){
@@ -22,18 +30,3 @@ export class IniciarSesionComponent implements OnInit{
 
   
 }
-
-// export class IniciarSesionComponent {
-
-//   loginForm = new FormGroup({
-//     email: new FormControl('', Validators.required),
-//     password: new FormControl('', Validators.required)
-//   })
-
-//   get email(){return this.loginForm.get('email')}
-//   get password(){return this.loginForm.get('password')}
-// }
-
-
-
-

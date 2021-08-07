@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
@@ -9,9 +10,21 @@ import Swal from 'sweetalert2'
 })
 export class AltaProductoComponent implements OnInit {
 
-  constructor() { }
+  agregarForm!: FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  createForm() {
+    this.agregarForm = this.fb.group({
+      nombreProducto: ['', Validators.required ],
+      marcaProducto: ['', Validators.required],
+      precioProducto: ['', Validators.required],
+      unidadesProducto: ['', Validators.required],
+      descripcionProducto: ['', Validators.required]
+    });
   }
 
   mensajeAltaProducto(){

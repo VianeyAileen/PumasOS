@@ -1,11 +1,7 @@
-input.ng-invalid{
+.form-control.ng-touched.ng-invalid {
     border: solid 1px red;
 }
 
-input.ng-valid{
+.form-control.ng-touched.ng-valid{
     border: solid 1px green;
-}
-
-.error{
-    color: red;
 }
