@@ -1,12 +1,11 @@
 import pymysql
 from app import app
 from db import mysql
-from flask import jsonify
-from flask import flash, request
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import jsonify, request
+from werkzeug.security import generate_password_hash
 
 @app.route('/comprador', methods=['POST'])
-def add_user():
+def añadir_comprador():
     conn = None
     cursor = None
     try:
@@ -31,14 +30,14 @@ def add_user():
         else:
             return not_found()
     except Exception as e:
-        print(e)
+        return e
     finally:
         cursor.close()
         conn.close()
 
 
 @app.route('/comprador/<string:correo>', methods=["GET"])
-def get_comprador(correo):
+def obtener_comprador(correo):
     conn = None
     cursor = None
     try:
@@ -64,8 +63,8 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
-
     return resp
 
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

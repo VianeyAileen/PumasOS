@@ -6,7 +6,7 @@ from flask import flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route('/vendedor', methods=['POST'])
-def add_user():
+def añadir_vendedor():
     conn = None
     cursor = None
     try:
@@ -39,7 +39,7 @@ def add_user():
 
 
 @app.route('/vendedor/<string:correo>', methods=["GET"])
-def get_vendedor(correo):
+def obtener_vendedor(correo):
     conn = None
     cursor = None
     try:
@@ -68,4 +68,4 @@ def not_found(error=None):
     return resp
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

@@ -5,8 +5,10 @@ from db import mysql
 from flask import jsonify
 from flask import flash, request
 
+
+#Metodo para obtener todos los productos
 @app.route('/product', methods=['GET'])
-def get_products():
+def obtener_productos():
     conn = None
     cursor = None
     try:
@@ -23,8 +25,9 @@ def get_products():
         cursor.close()
         conn.close()
 
+#Metodo para obtener un producto por su nombre
 @app.route('/product/<string:nombre>', methods=['GET'])
-def get_product(nombre):
+def obtener_producto(nombre):
     conn = None
     cursor = None
     try:
@@ -41,8 +44,9 @@ def get_product(nombre):
         cursor.close()
         conn.close()
 
+#Metodo para comprar un producto 
 @app.route("/comprar/<int:id>", methods=['PUT'])
-def purchase_product(id):
+def comprar_producto(id):
     conn = None
     cursor = None
     try:
@@ -50,6 +54,7 @@ def purchase_product(id):
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute("UPDATE producto SET unidadesDisponibles = unidadesDisponibles - 1 WHERE id = %s", id )
         row = cursor.fetchone()
+        conn.commit()
         resp = jsonify("El producto fue comprado exitosamente")
         resp.status_code = 200
         return resp
@@ -59,7 +64,7 @@ def purchase_product(id):
         cursor.close()
         conn.close()
 
-#Actualizar un producto
+#Metodo para actualizar un producto
 @app.route('/actualizar/<int:id>', methods=['PUT'])
 def actualizar_producto(id):
     conn = None
@@ -95,9 +100,9 @@ def actualizar_producto(id):
         cursor.close()
         conn.close()
 
-#Consultar calificacion
+#Metodo para consultar las calificaciones
 @app.route('/calificacion', methods=['GET'])
-def get_calificacion():
+def obtener_calificacion():
     conn = None
     cursor = None
     try:
@@ -114,9 +119,9 @@ def get_calificacion():
         cursor.close()
         conn.close()
 
-#Consultar Comentario
+#Metodo para consultar los Comentarios
 @app.route('/comentario', methods=['GET'])
-def get_comentario():
+def obtener_comentario():
     conn = None
     cursor = None
     try:
@@ -134,7 +139,7 @@ def get_comentario():
         conn.close()
 
 
-#Agregar opinion y comentario de producto
+#Metodo para agregar opinion y calificacion de producto
 @app.route('/addOp/<int:id>', methods=['POST'])
 def agregar_opiyCalif(id):
     conn = None
@@ -163,8 +168,64 @@ def agregar_opiyCalif(id):
         cursor.close()
         conn.close()
 
+#Metodo para agregar opinion de producto
+@app.route('/addOp/<int:id>', methods=['POST'])
+def agregar_opinion(id):
+    conn = None
+    cursor = None
+    try:
+        _json = request.json
+        comentario = _json['comentario']
 
-#Eliminar un producto
+        if  comentario and request.method == 'POST':
+            #save edits
+            sql = "UPDATE producto SET comentario = CONCAT(comentario,%s) WHERE id = %s"
+            data = (comentario, id)
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(sql, data)
+            conn.commit()
+            resp = jsonify('Opinión y Calificación agregada')
+            resp.status_code = 200
+            return resp
+        else:
+            return not_found()
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
+#Metodo para agregar calificacion de producto
+@app.route('/addOp/<int:id>', methods=['POST'])
+def agregar_Calificacion(id):
+    conn = None
+    cursor = None
+    try:
+        _json = request.json
+        calificacion = _json['calificacion']
+
+        if calificacion and request.method == 'POST':
+            #save edits
+            sql = "UPDATE producto SET calificacion = %s WHERE id = %s"
+            data = (calificacion, id)
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(sql, data)
+            conn.commit()
+            resp = jsonify('Opinión y Calificación agregada')
+            resp.status_code = 200
+            return resp
+        else:
+            return not_found()
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
+
+#Metodo para eliminar un producto
 @app.route('/delete/<int:id>', methods=['DELETE'])
 def eliminar_producto(id):
     conn = None
@@ -183,7 +244,7 @@ def eliminar_producto(id):
         cursor.close()
         conn.close()
 
-#Agregar un producto
+#Metodo para agregar un producto
 @app.route('/add', methods=['POST'])
 def agregar_producto():
     conn = None
@@ -235,4 +296,4 @@ def not_found(error=None):
   
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
