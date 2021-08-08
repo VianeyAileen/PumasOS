@@ -7,7 +7,7 @@ from flask import flash, request
 
 
 #Metodo para obtener todos los productos
-@app.route('/product', methods=['GET'])
+@app.route('/producto', methods=['GET'])
 def obtener_productos():
     conn = None
     cursor = None
@@ -26,7 +26,7 @@ def obtener_productos():
         conn.close()
 
 #Metodo para obtener un producto por su nombre
-@app.route('/product/<string:nombre>', methods=['GET'])
+@app.route('/producto/<string:nombre>', methods=['GET'])
 def obtener_producto(nombre):
     conn = None
     cursor = None
@@ -140,7 +140,7 @@ def obtener_comentario():
 
 
 #Metodo para agregar opinion y calificacion de producto
-@app.route('/addOp/<int:id>', methods=['POST'])
+@app.route('/añadirOpyCalif/<int:id>', methods=['POST'])
 def agregar_opiyCalif(id):
     conn = None
     cursor = None
@@ -150,7 +150,6 @@ def agregar_opiyCalif(id):
         comentario = _json['comentario']
 
         if calificacion and comentario and request.method == 'POST':
-            #save edits
             sql = "UPDATE producto SET calificacion = %s, comentario = CONCAT(comentario,%s) WHERE id = %s"
             data = (calificacion, comentario, id)
             conn = mysql.connect()
@@ -169,7 +168,7 @@ def agregar_opiyCalif(id):
         conn.close()
 
 #Metodo para agregar opinion de producto
-@app.route('/addOp/<int:id>', methods=['POST'])
+@app.route('/añadirOp/<int:id>', methods=['POST'])
 def agregar_opinion(id):
     conn = None
     cursor = None
@@ -185,7 +184,7 @@ def agregar_opinion(id):
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
             conn.commit()
-            resp = jsonify('Opinión y Calificación agregada')
+            resp = jsonify('Opinión agregada')
             resp.status_code = 200
             return resp
         else:
@@ -197,7 +196,7 @@ def agregar_opinion(id):
         conn.close()
 
 #Metodo para agregar calificacion de producto
-@app.route('/addOp/<int:id>', methods=['POST'])
+@app.route('/añadirCalif/<int:id>', methods=['POST'])
 def agregar_Calificacion(id):
     conn = None
     cursor = None
@@ -206,14 +205,13 @@ def agregar_Calificacion(id):
         calificacion = _json['calificacion']
 
         if calificacion and request.method == 'POST':
-            #save edits
             sql = "UPDATE producto SET calificacion = %s WHERE id = %s"
             data = (calificacion, id)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
             conn.commit()
-            resp = jsonify('Opinión y Calificación agregada')
+            resp = jsonify('Calificación agregada')
             resp.status_code = 200
             return resp
         else:
@@ -226,7 +224,7 @@ def agregar_Calificacion(id):
 
 
 #Metodo para eliminar un producto
-@app.route('/delete/<int:id>', methods=['DELETE'])
+@app.route('/eliminar/<int:id>', methods=['DELETE'])
 def eliminar_producto(id):
     conn = None
     cursor = None
@@ -245,7 +243,7 @@ def eliminar_producto(id):
         conn.close()
 
 #Metodo para agregar un producto
-@app.route('/add', methods=['POST'])
+@app.route('/agregar', methods=['POST'])
 def agregar_producto():
     conn = None
     cursor = None
@@ -293,7 +291,3 @@ def not_found(error=None):
     resp.status_code = 404
     return resp
 
-  
-
-if __name__ == "__main__":
-    app.run(debug=True)
