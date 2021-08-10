@@ -167,62 +167,6 @@ def agregar_opiyCalif(id):
         cursor.close()
         conn.close()
 
-#Metodo para agregar opinion de producto
-@app.route('/añadirOp/<int:id>', methods=['POST'])
-def agregar_opinion(id):
-    conn = None
-    cursor = None
-    try:
-        _json = request.json
-        comentario = _json['comentario']
-
-        if  comentario and request.method == 'POST':
-            #save edits
-            sql = "UPDATE producto SET comentario = CONCAT(comentario,%s) WHERE id = %s"
-            data = (comentario, id)
-            conn = mysql.connect()
-            cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute(sql, data)
-            conn.commit()
-            resp = jsonify('Opinión agregada')
-            resp.status_code = 200
-            return resp
-        else:
-            return not_found()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-
-#Metodo para agregar calificacion de producto
-@app.route('/añadirCalif/<int:id>', methods=['POST'])
-def agregar_Calificacion(id):
-    conn = None
-    cursor = None
-    try:
-        _json = request.json
-        calificacion = _json['calificacion']
-
-        if calificacion and request.method == 'POST':
-            sql = "UPDATE producto SET calificacion = %s WHERE id = %s"
-            data = (calificacion, id)
-            conn = mysql.connect()
-            cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute(sql, data)
-            conn.commit()
-            resp = jsonify('Calificación agregada')
-            resp.status_code = 200
-            return resp
-        else:
-            return not_found()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-
-
 #Metodo para eliminar un producto
 @app.route('/eliminar/<int:id>', methods=['DELETE'])
 def eliminar_producto(id):
