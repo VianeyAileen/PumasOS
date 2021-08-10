@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
@@ -10,9 +11,29 @@ import Swal from 'sweetalert2'
 })
 export class DatosPagoComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  pagoForm!: FormGroup;
+  constructor(private _router: Router, private fb: FormBuilder) {
+    this.createForm();
+   }
 
   ngOnInit(): void {
+  }
+
+  createForm() {
+    this.pagoForm = this.fb.group({
+      nombrePago: ['', Validators.required],
+      apellidoPago: ['', Validators.required],
+      tarjetaPago: ['', Validators.required],
+      expiracion: ['', Validators.required],
+      cvv: ['', Validators.required],
+      calle: ['', Validators.required],
+      colonia: ['', Validators.required],
+      codigoPostal: ['', Validators.required],
+      interior: ['', Validators.required],
+      exterior:['', Validators.required],
+      recibe: ['', Validators.required],
+      telefono: ['', Validators.required]
+    });
   }
 
   mensajeCompra(){

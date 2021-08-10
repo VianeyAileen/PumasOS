@@ -28,46 +28,61 @@
         </div>
 
         <div class="col-md-7 col-lg-8 position-relative bottom-20 start-50 translate-middle-x">
-          <form class="needs-validation" novalidate>
+          <!-- Inicia el formulario -->
+          <form [formGroup]="actualizarForm" novalidate>
             <div class="row g-3">
-              <div class="col-sm-6">
+              <!-- Pedimos el nuevo nombre -->
+              <div class="col-sm-6 form-group">
                 <label for="newName" class="form-label">Ingresa Nuevo Nombre</label>
-                <input type="text" class="form-control" id="nuevoNombre" placeholder="Ingresar Nombre del Producto" value=""
-                  required>
-                <div class="invalid-feedback">
-                  Indica un nombre.
-                </div>
-              </div>
-
-              <div class="col-12">
-                <label for="newPrice" class="form-label">Igresa Nuevo Precio</label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" id="nuevoPrecio" placeholder="Precio del Producto" required>
-                  <div class="invalid-feedback">
-                    Indica un Precio.
+                <input type="text" class="form-control" id="nuevoNombre" formControlName="nuevoNombreProducto" placeholder="Ingresar Nombre del Producto" value="">
+                <!-- Si no se ingresa un nuevo nombre, mandamos un mensaje de error -->
+                <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevoNombreProducto'].invalid && (actualizarForm.controls['nuevoNombreProducto'].dirty || actualizarForm.controls['nuevoNombreProducto'].touched)">
+                  <div *ngIf="actualizarForm.controls['nuevoNombreProducto'].errors?.required">
+                    Indica un nombre.
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <!-- Pedimos el precio nuevo -->
+              <div class="col-12 form-group">
+                <label for="newPrice" class="form-label">Igresa Nuevo Precio</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="text" class="form-control" id="nuevoPrecio" formControlName="nuevoPrecioProducto" placeholder="Precio del Producto">
+                  <!-- Si no nos dan un precio, mandamos un mesaje de error -->
+                  <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevoPrecioProducto'].invalid && (actualizarForm.controls['nuevoPrecioProducto'].dirty || actualizarForm.controls['nuevoPrecioProducto'].touched)">
+                    <div *ngIf="actualizarForm.controls['nuevoPrecioProducto'].errors?.required">
+                        Indica un Precio.
+                    </div>
+                </div>
+                </div>
+              </div>
+
+              <!-- Pedimos las Unidades Disponibles -->
+              <div class="col-12 form-group">
                 <label for="unidadesDisponibles" class="form-label">Ingresar No. de Unidades Disponbles<span
                     class="text-muted"></span></label>
-                <input type="text" class="form-control" id="nuvasUnidades" placeholder="Ingresar Cantidad" required>
-                <div class="invalid-feedback">
-                  Ingrese una descripción.
-                </div>
+                <input type="text" class="form-control" id="nuvasUnidades" formControlName="nuevasUnidadesProducto" placeholder="Ingresar Cantidad">
+                <!-- Si no nos dan las unidades disponibles, mandamos un mesaje de error -->
+                <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevasUnidadesProducto'].invalid && (actualizarForm.controls['nuevasUnidadesProducto'].dirty || actualizarForm.controls['nuevasUnidadesProducto'].touched)">
+                  <div *ngIf="actualizarForm.controls['nuevasUnidadesProducto'].errors?.required">
+                      Indica las Unidades Disponibles.
+                  </div>
+              </div>
               </div>
 
-              <div class="col-12">
+              <!-- Pedimos la descripción -->
+              <div class="col-12 form-group">
                 <label for="description" class="form-label">Ingresar Descripción<span class="text-muted"></span></label>
-                <input type="text" class="form-control" id="nuevaDescripcion" placeholder="INGRESA DESCRIPCIÓN NUEVA"
+                <input type="text" class="form-control" id="nuevaDescripcion" formControlName="nuevaDescripcionProducto" placeholder="INGRESA DESCRIPCIÓN NUEVA"
                   maxlength="500" required style="height: 5em;">
-                <div class="invalid-feedback">
-                  Ingrese una descripción.
+                <!-- Si no nos dan una descripción, mandamos un mesaje de error -->
+                <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevaDescripcionProducto'].invalid && (actualizarForm.controls['nuevaDescripcionProducto'].dirty || actualizarForm.controls['nuevaDescripcionProducto'].touched)">
+                  <div *ngIf="actualizarForm.controls['nuevaDescripcionProducto'].errors?.required">
+                      Ingrese una Descripción.
+                  </div>
                 </div>
               </div>
-
             </div>
 
             <br>
@@ -85,12 +100,10 @@
             
             <hr>
 
+            <!-- Botón Aceptar -->
             <div class="text-center">
-              <a aria-current="page" routerLink="/editar" routerLinkActive="active">
-                <button class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeActualizar()">Aceptar</button>
-            </a>
-              <p></p>
-              <!-- <button class="w-40 btn btn-primary btn-lg" type="submit" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active">Cancelar Cambios</button> -->
+              <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
+              <button aria-current="page" routerLink="/editar" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeActualizar()" [disabled]="actualizarForm.pristine || actualizarForm.invalid">Aceptar</button>
             </div>
           </form>
         </div>
@@ -102,7 +115,6 @@
     </div>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="form-validation.js"></script> -->
 
   </body>
 </html>

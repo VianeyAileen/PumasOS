@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
@@ -10,9 +11,21 @@ import Swal from 'sweetalert2'
 })
 export class ActualizarComponent implements OnInit {
 
-  constructor( private _router: Router) { }
+  actualizarForm!: FormGroup;
+  constructor( private _router: Router, private fb: FormBuilder) { 
+    this.createForm();
+  }
 
   ngOnInit(): void {
+  }
+
+  createForm() {
+    this.actualizarForm = this.fb.group({
+      nuevoNombreProducto: ['', Validators.required],
+      nuevoPrecioProducto: ['', Validators.required],
+      nuevasUnidadesProducto: ['', Validators.required],
+      nuevaDescripcionProducto: ['', Validators.required]
+    });
   }
 
   mensajeActualizar(){

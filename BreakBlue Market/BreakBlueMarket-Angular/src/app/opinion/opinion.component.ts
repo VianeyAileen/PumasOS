@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
@@ -10,9 +10,19 @@ import Swal from 'sweetalert2'
 })
 export class OpinionComponent implements OnInit {
 
-  constructor() { }
+  opinionForm!: FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+   }
 
   ngOnInit(): void {
+  }
+
+  createForm() {
+    this.opinionForm = this.fb.group({
+      opinion: ['', Validators.required],
+      calificacion: ['', Validators.required]
+    });
   }
 
   mensajeOpinion(){
@@ -24,5 +34,4 @@ export class OpinionComponent implements OnInit {
       timer: 1500
     })
   }
-
 }

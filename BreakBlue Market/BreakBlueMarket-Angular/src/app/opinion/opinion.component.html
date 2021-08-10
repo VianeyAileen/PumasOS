@@ -47,10 +47,9 @@
                     </a>
 
                     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                        <a aria-current="page" routerLink="/informacionComprador" routerLinkActive="active">
-                            <button type="button" class="w-100 btn btn-lg btn-outline-primary" (click)="mensajeOpinion()">Enviar Opinión</button>
-                        </a>
-
+                        <!-- Botón Enviar Opinión -->
+                        <button aria-current="page" routerLink="/informacionComprador" routerLinkActive="active" type="button" class="w-100 btn btn-lg btn-outline-primary" (click)="mensajeOpinion()" [disabled]="opinionForm.pristine || opinionForm.invalid">Enviar Opinión</button>
+                        
                     </nav>
                 </div>
 
@@ -59,30 +58,40 @@
                 </div>
             </header>
 
-            <main>
+            <!-- Inicia el formulario -->
+            <form [formGroup]="opinionForm" novalidate>
                 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                     <div class="col">
                         <div class="card mb-4 rounded-3 shadow-sm" style=width:1000px;>
-                            <div class="card-header py-3">
+                            <!-- Pedimos la opinión -->
+                            <div class="card-header py-3 form-group">
                                 <h4 class="my-0 fw-normal">Opinión</h4>
                             </div>
                             <div class="card-body" style="height: 10em;">
-                                <input type="text" class="form-control" style="height: 8em;" id="productName"
-                                    style=width:900px; placeholder="Opinión" required>
-                                <div class="invalid-feedback">
+                                <input type="text" class="form-control" style="height: 8em;" formControlName="opinion" id="productName" style=width:900px; placeholder="Opinión">
+                                <!-- Si no se ingresa una opinióm, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="opinionForm.controls['opinion'].invalid && (opinionForm.controls['opinion'].dirty || opinionForm.controls['opinion'].touched)">
+                                    <div *ngIf="opinionForm.controls['opinion'].errors?.required">
                                     Indica una opinión.
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-
-            <p> Ingresa una calificación (Rango entre 0.0 y 5.0)</p>
-            <input type="text" class="form-control" id="productName" placeholder="Ingresar calificación" value="" required>
-            <div class="invalid-feedback">
-                Indica una calificación.
-            </div>
+    
+                <!-- Pedimos la calificación -->
+                <div class="form-group">
+                    <p> Ingresa una calificación (Rango entre 0.0 y 5.0)</p>
+                    <input type="text" class="form-control" id="productName" formControlName="calificacion" placeholder="Ingresar calificación" value="">
+                    <!-- Si no se ingresa una calificación, mandamos un mensaje de error -->
+                    <div class="alert alert-danger" *ngIf="opinionForm.controls['calificacion'].invalid && (opinionForm.controls['calificacion'].dirty || opinionForm.controls['calificacion'].touched)">
+                        <div *ngIf="opinionForm.controls['calificacion'].errors?.required">
+                        Indica una calificación.
+                        </div>
+                    </div>
+                </div>
+            </form>
 
             <footer class="pt-4 my-md-5 pt-md-5 border-top">
                 <div class="row">

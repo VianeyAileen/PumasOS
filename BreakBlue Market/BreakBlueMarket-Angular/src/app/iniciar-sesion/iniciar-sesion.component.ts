@@ -1,5 +1,5 @@
 import { Component,OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 export class IniciarSesionComponent implements OnInit{
   
   loginForm!: FormGroup;
+  
   constructor(private fb: FormBuilder) {
     this.createForm();
    }

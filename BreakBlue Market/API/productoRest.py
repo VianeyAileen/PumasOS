@@ -101,14 +101,14 @@ def actualizar_producto(id):
         conn.close()
 
 #Metodo para consultar las calificaciones
-@app.route('/calificacion', methods=['GET'])
+@app.route('/calificación', methods=['GET'])
 def obtener_calificacion():
     conn = None
     cursor = None
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT calificacion FROM producto")
+        cursor.execute("SELECT calificación FROM producto")
         rows = cursor.fetchall()
         resp = jsonify(rows)
         resp.status_code = 200
