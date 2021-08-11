@@ -67,11 +67,11 @@ CREATE TABLE `vendedor` (
 
 
     SELECT * FROM producto;
-    SELECT * FROM comprador;
-    SELECT * FROM vendedor;
     SELECT * FROM imagen;
     SELECT * FROM comentario;
     SELECT * FROM calificacion;
+    SELECT * FROM comprador;
+    SELECT * FROM vendedor;
     
     INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`)
     VALUES ('Celular', 11000.00, 'Iphone', 'Bonito celular nuevo 100% calidad (no es clon)', 10, 'misalvaje14@gmail.com');
@@ -135,5 +135,13 @@ CREATE TABLE `vendedor` (
     INSERT INTO calificacion (`id`, `calificacion`) 
     VALUES (4, 2.7);
     
-    
+DELETE calificacion, comentario, imagen, producto
+   FROM imagen, calificacion, comentario, producto
+   WHERE imagen.id=calificacion.id=comentario.id=producto.id = 5;
+
+  SELECT * FROM producto;
+    SELECT * FROM imagen;
+    SELECT * FROM comentario;
+    SELECT * FROM calificacion;
+
     SELECT * FROM vendedor WHERE (correo = "micorreito@gmail.com" AND contrasena = "Pepegrillo");

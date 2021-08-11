@@ -5,7 +5,7 @@ db = SQLAlchemy()
 class Imagen(db.Model):
     __tablename__ = 'imagen'
 
-    id = db.Column(db.Integer, primary_key=True, unique=True)
+    id = db.Column(db.Integer)
     imagen = db.Column()
 
 @property

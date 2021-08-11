@@ -3,8 +3,7 @@ from pymysql.cursors import DictCursor
 from app import app
 from db import mysql
 from flask import jsonify
-from flask import flash, request
-
+from flask import request
 
 #Metodo para obtener todos los productos
 @app.route('/producto', methods=['GET'])
@@ -73,18 +72,13 @@ def actualizar_producto(id):
         _json = request.json
         nombre = _json['nombre']
         precio = _json['precio']
-        marca = _json['marca']
         descripcion = _json['descripcion']
         unidadesDisponibles = _json['unidadesDisponibles']
-        imagen = _json['imagen']
-        calificacion = _json['calificacion']
-        comentario = _json['comentario']
-        correo = _json['correo']
 
-        if nombre and precio and marca and descripcion and unidadesDisponibles and imagen and calificacion and comentario and correo and request.method == 'PUT':
+        if nombre and precio and descripcion and unidadesDisponibles and request.method == 'PUT':
             #save edits
-            sql = "UPDATE producto SET nombre = %s, precio = %s, marca = %s, descripcion = %s, unidadesDisponibles = %s, imagen = %s, calificacion = %s, comentario = %s, correo = %s WHERE id = %s"  
-            data = (nombre, precio, marca, descripcion, unidadesDisponibles, imagen, calificacion, comentario, correo, id)
+            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s WHERE id = %s"  
+            data = (nombre, precio, descripcion, unidadesDisponibles, id)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -92,8 +86,6 @@ def actualizar_producto(id):
             resp = jsonify('Producto Actualizado')
             resp.status_code = 200
             return resp
-        else:
-            return not_found()
     except Exception as e:
         print(e)
     finally:
@@ -101,14 +93,14 @@ def actualizar_producto(id):
         conn.close()
 
 #Metodo para consultar las calificaciones
-@app.route('/calificación', methods=['GET'])
-def obtener_calificacion():
+@app.route('/calificacion/<int:id>', methods=['GET'])
+def obtener_calificacion(id):
     conn = None
     cursor = None
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT calificación FROM producto")
+        cursor.execute("SELECT calificacion FROM calificacion WHERE id = %s",id)
         rows = cursor.fetchall()
         resp = jsonify(rows)
         resp.status_code = 200
@@ -120,14 +112,14 @@ def obtener_calificacion():
         conn.close()
 
 #Metodo para consultar los Comentarios
-@app.route('/comentario', methods=['GET'])
-def obtener_comentario():
+@app.route('/comentario/<int:id>', methods=['GET'])
+def obtener_comentario(id):
     conn = None
     cursor = None
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT comentario FROM producto")
+        cursor.execute("SELECT comentario FROM comentario WHERE id = %s",id)
         rows = cursor.fetchall()
         resp = jsonify(rows)
         resp.status_code = 200
@@ -138,29 +130,54 @@ def obtener_comentario():
         cursor.close()
         conn.close()
 
+#Metodo para subir un comentario
+@app.route('/comentario/<int:id>', methods=['POST'])
+def subir_comentario(id):
+    conn = None
+    cursor = None
+    try:
+        _json = request.json
+        comentario = _json['comentario']
 
-#Metodo para agregar opinion y calificacion de producto
-@app.route('/añadirOpyCalif/<int:id>', methods=['POST'])
-def agregar_opiyCalif(id):
+        if comentario and request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            sql = "INSERT INTO comentario (id, comentario) VALUES ( %s, %s)"
+            data = (id, comentario)
+            cursor.execute(sql, data)
+            conn.commit()
+            resp = jsonify("Comentario añadido correctamente")
+            resp.status_code = 200
+            return resp
+        else :
+            resp = jsonify("No se agrego un comentario")
+            resp.status_code = 400
+            return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
+#Metodo para subir una calificacion
+@app.route('/calificacion/<int:id>', methods=['POST'])
+def subir_calificacion(id):
     conn = None
     cursor = None
     try:
         _json = request.json
         calificacion = _json['calificacion']
-        comentario = _json['comentario']
-
-        if calificacion and comentario and request.method == 'POST':
-            sql = "UPDATE producto SET calificacion = %s, comentario = CONCAT(comentario,%s) WHERE id = %s"
-            data = (calificacion, comentario, id)
+        
+        if calificacion and request.method == 'POST':
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
+            sql = "INSERT INTO calificacion (id, calificacion) VALUES (%s, %s)"
+            data = (id, calificacion)
             cursor.execute(sql, data)
             conn.commit()
-            resp = jsonify('Opinión y Calificación agregada')
+            resp = jsonify("Calificacion añadida correctamente")
             resp.status_code = 200
             return resp
-        else:
-            return not_found()
     except Exception as e:
         print(e)
     finally:
@@ -175,7 +192,8 @@ def eliminar_producto(id):
     try:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM producto WHERE id=%s", (id,))
+        sql = "DELETE t1,t2, t3, t4 FROM producto t1 LEFT JOIN imagen t2 ON (t2.id=t1.id) LEFT JOIN comentario t3 ON(t3.id=t1.id) LEFT JOIN calificacion t4 ON(t4.id=t1.id) WHERE t1.id=%s;"
+        cursor.execute(sql,id)
         conn.commit()
         resp = jsonify('Producto eliminado')
         resp.status_code = 200
@@ -198,15 +216,12 @@ def agregar_producto():
         marca = _json['marca']
         descripcion = _json['descripcion']
         unidadesDisponibles = _json['unidadesDisponibles']
-        imagen = _json['imagen']
-        calificacion = _json['calificacion']
-        comentario = _json['comentario']
         correo = _json['correo']
 
-        if nombre and precio and marca and descripcion and unidadesDisponibles and imagen and calificacion and comentario and correo and request.method == 'POST':
+        if nombre and precio and marca and descripcion and unidadesDisponibles and correo and request.method == 'POST':
             #save edits
-            sql = "INSERT INTO producto (nombre, precio, marca, descripcion, unidadesDisponibles, imagen, calificacion, comentario, correo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            data = (nombre, precio, marca, descripcion, unidadesDisponibles, imagen, calificacion, comentario, correo)
+            sql = "INSERT INTO producto (nombre, precio, marca, descripcion, unidadesDisponibles, correo) VALUES (%s, %s, %s, %s, %s, %s)"
+            data = (nombre, precio, marca, descripcion, unidadesDisponibles, correo)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -214,16 +229,77 @@ def agregar_producto():
             resp = jsonify('Producto agregado')
             resp.status_code = 200
             return resp
-        else:
-            return not_found()
     except Exception as e:
         print(e) 
     finally:
         cursor.close()
         conn.close()
-        
 
+#Metodo para agregar una imagen
+@app.route('/imagen/<int:id>', methods=['POST'])        
+def agregar_imagen(id):
+    conn = None
+    cursor = None
+    try:
+        _json = request.json
+        imagen = _json['imagen']
+        if imagen and request.method == 'POST':
+            sql = "INSERT INTO imagen (id, imagen) VALUES (%s, %s)"
+            data = (id, imagen)
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(sql, data)
+            conn.commit()
+            resp = jsonify('Imagen agregada')
+            resp.status_code = 200
+            return resp  
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
 
+# Metodo para consultar las imagenes de un producto
+@app.route('/imagen/<int:id>', methods=['GET'])
+def obtener_imagen(id):
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT imagen FROM imagen WHERE id = %s",id)
+        rows = cursor.fetchall()
+        resp = jsonify(rows)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/imagen/<int:id>', methods=["PUT"])
+def actualizar_imagen(id):
+    conn = None
+    cursor = None
+    try:
+        _json = request.json
+        imagen = _json['imagenAnt']
+        _imagen = _json['imagenNueva']
+        sql = "UPDATE imagen SET imagen = %s WHERE imagen = %s AND id = %s"
+        data = (_imagen, imagen, id)
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(sql, data)
+        conn.commit()
+        resp = jsonify('Imagen actualizada')
+        resp.status_code = 200
+        return resp  
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.errorhandler(404)
 def not_found(error=None):
@@ -233,5 +309,4 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
-    return resp
-
+    return resp 
