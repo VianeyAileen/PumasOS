@@ -17,6 +17,7 @@ import { HomeCompradorComponent } from './home-comprador/home-comprador.componen
 import { ProductoCompradorComponent } from './producto-comprador/producto-comprador.component';
 import { OpinionComponent } from './opinion/opinion.component';
 import { DatosPagoComponent } from './datos-pago/datos-pago.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DatosPagoComponent } from './datos-pago/datos-pago.component';
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
