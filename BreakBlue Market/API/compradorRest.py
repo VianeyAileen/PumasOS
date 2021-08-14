@@ -54,6 +54,7 @@ def mail():
     email.send(msg)
 
 
+#Método para obtener a un comprador a través del email
 @app.route('/comprador/<string:correo>', methods=["GET"])
 def obtener_comprador(correo):
     conn = None

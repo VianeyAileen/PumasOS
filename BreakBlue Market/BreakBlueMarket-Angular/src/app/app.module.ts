@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { RouterModule } from '@angular/router';
-
 import { AppRoutingModule} from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { CoverComponent } from './cover/cover.component';
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
@@ -40,7 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

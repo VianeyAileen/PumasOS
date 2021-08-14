@@ -53,14 +53,15 @@ def mail():
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
-@app.route('/vendedor/<string:correo>', methods=["GET"])
+# Método para obtener a un vendedor
+@app.route('/login/<string:correo>', methods=["GET"])
 def obtener_vendedor(correo):
     conn = None
     cursor = None
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM vendedor WHERE correo = %s", correo)
+        cursor.execute("SELECT * FROM vendedor WHERE correo = %s")
         row = cursor.fetchone()
         resp = jsonify(row)
         resp.status_code = 200
