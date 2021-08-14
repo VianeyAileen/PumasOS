@@ -205,7 +205,7 @@ def eliminar_producto(id):
         conn.close()
 
 #Metodo para agregar un producto
-@app.route('/agregar', methods=['POST'])
+@app.route('/altaProducto', methods=['POST'])
 def agregar_producto():
     conn = None
     cursor = None

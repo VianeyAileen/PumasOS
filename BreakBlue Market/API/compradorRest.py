@@ -4,6 +4,7 @@ from db import mysql
 from flask import jsonify, request
 from werkzeug.security import generate_password_hash
 
+#Método para añadir a un comprador
 @app.route('/comprador', methods=['POST'])
 def añadir_comprador():
     conn = None
@@ -36,6 +37,7 @@ def añadir_comprador():
         conn.close()
 
 
+#Método para obtener a un comprador a través del email
 @app.route('/comprador/<string:correo>', methods=["GET"])
 def obtener_comprador(correo):
     conn = None

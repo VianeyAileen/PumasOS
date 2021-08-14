@@ -1,5 +1,10 @@
-import { Component,OnInit} from '@angular/core';
+import { Component,OnInit, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+import { ActivatedRoute } from '@angular/router';
+
+import { Vendedor } from '../_modelos/vendedorModelo';
+import { vendedorService } from '../_services/vendedorService';
 
 import Swal from 'sweetalert2'
 
@@ -16,7 +21,7 @@ export class IniciarSesionComponent implements OnInit{
     this.createForm();
    }
 
-  ngOnInit(): void { }
+  ngOnInit(): void{ } 
 
   createForm() {
     this.loginForm = this.fb.group({
