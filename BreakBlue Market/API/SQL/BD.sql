@@ -20,8 +20,8 @@ CREATE TABLE `producto` (
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (
 	`id` int(11) NOT NULL auto_increment,
-    `imagen` varchar(2000) NOT NULL,
-
+    `nombre` varchar(2000) NOT NULL
+    
     FOREIGN KEY imagen(`id`) REFERENCES producto(`id`)
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

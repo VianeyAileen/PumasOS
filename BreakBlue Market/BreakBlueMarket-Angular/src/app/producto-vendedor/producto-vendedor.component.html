@@ -40,8 +40,8 @@
 
                     <form class="d-flex">
                         <a type="button" aria-current="page" routerLink="/editar" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="mensajeBorrar()">Borrar</button>
-                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
+                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (change)="mensajeBorrar()">Borrar</button>
+                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (change)="mensajeCerrar()">Cerrar Sesión</a>
                     </form>
                 </div>
             </div>
@@ -57,6 +57,24 @@
                     </div>
                 </div>
             </section>
+
+            <div class="container row">
+              
+          </div>
+            <div class = "container text-center">
+              <div class="col-md-6">
+                <img [src] = "url" height="200">
+                <input type="file" (change)="onselectFile($event)">
+                <input type="button" (change)="getImage()" value ="view">
+        
+              </div>
+              <div class="col-md-6">
+                  <input type="button" (click)="onUpload()" value="upload">
+              </div>
+              
+              
+            </div>
+            
 
             <div style="text-align: center;">
                 <div class="album py-5 bg-light">

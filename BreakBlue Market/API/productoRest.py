@@ -240,9 +240,12 @@ def agregar_producto():
 def agregar_imagen(id):
     conn = None
     cursor = None
+    print(request.json)
     try:
         _json = request.json
         imagen = _json['imagen']
+        print("id => "+ id)
+        
         if imagen and request.method == 'POST':
             sql = "INSERT INTO imagen (id, imagen) VALUES (%s, %s)"
             data = (id, imagen)

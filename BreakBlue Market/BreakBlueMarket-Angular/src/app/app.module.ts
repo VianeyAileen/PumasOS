@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { RouterModule } from '@angular/router';
 
@@ -38,6 +39,7 @@ import { DatosPagoComponent } from './datos-pago/datos-pago.component';
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
     FormsModule
   ],
   providers: [],
