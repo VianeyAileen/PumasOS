@@ -1,8 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
+
+import { Imagen } from '../_modelos/imagenModelo';
+import { imagenService } from '../_services/imagenService';
 
 import Swal from 'sweetalert2'
 
@@ -16,13 +20,20 @@ export class AltaProductoComponent implements OnInit {
   //Datos que pedimos para dar de alta un producto
   @Input() producto: Producto = {nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com'}
 
+  @Input() imagenes: Imagen = {id:0, imagen:''}
+
   agregarForm!: FormGroup;
 
   respuesta: any = [];
+  error: any = [];
 
 
-  constructor(private fb: FormBuilder, private productoService: productoService) {
-    this.createForm();
+  constructor(
+    private fb: FormBuilder,
+    private productoService: productoService,
+    private imagenService : imagenService,
+    private _router: Router) {
+      this.createForm();
    }
 
   ngOnInit(): void { }
@@ -38,14 +49,55 @@ export class AltaProductoComponent implements OnInit {
     });
   }
 
+
   // Subimos los datos a la BD
   agregarProducto() {
     console.log(this.producto)
-    this.productoService.agregarProducto(this.producto).subscribe(respuesta => {
-      console.log('Producto dado de alta');
-      // Mandamos el mensaje
-      this.mensajeAltaProducto();
-    })
+    this.productoService.agregarProducto(this.producto).subscribe(
+      // Si no hay errores mandamos un mensaje de exito
+      respuesta => {
+        let producto = this.productoService.obtenerProducto(this.producto.nombre).subscribe(
+          respuesta => {
+            // if (respuesta) {
+            //   for (let r of this.respuesta) {
+            //     let p : Producto;
+            //     let id = r[7];
+            //     console.log(id);
+            //     p = r;
+            //     if (p.descripcion==this.producto.descripcion) {
+            //       this.agregarImagenes(id);
+            //     }                
+            //   }
+            // }
+            console.log(respuesta)
+          }
+        )
+        console.log(producto);
+        console.log('Producto dado de alta');
+        // Mandamos el mensaje de que el producto fue dado de alta
+        this.mensajeAltaProducto();
+        // Rederigimos al vendedor a la página donde estan todos sus productos
+        this._router.navigate(["/homeVendedor"]);
+      },
+      // En caso contrario Mandamos un error
+      error => {
+        console.log('error');
+        //Se manda el mensaje de error
+        this.mensajeError();
+        // Rederigimos al vendedor a la misma página
+        this._router.navigate(["/homeVendedor"]);
+
+      }
+    )
+  }
+
+  agregarImagenes(id:number) {
+    for (let url of this.urls) {
+      let img: Imagen = {id: id, imagen: url};
+      this.imagenService.agregarImagenes(id, img).subscribe(respuesta =>{
+        console.log('Imagen dada de alta');
+      })      
+    }
   }
 
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa
@@ -55,7 +107,18 @@ export class AltaProductoComponent implements OnInit {
       icon: 'success',
       title: 'Producto Dado de Alta',
       showConfirmButton: false,
-      timer: 1500
+      timer: 2500
+    })
+  }
+
+  // Mensaje que se manda cuando ocurre un error al conectarse con el servidor
+  mensajeError(){
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Ocurrio un error en el servidor',
+      text: 'Por favor intente subir su producto de nuevo, sino intentarlo más tarde',
+      showConfirmButton: true,
     })
   }
 
