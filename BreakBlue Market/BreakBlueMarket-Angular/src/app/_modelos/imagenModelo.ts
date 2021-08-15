@@ -1,4 +1,4 @@
 export interface Imagen {
-    id: number,
-    //imagen:
+    id: number;
+    imagen: String
 }
