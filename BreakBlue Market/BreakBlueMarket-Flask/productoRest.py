@@ -108,5 +108,16 @@ def agregar_opiyCalif(id):
         cursor.close()
         conn.close()
 
+@app.errorhandler(404)
+def not_found(error=None):
+    message = {
+        'status': 404,
+        'message': 'Not Found: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+
+    return resp
+
 if __name__ == "__main__":
     app.run()
