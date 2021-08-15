@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Producto Vendedor</title>
+        <link rel="icon" href="../../assets/img/icon.PNG" type="image/x-icon">
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/BreakBlue Market/BreakBlueMarket-Flask/BreakBlueMarket/src/assets/dist/css/bootstrap.min.css">
+
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+            }
+
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div class="navbar navbar-dark bg-dark shadow-sm">
+                <div class="container">
+                    <a aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" class="navbar-brand d-flex align-items-center">
+                        <strong>BreakBlueMarket</strong>
+                    </a>
+
+                    <form class="d-flex">
+                        <a type="button" aria-current="page" routerLink="/editar" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="mensajeBorrar()">Borrar</button>
+                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="py-5 text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">Nombre del Producto</h1>
+                        <p class="lead text-muted">Nombre del Vendedor/Compañia</p>
+                        <h2>$ precio del producto</h2>
+                    </div>
+                </div>
+            </section>
+
+            <div style="text-align: center;">
+                <div class="album py-5 bg-light">
+                  <ngb-carousel>
+                    <ng-template  ngbSlide>
+                      <div>
+                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                      </div>
+                    </ng-template>
+                    <ng-template ngbSlide>
+                      <div>
+                        <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
+                      </div>
+                    </ng-template>
+                    <ng-template ngbSlide>
+                      <div>
+                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                      </div>
+                    </ng-template>
+                  </ngb-carousel>
+                </div>
+
+                <div class="col-9">
+                    <label for="description" class="form-label">
+                        <h3>Descripción del Producto</h3>
+                    </label>
+                    <input type="text" class="form-control" id="Descripcion" placeholder="Descripción" maxlength="500" required style="height: 5em;">
+                    <div class="invalid-feedback">Ingrese una Descripción</div>
+                </div>
+                <p></p>
+                <div class="col-9">
+                    <label>
+                        <h3>Opiniones y Calificaciones</h3>
+                    </label>
+                    <input type="text" class="form-control" id="Opinion" placeholder="Opinión" maxlength="500" required style="height: 5em;">
+                    <div class="invalid-feedback">
+                        Ingrese una Opinión
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-muted py-5 text-center">
+            <p>&copy; BreakBlue Market</p>
+        </footer>
+
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

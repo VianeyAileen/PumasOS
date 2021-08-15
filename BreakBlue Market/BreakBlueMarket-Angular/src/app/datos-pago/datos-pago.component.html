@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Datos de Pagos</title>
+        <link rel="icon" href="../../assets/img/icon.PNG" type="image/x-icon">
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+
+        <!-- Bootstrap core CSS -->
+        <link href="../../assets/dist/css/bootstrap.min.css">
+
+
+
+        <!-- Custom styles for this template -->
+        <link href="datos-pago.component.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+
+        <div class="container">
+            <main>
+                <div class="py-5 text-center">
+                    <h2>Datos de Pago</h2>
+
+                    <div class="col-md-7 col-lg-8">
+                        <h4 class="mb-3">Ingresar Datos de Pago</h4>
+                        <!-- Inicia el formulario -->
+                        <form [formGroup]="pagoForm">
+                            <div class="row g-3">
+                                <!-- Pedimos los nombres de la persona -->
+                                <div class="col-sm-6 form-group">
+                                    <label for="firstName" class="form-label">Nombre(s)</label>
+                                    <input type="text" class="form-control" id="firstName" formControlName="nombrePago" placeholder="Nombre del Titular"
+                                        value="">
+                                   <!-- Si no se ingresa un nombre, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['nombrePago'].invalid && (pagoForm.controls['nombrePago'].dirty || pagoForm.controls['nombrePago'].touched)">
+                                        <div *ngIf="pagoForm.controls['nombrePago'].errors?.required">
+                                        Ingresa un nombre.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos los apellidos de la persona -->
+                                <div class="col-sm-6 form-group">
+                                    <label for="lastName" class="form-label">Apellidos</label>
+                                    <input type="text" class="form-control" id="lastName" formControlName="apellidoPago" placeholder="Apellidos del Titular"
+                                        value="">
+                                    <!-- Si no se ingresa un apellido, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['apellidoPago'].invalid && (pagoForm.controls['apellidoPago'].dirty || pagoForm.controls['apellidoPago'].touched)">
+                                        <div *ngIf="pagoForm.controls['apellidoPago'].errors?.required">
+                                        Ingresa un apellido.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos el número de tarjeta -->
+                                <div class="col-md-6 form-group">
+                                    <label for="cc-number" class="form-label">Número de la Tarjeta</label>
+                                    <input type="text" class="form-control" id="cc-number" formControlName="tarjetaPago"  placeholder="Número de la Tarjeta">
+                                    <!-- Si no se ingresa un número de tarjeta, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['tarjetaPago'].invalid && (pagoForm.controls['tarjetaPago'].dirty || pagoForm.controls['tarjetaPago'].touched)">
+                                        <div *ngIf="pagoForm.controls['tarjetaPago'].errors?.required">
+                                        Ingrese el número de su tarjeta.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos la fecha de expiración de la tarjeta -->
+                                <div class="col-md-3 form-group">
+                                    <label for="cc-expiration" class="form-label">Fecha de Expiración</label>
+                                    <input type="text" class="form-control" id="cc-expiration" formControlName="expiracion" placeholder="00/00">
+                                    <!-- Si no se ingresa una fecha de expiración, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['expiracion'].invalid && (pagoForm.controls['expiracion'].dirty || pagoForm.controls['expiracion'].touched)">
+                                        <div *ngIf="pagoForm.controls['expiracion'].errors?.required">
+                                        Fecha de expiración requerida.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos el cvv de la tarjeta -->
+                                <div class="col-md-3 form-group">
+                                    <label for="cc-cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" formControlName="cvv" placeholder="CVC">
+                                    <!-- Si no se ingresa el cvv, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['cvv'].invalid && (pagoForm.controls['cvv'].dirty || pagoForm.controls['cvv'].touched)">
+                                        <div *ngIf="pagoForm.controls['cvv'].errors?.required">
+                                        Código de Seguridad requerido.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <!-- Datos del domicilio -->
+                                <h4>Ingresar Domicilio</h4>
+                                <!-- Pedimos la calle -->
+                                <div class="col-12 form-group">
+                                    <label for="street" class="form-label">Calle</label>
+                                    <input type="text" class="form-control" id="street" formControlName="calle" placeholder="Calle">
+                                    <!-- Si no se ingresa la calle, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['calle'].invalid && (pagoForm.controls['calle'].dirty || pagoForm.controls['calle'].touched)">
+                                        <div *ngIf="pagoForm.controls['calle'].errors?.required">
+                                        Ingrese una Calle.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos la Colonia -->
+                                <div class="col-12 form-group">
+                                    <label for="address2" class="form-label">Colonia</label>
+                                    <input type="text" class="form-control" id="address2" formControlName="colonia" placeholder="Colonia">
+                                    <!-- Si no se ingresa la Colonia, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['colonia'].invalid && (pagoForm.controls['colonia'].dirty || pagoForm.controls['colonia'].touched)">
+                                        <div *ngIf="pagoForm.controls['colonia'].errors?.required">
+                                        Ingrese una Colonia.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos el Código Postal -->
+                                <div class="col-12 form-group">
+                                    <label for="cp" class="form-label">Código Postal</label>
+                                    <input type="text" class="form-control" id="cp" formControlName="codigoPostal" placeholder="Código Postal">
+                                    <!-- Si no se ingresa un Código Postal, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['codigoPostal'].invalid && (pagoForm.controls['codigoPostal'].dirty || pagoForm.controls['codigoPostal'].touched)">
+                                        <div *ngIf="pagoForm.controls['codigoPostal'].errors?.required">
+                                        Ingrese un Código Postal.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos el Número Interior -->
+                                <div class="col-12 form-group">
+                                    <label for="numI" class="form-label">Número Interior</label>
+                                    <input type="text" class="form-control" id="numI" formControlName="interior" placeholder="Número Interior">
+                                    <!-- Si no se ingresa un número interior, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['interior'].invalid && (pagoForm.controls['interior'].dirty || pagoForm.controls['interior'].touched)">
+                                        <div *ngIf="pagoForm.controls['interior'].errors?.required">
+                                        Ingrese un Número Interior.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos el Número Exteior -->
+                                <div class="col-12 form-group">
+                                    <label for="numE" class="form-label">Número Exterior</label>
+                                    <input type="text" class="form-control" id="numE" formControlName="exterior" placeholder="Número Exterior">
+                                    <!-- Si no se ingresa un número exterior, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['exterior'].invalid && (pagoForm.controls['exterior'].dirty || pagoForm.controls['exterior'].touched)">
+                                        <div *ngIf="pagoForm.controls['exterior'].errors?.required">
+                                        Ingrese un Número Exterior.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos el nombre de quien recibirá el producto -->
+                                <div class="col-12 form-group">
+                                    <label for="name2" class="form-label">Nombre de quien recibe</label>
+                                    <input type="text" class="form-control" id="name2" formControlName="recibe" placeholder="Nombre">
+                                    <!-- Si no se ingresa un nombre, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['recibe'].invalid && (pagoForm.controls['recibe'].dirty || pagoForm.controls['recibe'].touched)">
+                                        <div *ngIf="pagoForm.controls['recibe'].errors?.required">
+                                        Ingrese un Nombre.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pedimos un número telefónico -->
+                                <div class="col-12 form-group">
+                                    <label for="number" class="form-label">Numero Telefónico</label>
+                                    <input type="text" class="form-control" id="number" formControlName="telefono" placeholder="Número">
+                                    <!-- Si no se ingresa un nombre, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="pagoForm.controls['telefono'].invalid && (pagoForm.controls['telefono'].dirty || pagoForm.controls['telefono'].touched)">
+                                        <div *ngIf="pagoForm.controls['telefono'].errors?.required">
+                                        Ingrese un Número Telefónico.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Botón Aceptar -->
+                            <div class="text-center">
+                                 <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
+                                <button  aria-current="page" routerLink="/datosPago" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeCompra()" [disabled]="pagoForm.pristine || pagoForm.invalid">Aceptar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="my-5 pt-5 text-muted text-center text-small">
+                <p class="mb-1">&copy; BreakBlue Market</p>
+            </footer>
+        </div>
+
+
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+
+</html>

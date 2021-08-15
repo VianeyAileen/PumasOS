@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Registrar</title>
+        <link rel="icon" href="../../assets/img/icon.PNG" type="image/x-icon">
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+
+        <!-- Bootstrap core CSS -->
+        <link href="/BreakBlue Market/BreakBlueMarket-Flask/BreakBlueMarket/src/assets/dist/css/bootstrap.min.css">
+
+
+        <!-- Custom styles for this template -->
+        <link href="registrarse.component.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+
+        <div class="container">
+            <main>
+                <div class="py-5 text-center">
+                    <img class="d-block mx-auto mb-4" src="../../assets/img/icon.PNG" alt="" width="72" height="57">
+                    <h2>Formulario de Registro</h2>
+                    <p class="lead">Rellena el formulario.</p>
+                </div>
+
+                <div class="col-md-7 col-lg-8 position-relative bottom-20 start-50 translate-middle-x">
+                    <h4 class="mb-3">Datos Personales</h4>
+                    
+                    <!-- Inicia el Formulario -->
+                    <form [formGroup]="registroForm" novalidate>
+                        <div class="row g-3">
+                            <!-- Pedimos el nombre -->
+                            <div class="col-sm-6 form-group">
+                                <label for="firstName" class="form-label">Nombres</label>
+                                <input type="text" class="form-control" id="nombres" formControlName="nombre" placeholder="Nombres">
+                                <!-- Si no se ingresa el nombre, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['nombre'].invalid && (registroForm.controls['nombre'].dirty || registroForm.controls['nombre'].touched)">
+                                    <div *ngIf="registroForm.controls['nombre'].errors?.required">
+                                    Indica un nombre.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos los apellidos -->
+                            <div class="col-sm-6 form-group">
+                                <label for="lastName" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="apellidos" formControlName="apellidos" placeholder="Apellidos">
+                                <!-- Si no se ingresan los apellidos, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['apellidos'].invalid && (registroForm.controls['apellidos'].dirty || registroForm.controls['apellidos'].touched)">
+                                    <div *ngIf="registroForm.controls['apellidos'].errors?.required">
+                                    Ingresa los apellidos.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos el nombre de usuario -->
+                            <div class="col-12 form-group">
+                                <label for="username" class="form-label">Nombre de Usuario</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">@</span>
+                                    <input type="text" class="form-control" id="username" formControlName="usuario" placeholder="Nombre de Usuario">
+                                    <!-- Si no se ingresa el nombre de usuario, mandamos un mensaje de error -->
+                                    <div class="alert alert-danger" *ngIf="registroForm.controls['usuario'].invalid && (registroForm.controls['usuario'].dirty || registroForm.controls['usuario'].touched)">
+                                        <div *ngIf="registroForm.controls['usuario'].errors?.required">
+                                        Ingresa un usuario.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos un correo electrónico -->
+                            <div class="col-12 form-group">
+                                <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+                                <input type="email" class="form-control" id="email" formControlName="email" placeholder="correo@ejemplo.com">
+                                <!-- Si no se ingresa el nombre de usuario, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['email'].invalid && (registroForm.controls['email'].dirty || registroForm.controls['email'].touched)">
+                                    <div *ngIf="registroForm.controls['email'].errors?.required">
+                                    Por favor ingrese un email válido.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos la edad -->
+                            <div class="col-12 form-group">
+                                <label for="age" class="form-label">Edad</label>
+                                <input type="text" class="form-control" id="age" formControlName="edad" placeholder="edad">
+                                <!-- Si no se ingresa una edad, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['edad'].invalid && (registroForm.controls['edad'].dirty || registroForm.controls['edad'].touched)">
+                                    <div *ngIf="registroForm.controls['edad'].errors?.required">
+                                    Ingrese una edad.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos una contraseña -->
+                            <div class="col-12 form-group">
+                                <label for="password" class="form-label">Contraseña <span class="text-muted"></span></label>
+                                <input type="password" class="form-control" id="password" formControlName="contrasena" placeholder="********">
+                                <!-- Si no se ingresa una contraseña, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['contrasena'].invalid && (registroForm.controls['contrasena'].dirty || registroForm.controls['contrasena'].touched)">
+                                    <div *ngIf="registroForm.controls['contrasena'].errors?.required">
+                                    Ingrese una contraseña.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos la confirmación de la contraseña -->
+                            <div class="col-12 form-group">
+                                <label for="password2" class="form-label">Confirmación de la Contraseña <span
+                                        class="text-muted"></span></label>
+                                <input type="password" class="form-control" id="password2" formControlName="contrasena2" placeholder="********">
+                                <!-- Si no se ingresa una contraseña, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['contrasena2'].invalid && (registroForm.controls['contrasena2'].dirty || registroForm.controls['contrasena2'].touched)">
+                                    <div *ngIf="registroForm.controls['contrasena2'].errors?.required">
+                                    Ingrese una contraseña.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos el tipo de usuario -->
+                            <div class="col-md-5 form-group">
+                                <label for="user" class="form-label">Tipo de Usuario</label>
+                                <select class="form-select" id="user" formControlName="tipo">
+                                    <option value="">Elegir...</option>
+                                    <option>Comprador</option>
+                                    <option>Vendedor</option>
+                                </select>
+                                <!-- Si no se selecciona un tipo de usuario, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['tipo'].invalid && (registroForm.controls['tipo'].dirty || registroForm.controls['tipo'].touched)">
+                                    <div *ngIf="registroForm.controls['tipo'].errors?.required">
+                                    Por favor seleccione un tipo de usuario.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos el género del usuario -->
+                            <div class="col-md-4 form-group">
+                                <label for="gender" class="form-label">Género</label>
+                                <select class="form-select" id="gender" formControlName="genero">
+                                    <option value="">Elegir...</option>
+                                    <option>Hombre</option>
+                                    <option>Mujer</option>
+                                    <option>Otro</option>
+                                </select>
+                                <!-- Si no se selecciona un género, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="registroForm.controls['genero'].invalid && (registroForm.controls['genero'].dirty || registroForm.controls['genero'].touched)">
+                                    <div *ngIf="registroForm.controls['genero'].errors?.required">
+                                    Por favor seleccione un genéro.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="same-address">
+                            <label class="form-check-label" for="same-address">Mostrar contraseña</label>
+                        </div>
+
+                        <hr>
+
+                        <!-- Botón Aceptar -->
+                        <div class="text-center">
+                            <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
+                            <button aria-current="page" routerLink="/login" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" [disabled]="registroForm.pristine || registroForm.invalid">Aceptar</button>
+                        </div>
+                    </form> 
+
+                </div>     
+            </main>
+
+            <footer class="pt-4 text-muted text-center text-small">
+                <p class="mb-1">&copy; BreakBlue Market</p>
+            </footer>
+        </div>
+
+
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
