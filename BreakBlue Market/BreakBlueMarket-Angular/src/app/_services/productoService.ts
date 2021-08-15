@@ -23,5 +23,22 @@ export class productoService {
         return this.http.post<Producto>(this.useUrl + "/actualizar", producto);
     }
 
+    // GET: ver opiniones
+    obtenerOpinion(producto : Producto): Observable<Producto> {
+        return this.http.post<Producto>(this.useUrl + "/comentario", producto);
+    }
+
+    // GET: ver calificaciones
+    obtenerCalificacion(producto : Producto): Observable<Producto> {
+        return this.http.post<Producto>(this.useUrl + "/calificacion", producto);
+    }
+
+    // POST: agrega una nueva opinion
+    darOpinion(producto : Producto): Observable<Producto> {
+        return this.http.post<Producto>(this.useUrl + "/addOp", producto);
+    }
+
+    
+
     
 }
