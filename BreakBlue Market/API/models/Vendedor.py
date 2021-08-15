@@ -10,13 +10,17 @@ class Vendedor(db.Model):
     apellidos =db.Column(db.Unicode)
     contrasena =db.Column(db.Unicode)
     nombreUsuario =db.Column(db.Unicode)
+    genero =db.Column(db.Unicode)
+    edad =db.Column(db.Unicode)
 
 @property
 def serialize(self):
     return {
-        'correo': self.correo, 
+        'correo': self.correo,
         'nombre': self.nombre,
         'apellidos': self.apellidos,
         'contrasena': self.contrasena,
-        'nombreUsuario': self.nombreUsuario
+        'nombreUsuario': self.nombreUsuario,
+        'genero': self.genero,
+        'edad': self.edad
     }

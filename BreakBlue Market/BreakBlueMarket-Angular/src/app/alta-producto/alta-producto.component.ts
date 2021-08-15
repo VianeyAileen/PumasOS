@@ -28,7 +28,11 @@ export class AltaProductoComponent implements OnInit {
   error: any = [];
 
 
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> Develop
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,
@@ -74,6 +78,15 @@ export class AltaProductoComponent implements OnInit {
       }
     )
   }
+
+  // agregarImagenes(id:number) {
+  //   for (let url of this.urls) {
+  //     let img: Imagen = {id: id, imagen: url};
+  //     this.imagenService.agregarImagenes(id, img).subscribe(respuesta =>{
+  //       console.log('Imagen dada de alta');
+  //     })
+  //   }
+  // }
 
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa
   mensajeAltaProducto(){

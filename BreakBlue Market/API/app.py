@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, request, session
+from flask_mail import Mail
 from flask_cors import CORS, cross_origin
 from flas_session import Session
 
@@ -11,4 +12,3 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 CORS(app)
-

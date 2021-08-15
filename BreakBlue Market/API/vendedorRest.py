@@ -1,7 +1,7 @@
 import pymysql
 from app import app
 from db import mysql
-from flask import jsonify, flash, request
+from flask import jsonify, flash, request, render_template, redirect, url_for, abort, session
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Método para agregar a un vendedor
@@ -56,6 +56,30 @@ def obtener_vendedor(correo):
     finally:
         cursor.close()
         conn.close()
+
+# Método para inicair sesión del vendedor
+@app.route('/login', methods=["POST"])
+def login_vendedor():
+    conn = None
+    cursor = None
+    try:
+        _json = request.json
+        correo = _json['correo']
+        contrasena = _json['contrasena']
+        # nombreUsuario = _json['nombreUsuario']
+        
+        if correo and contrasena and request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            usuario = cursor.execute("SELECT * FROM vendedor WHERE correo = %s", correo)
+            if not usuario or not check_password_hash(usuario.contrasena, contrasena):
+                return jsonify('Correo o contraseña inválidas')
+            if correo and contrasena and request.method == 'POST':
+                sql = "INSERT INTO vendedor ()"
+
+
+
+
 
 @app.errorhandler(404)
 def not_found(error=None):

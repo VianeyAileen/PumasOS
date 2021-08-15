@@ -3,5 +3,7 @@ export interface Vendedor {
     nombre: string,
     apellidos: string,
     contrasena: string,
-    nombreUsuario: string
+    nombreUsuario: string,
+    genero: string,
+    edad: number
 }
