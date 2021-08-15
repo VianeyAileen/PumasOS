@@ -6,6 +6,7 @@ from flask import jsonify
 from flask import flash, request
 from werkzeug.security import generate_password_hash
 from flask_mail import Message
+from flask_login import logout_user
 
 #funcion que registra a un usuario de tipo comprador
 @app.route('/comprador', methods=['POST'])
@@ -48,10 +49,17 @@ def aniadir_comprador():
             cursor.close()
             conn.close()
 
+#funcion que crea un mensaje y manda un email al usuario registrado.
 def mail():
     msg = Message('BreakBlue Market', sender = 'dicter05@gmail.com', recipients = ['dicteraulad@ciencias.unam.mx'])
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
+
+#funcion que nos ayuda a cerrar la sesion del comprador.
+@app.route("/cerrarsesion")
+def cerrarsesion():
+    logout_user()
+    return redirect('/')
 
 
 #Método para obtener a un comprador a través del email

@@ -43,7 +43,7 @@ def obtener_producto(nombre):
         cursor.close()
         conn.close()
 
-#Metodo para comprar un producto 
+#Metodo para comprar un producto
 @app.route("/comprar/<int:id>", methods=['PUT'])
 def comprar_producto(id):
     conn = None
@@ -77,7 +77,7 @@ def actualizar_producto(id):
 
         if nombre and precio and descripcion and unidadesDisponibles and request.method == 'PUT':
             #save edits
-            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s WHERE id = %s"  
+            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s WHERE id = %s"
             data = (nombre, precio, descripcion, unidadesDisponibles, id)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -167,7 +167,7 @@ def subir_calificacion(id):
     try:
         _json = request.json
         calificacion = _json['calificacion']
-        
+
         if calificacion and request.method == 'POST':
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -217,11 +217,12 @@ def agregar_producto():
         descripcion = _json['descripcion']
         unidadesDisponibles = _json['unidadesDisponibles']
         correo = _json['correo']
+        imagen = _json['imagen']
 
-        if nombre and precio and marca and descripcion and unidadesDisponibles and correo and request.method == 'POST':
+        if nombre and precio and marca and descripcion and unidadesDisponibles and correo and imagen and request.method == 'POST':
             #save edits
-            sql = "INSERT INTO producto (nombre, precio, marca, descripcion, unidadesDisponibles, correo) VALUES (%s, %s, %s, %s, %s, %s)"
-            data = (nombre, precio, marca, descripcion, unidadesDisponibles, correo)
+            sql = "INSERT INTO producto (nombre, precio, marca, descripcion, unidadesDisponibles, correo, imagen) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            data = (nombre, precio, marca, descripcion, unidadesDisponibles, correo, imagen)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -230,13 +231,14 @@ def agregar_producto():
             resp.status_code = 200
             return resp
     except Exception as e:
-        print(e) 
+        print(e)
+        return jsonify('error al añadir el producto')
     finally:
         cursor.close()
         conn.close()
 
 #Metodo para agregar una imagen
-@app.route('/imagen/<int:id>', methods=['POST'])        
+@app.route('/imagen/<int:id>', methods=['POST'])
 def agregar_imagen(id):
     conn = None
     cursor = None
@@ -252,7 +254,7 @@ def agregar_imagen(id):
             conn.commit()
             resp = jsonify('Imagen agregada')
             resp.status_code = 200
-            return resp  
+            return resp
     except Exception as e:
         print(e)
     finally:
@@ -294,7 +296,7 @@ def actualizar_imagen(id):
         conn.commit()
         resp = jsonify('Imagen actualizada')
         resp.status_code = 200
-        return resp  
+        return resp
     except Exception as e:
         print(e)
     finally:
@@ -309,4 +311,4 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
-    return resp 
+    return resp

@@ -12,6 +12,7 @@ class Producto(db.Model):
     descripcion = db.Column(db.Unicode)
     unidadesDisponibles = db.Column(db.Integer)
     correo = db.Column(db.Unicode)
+    imagen =  db.Column(db.Unicode)
 
 
 
@@ -24,5 +25,6 @@ def serialize(self):
         'descripcion': self.descripcion,
         'unidadesDisponibles': self.unidadesDisponibles,
         'comentario': self.comentario,
-        'correo': self.correo
+        'correo': self.correo,
+        'imagen': self.imagen
     }
