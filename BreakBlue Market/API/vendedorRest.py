@@ -1,8 +1,7 @@
 import pymysql
 from app import app
 from db import mysql
-from flask import jsonify
-from flask import flash, request
+from flask import jsonify, flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Método para agregar a un vendedor

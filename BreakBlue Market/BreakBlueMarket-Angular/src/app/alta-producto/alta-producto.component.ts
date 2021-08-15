@@ -18,7 +18,7 @@ import Swal from 'sweetalert2'
 export class AltaProductoComponent implements OnInit {
 
   //Datos que pedimos para dar de alta un producto
-  @Input() producto: Producto = {nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
+  @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
 
   // @Input() imagenes: Imagen = {id:0, imagen:''}
 
@@ -74,15 +74,6 @@ export class AltaProductoComponent implements OnInit {
       }
     )
   }
-
-  // agregarImagenes(id:number) {
-  //   for (let url of this.urls) {
-  //     let img: Imagen = {id: id, imagen: url};
-  //     this.imagenService.agregarImagenes(id, img).subscribe(respuesta =>{
-  //       console.log('Imagen dada de alta');
-  //     })      
-  //   }
-  // }
 
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa
   mensajeAltaProducto(){
