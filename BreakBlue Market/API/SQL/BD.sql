@@ -3,55 +3,60 @@ use `BreakBlueMarket`;
 
 DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto` (
-	`id` int(11) NOT NULL auto_increment,
-    `nombre` varchar(50) NOT NULL,
-    `precio` float(10) NOT NULL,
-    `marca` varchar(50) NOT NULL,
-    `descripcion` varchar(500) NOT NULL,
-    `unidadesDisponibles` int NOT NULL,
-    `correo` varchar(500) NOT NULL,
+		`id` int(11) NOT NULL auto_increment,
+		`nombre` varchar(50) NOT NULL,
+		`precio` float(10) NOT NULL,
+		`marca` varchar(50) NOT NULL,
+		`descripcion` varchar(500) NOT NULL,
+		`unidadesDisponibles` int NOT NULL,
+		`correo` varchar(500) NOT NULL,
 
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`correo`) REFERENCES comprador(`correo`),
-    FOREIGN KEY (`correo`) REFERENCES vendedor(`correo`),
-    UNIQUE(`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+		PRIMARY KEY (`id`),
+		FOREIGN KEY (`correo`) REFERENCES comprador(`correo`),
+		FOREIGN KEY (`correo`) REFERENCES vendedor(`correo`),
+		UNIQUE(`id`)
+		) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (
 	`id` int(11) NOT NULL auto_increment,
-    `nombre` varchar(2000) NOT NULL
-    
-    FOREIGN KEY imagen(`id`) REFERENCES producto(`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+	`imagen` varchar(900) NOT NULL,
+
+	PRIMARY KEY (`id`, `imagen`),
+	imagen_id int NULL REFERENCES producto(id) ON DELETE CASCADE
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `comentario`;
 CREATE TABLE `comentario` (
 	`id` int(11) NOT NULL auto_increment,
-    `comentario` varchar(2000) NOT NULL,
+	`comentario` varchar(900) NOT NULL,
 
-	FOREIGN KEY comentario(`id`) REFERENCES producto(`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
-    
+	PRIMARY KEY (`id`, `comentario`),
+	comentario_id int NULL REFERENCES producto(id) ON DELETE CASCADE
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+
 DROP TABLE IF EXISTS `calificacion`;
 CREATE TABLE `calificacion` (
-	`id` int(11) NOT NULL auto_increment,
-    `calificacion` float(10) NOT NULL,
-    
-	FOREIGN KEY calificacion(`id`) REFERENCES producto(`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+		`id` int(11) NOT NULL auto_increment,
+		`calificacion` float(10) NOT NULL,
+
+		PRIMARY KEY(`id`,`calificacion`),
+		calificacion_id int REFERENCES producto(id) ON DELETE CASCADE
+		) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 DROP TABLE IF EXISTS `comprador`;
 CREATE TABLE `comprador` (
-	`correo` varchar(50) NOT NULL,
-	`nombre` varchar(50) NOT NULL,
-    `apellidos` varchar(50) NOT NULL,
-    `contrasena` varchar(255) NOT NULL,
-    `nombreUsuario` varchar(20) NOT NULL,
+		`correo` varchar(50) NOT NULL,
+		`nombre` varchar(50) NOT NULL,
+		`apellidos` varchar(50) NOT NULL,
+		`contrasena` varchar(255) NOT NULL,
+		`nombreUsuario` varchar(20) NOT NULL,
+		`genero` varchar(20) NOT NULL,
+		`edad` int(3) NOT NULL,
 
-    PRIMARY KEY (`correo`),
-    UNIQUE(`correo`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+		PRIMARY KEY (`correo`),
+		UNIQUE(`correo`)
+		) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `vendedor`;
 CREATE TABLE `vendedor` (

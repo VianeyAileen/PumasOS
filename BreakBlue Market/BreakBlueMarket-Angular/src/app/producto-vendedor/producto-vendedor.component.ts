@@ -72,7 +72,7 @@ export class ProductoVendedorComponent implements OnInit {
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-        // this._router.navigate(["/informacionVendedor"])
+        this._router.navigate(["/informacionVendedor"])
       } 
     })
   }
