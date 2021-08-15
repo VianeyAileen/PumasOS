@@ -45,7 +45,8 @@ export class AltaProductoComponent implements OnInit {
       marcaProducto: ['', Validators.required],
       precioProducto: ['', Validators.required],
       unidadesProducto: ['', Validators.required],
-      descripcionProducto: ['', Validators.required]
+      descripcionProducto: ['', Validators.required],
+      imagenProducto: ['', Validators.required]
     });
   }
 
@@ -58,17 +59,17 @@ export class AltaProductoComponent implements OnInit {
       respuesta => {
         let producto = this.productoService.obtenerProducto(this.producto.nombre).subscribe(
           respuesta => {
-            // if (respuesta) {
-            //   for (let r of this.respuesta) {
-            //     let p : Producto;
-            //     let id = r[7];
-            //     console.log(id);
-            //     p = r;
-            //     if (p.descripcion==this.producto.descripcion) {
-            //       this.agregarImagenes(id);
-            //     }                
-            //   }
-            // }
+            if (respuesta) {
+              for (let r of this.respuesta) {
+                let p : Producto;
+                let id = r[7];
+                console.log(id);
+                p = r;
+                if (p.descripcion==this.producto.descripcion) {
+                  this.agregarImagenes(id);
+                }                
+              }
+            }
             console.log(respuesta)
           }
         )

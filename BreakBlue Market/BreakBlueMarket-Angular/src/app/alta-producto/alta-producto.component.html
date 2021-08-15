@@ -96,10 +96,17 @@
                             </div>
 
                             <!-- Pedimos las imágenes del producto -->
-                            <div>
+                            <div class="form-group">
+                                <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
                                 <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="100">
                             </div>
-                            <input type="file" multiple (change)="detectFiles($event)">
+                            <input [(ngModel)]="imagenes.imagen" class="form-control" formControlName="imagenProducto" type="file" multiple (change)="detectFiles($event)">
+                            <!-- Si no nos dan una imagen, mandamos un mesaje de error -->
+                            <div class="alert alert-danger" *ngIf="agregarForm.controls['imagenProducto'].invalid && (agregarForm.controls['imagenProducto'].dirty || agregarForm.controls['imagenProducto'].touched)">
+                                <div *ngIf="agregarForm.controls['imagenProducto'].errors?.required">
+                                    No se eligieron imágenes
+                                </div>
+                            </div>
                         </div>
 
                         <hr>
