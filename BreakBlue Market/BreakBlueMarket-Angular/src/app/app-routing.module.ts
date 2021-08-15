@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'homeVendedor', component: HomeVendedorComponent},
   { path: 'altaProducto', component: AltaProductoComponent},
   { path: 'informacionVendedor', component: ProductoVendedorComponent},
-  { path: 'editar', component: ActualizarComponent},
+  { path: 'actualizar', component: ActualizarComponent},
   { path: 'homeComprador', component: HomeCompradorComponent},
   { path: 'informacionComprador', component: ProductoCompradorComponent},
   { path: 'opinion', component: OpinionComponent},

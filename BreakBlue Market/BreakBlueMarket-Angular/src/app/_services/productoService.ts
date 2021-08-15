@@ -19,26 +19,8 @@ export class productoService {
     }
 
     // UPDATE
-    actualizarProducto(producto : Producto): Observable<Producto> {
-        return this.http.post<Producto>(this.useUrl + "/actualizar", producto);
+    actualizarProducto(id: number, producto : Producto): Observable<Producto> {
+        return this.http.post<Producto>(this.useUrl + "/actualizar/"+id, producto);
     }
-
-    // GET: ver opiniones
-    obtenerOpinion(producto : Producto): Observable<Producto> {
-        return this.http.post<Producto>(this.useUrl + "/comentario", producto);
-    }
-
-    // GET: ver calificaciones
-    obtenerCalificacion(producto : Producto): Observable<Producto> {
-        return this.http.post<Producto>(this.useUrl + "/calificacion", producto);
-    }
-
-    // POST: agrega una nueva opinion
-    darOpinion(producto : Producto): Observable<Producto> {
-        return this.http.post<Producto>(this.useUrl + "/addOp", producto);
-    }
-
-    
-
     
 }

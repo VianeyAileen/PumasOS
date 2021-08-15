@@ -74,11 +74,12 @@ def actualizar_producto(id):
         precio = _json['precio']
         descripcion = _json['descripcion']
         unidadesDisponibles = _json['unidadesDisponibles']
+        imagen = _json['unidadesDisponibles']
 
-        if nombre and precio and descripcion and unidadesDisponibles and request.method == 'PUT':
+        if nombre and precio and descripcion and unidadesDisponibles and imagen and request.method == 'PUT':
             #save edits
-            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s WHERE id = %s"  
-            data = (nombre, precio, descripcion, unidadesDisponibles, id)
+            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s, imagen = %s WHERE id = %s"  
+            data = (nombre, precio, descripcion, unidadesDisponibles, imagen)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -217,11 +218,12 @@ def agregar_producto():
         descripcion = _json['descripcion']
         unidadesDisponibles = _json['unidadesDisponibles']
         correo = _json['correo']
+        imagen = _json['imagen']
 
-        if nombre and precio and marca and descripcion and unidadesDisponibles and correo and request.method == 'POST':
+        if nombre and precio and marca and descripcion and unidadesDisponibles and correo and imagen and request.method == 'POST':
             #save edits
-            sql = "INSERT INTO producto (nombre, precio, marca, descripcion, unidadesDisponibles, correo) VALUES (%s, %s, %s, %s, %s, %s)"
-            data = (nombre, precio, marca, descripcion, unidadesDisponibles, correo)
+            sql = "INSERT INTO producto (nombre, precio, marca, descripcion, unidadesDisponibles, correo, imagen) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            data = (nombre, precio, marca, descripcion, unidadesDisponibles, correo,imagen)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
