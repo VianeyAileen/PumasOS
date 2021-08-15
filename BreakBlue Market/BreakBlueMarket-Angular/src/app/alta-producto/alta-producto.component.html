@@ -100,11 +100,11 @@
                                 <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
                                 <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="100">
                             </div>
-                            <input [(ngModel)]="imagenes.imagen" class="form-control" formControlName="imagenProducto" type="file" multiple (change)="detectFiles($event)">
+                            <input [(ngModel)]="producto.imagen" class="form-control" formControlName="imagenProducto" type="file" (change)="onSelectFile($event)">
                             <!-- Si no nos dan una imagen, mandamos un mesaje de error -->
                             <div class="alert alert-danger" *ngIf="agregarForm.controls['imagenProducto'].invalid && (agregarForm.controls['imagenProducto'].dirty || agregarForm.controls['imagenProducto'].touched)">
                                 <div *ngIf="agregarForm.controls['imagenProducto'].errors?.required">
-                                    No se eligieron imágenes
+                                    No se eligió una imagen
                                 </div>
                             </div>
                         </div>
@@ -114,7 +114,6 @@
                         <!-- Botón Siguiente -->
                         <div class="text-center">
                             <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
-                            <!-- aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" -->
                             <button class="w-50 btn btn-primary btn-lg" (click)="mensajeAltaProducto" [disabled]="agregarForm.pristine || agregarForm.invalid">Siguiente</button>
                         </div>
                     </form>
