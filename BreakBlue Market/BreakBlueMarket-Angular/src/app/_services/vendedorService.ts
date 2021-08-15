@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable} from 'rxjs';
 
 import { Vendedor } from '../_modelos/vendedorModelo';
 
@@ -13,8 +12,7 @@ export class vendedorService {
 
     constructor(private http: HttpClient) { }
 
-    obtenerVendedor(correo: string): Observable<any> {
-        const url = `${this.userUrl}/login/${correo}`;
-        return this.http.get<Vendedor>(url);
+    obtenerVendedor(correo: String): Observable<Vendedor> {
+        return this.http.get<Vendedor>(this.userUrl+"/vendedor/"+ correo);
     }
 }

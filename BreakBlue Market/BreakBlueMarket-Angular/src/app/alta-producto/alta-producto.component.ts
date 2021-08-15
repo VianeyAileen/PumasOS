@@ -18,7 +18,7 @@ import Swal from 'sweetalert2'
 export class AltaProductoComponent implements OnInit {
 
   //Datos que pedimos para dar de alta un producto
-  @Input() producto: Producto = {nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
+  @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
 
   // @Input() imagenes: Imagen = {id:0, imagen:''}
 

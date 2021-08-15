@@ -1,8 +1,23 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2'
+// Importando Modelos
+import { Producto } from '../_modelos/productoModelo';
+import { Imagen } from '../_modelos/imagenModelo';
+import { Vendedor } from '../_modelos/vendedorModelo';
+import { Comentario } from '../_modelos/comentarioModelo';
+import { Calificacion } from '../_modelos/calificacionModelo';
+
+//  Importando Servicios
+import { productoService } from '../_services/productoService';
+import { imagenService } from '../_services/imagenService';
+import { vendedorService } from '../_services/vendedorService';
+import { comentarioService } from '../_services/comentarioService';
+import { calificacionService } from '../_services/calificacionService';
+
+
 
 @Component({
   selector: 'app-producto-vendedor',
@@ -11,48 +26,62 @@ import Swal from 'sweetalert2'
 })
 export class ProductoVendedorComponent implements OnInit {
 
-  constructor(private _router: Router, private httpClient: HttpClient) { }
+  // Constantes de cada producto
+  id :number|any = 0;
+  nombre : string | any;
+  correo : string | any;
+  // Objeto Producto
+  productos : Producto[] = [];
+  // Objeto imagen que contiene las imagenes del producto
+  imagenes : Imagen[] = [];
+  // Objeto vendedor para saber quien es el que vende el producto
+  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "",nombreUsuario: ""};
 
-  public selectedFile: File | any;
-  receivedImageData: any;
-  base64Data: any;
-  convertedImage: any;
-  message: string | any;
-  imageName: any;
-  url : any;
+  comentarios : Comentario[] = [];
 
-  ngOnInit(): void {
+  calificaciones : Calificacion[] = [];
+
+  constructor(
+    private _router: Router,
+    private productoService : productoService,
+    private imagenService : imagenService,
+    private vendedorService : vendedorService,
+    private comentarioService : comentarioService,
+    private calificacionService : calificacionService,
+    private rutaActiva: ActivatedRoute) {}
+
+  ngOnInit(){
+    //  Asignamos el id y el nombre
+    this.id = this.rutaActiva.snapshot.paramMap.get('id');
+    this.nombre = this.rutaActiva.snapshot.paramMap.get('nombre');
+    this.correo = this.rutaActiva.snapshot.paramMap.get('correo');
+
+    // Buscamos el producto
+    this.productoService.obtenerProducto(this.nombre).subscribe(data => {
+      this.productos = data;
+    });
+
+    // Buscamos el vendedor
+    this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
+      this.vendedor = data2;
+    });
+
+    // Buscamos las imagenes
+    this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
+      this.imagenes = data3;
+    });
+
+    //  Buscamos los comentarios
+    this.comentarioService.obtenerComentarios(this.id).subscribe(data4 => {
+      this.comentarios = data4;
+    })
+
+    //  Obtenemos las calificaciones
+    this.calificacionService.obtenerCalificaciones(this.id).subscribe(data5 => {
+      this.calificaciones = data5;
+    })
   }
 
-
-
-  onselectFile(e:any){
-    console.log(e);
-    this.selectedFile = e.target.files[0];
-
-    if(this.selectedFile){
-      var reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = (event:any) =>  {
-        this.url = this.selectedFile.result;
-      }
-    }
-  }
-
-  onUpload(){
-    const uploadData = new FormData();
-    uploadData.append("myFile", this.selectedFile, this.selectedFile.name);
-
-  
-    this.httpClient.post('http://127.0.0.1:5000/imagen/1', uploadData)
-    .subscribe(
-      (   res: any) => {console.log(res);
-                        this.receivedImageData = res;
-                        this.base64Data = this.receivedImageData.pic;
-                        this.convertedImage = 'data:image/jpeg;base64,' + this.base64Data;},
-      (   err: any) => console.log("Error ocurrido durante el guardado")
-              );
-  }
 
   mensajeBorrar(){
     Swal.fire({
@@ -97,18 +126,5 @@ export class ProductoVendedorComponent implements OnInit {
          this._router.navigate(["/informacionVendedor"])
       } 
     })
-  }
-  //Gets called when the user clicks on retieve image button to get the image from back end
-  getImage() {
-  //Make a call to Sprinf Boot to get the Image Bytes.
-  // this.httpClient.get('http://127.0.0.1:5000/imagen/1')
-  //   .subscribe(
-  //       (res: any) => {
-  //         this.retrieveResonse = res;
-  //         this.base64Data = this.retrieveResonse.picByte;
-  //         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-  //         this.url = this.retrievedImage;
-  //     }
-  //   );
   }
 }

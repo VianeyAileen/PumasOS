@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
 
 import { Producto } from "../_modelos/productoModelo";
 
@@ -20,7 +19,11 @@ export class productoService {
         return this.http.post<Producto>(this.useUrl + "/altaProducto", producto);
     }
 
-    obtenerProducto(nombre: String): Observable<Producto> {
-        return this.http.get<Producto>(this.useUrl + "/producto/"+ nombre);
+    obtenerProducto(nombre: string): Observable<Producto[]> {
+        return this.http.get<Producto[]>(this.useUrl + "/producto/"+ nombre);
+    }
+
+    obtenerProductos() :Observable<Producto[]>{
+        return this.http.get<Producto[]>(this.useUrl + "/producto");
     }
 }

@@ -40,69 +40,90 @@
 
                     <form class="d-flex">
                         <a type="button" aria-current="page" routerLink="/editar" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (change)="mensajeBorrar()">Borrar</button>
-                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (change)="mensajeCerrar()">Cerrar Sesión</a>
+                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="mensajeBorrar()">Borrar</button>
+                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
                     </form>
                 </div>
             </div>
         </header>
 
         <main>
-            <section class="py-5 text-center container">
-                <div class="row py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Nombre del Producto</h1>
-                        <p class="lead text-muted">Nombre del Vendedor/Compañia</p>
-                        <h2>$ precio del producto</h2>
+            <tr *ngFor="let producto of productos">
+                <div *ngIf="producto.id == id">
+                    <section class="py-5 text-center container ">
+                        <div class="row py-lg-5" >
+                            <div class="col-lg-6 col-md-8 mx-auto">
+                                <h1 class="fw-light">{{producto.nombre}}</h1>
+                                <div *ngIf="vendedor.correo == producto.correo">
+                                    <p class="lead text-muted">{{vendedor.nombreUsuario}}</p>
+                                </div>
+                                <h2>$ {{producto.precio}}</h2>
+                            </div>
+                        </div>
+                    </section>
+        
+                    <div style="text-align: center;">
+                        <div class="album py-5 bg-light" >
+                          <ngb-carousel>
+                            <ng-template  ngbSlide>
+                              <div>
+                                <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                              </div>
+                            </ng-template>
+                            <ng-template ngbSlide>
+                              <div>
+                                <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
+                              </div>
+                            </ng-template>
+                            <ng-template ngbSlide>
+                              <div>
+                                <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                              </div>
+                            </ng-template>
+                          </ngb-carousel>
+                        </div>
+        
+                        <div class="col-9">
+                            <label for="description" class="form-label">
+                                <h3 >Descripción del Producto</h3>
+                            </label>
+                            <h4 class="recuadro">
+                                {{producto.descripcion}}
+                            </h4>
+                        </div>
+                        <p></p>
+                        <div class="col-9" style="text-align: center;">
+                            <label>
+                                <h3>Opiniones</h3>
+                            </label>
+                            <div class="recuadro">
+                                <tr *ngFor="let coment of comentarios" >
+                                    <label>
+                                        <h4 >{{coment.comentario}}</h4>
+                                    </label>
+                                </tr>
+                            </div>
+                            
+
+                            <label>
+                                <h3>Calificaciones</h3>
+                            </label>
+                            <div class="recuadro">
+                                <tr *ngFor="let calif of calificaciones">
+                                    <label>
+                                        <h4 >{{calif.calificacion}}</h4>
+                                    </label>
+                                </tr>
+                            </div>
+                            
+                            <!-- <input type="text" class="form-control" id="Opinion" placeholder="Opinión" maxlength="500" required style="height: 5em;">
+                            <div class="invalid-feedback">
+                                Ingrese una Opinión
+                            </div> -->
+                        </div>
                     </div>
                 </div>
-            </section>
-
-            <div class="container row">
-              
-          </div>
-            
-            
-
-            <div style="text-align: center;">
-                <div class="album py-5 bg-light">
-                  <ngb-carousel>
-                    <ng-template  ngbSlide>
-                      <div>
-                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
-                      </div>
-                    </ng-template>
-                    <ng-template ngbSlide>
-                      <div>
-                        <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
-                      </div>
-                    </ng-template>
-                    <ng-template ngbSlide>
-                      <div>
-                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
-                      </div>
-                    </ng-template>
-                  </ngb-carousel>
-                </div>
-
-                <div class="col-9">
-                    <label for="description" class="form-label">
-                        <h3>Descripción del Producto</h3>
-                    </label>
-                    <input type="text" class="form-control" id="Descripcion" placeholder="Descripción" maxlength="500" required style="height: 5em;">
-                    <div class="invalid-feedback">Ingrese una Descripción</div>
-                </div>
-                <p></p>
-                <div class="col-9">
-                    <label>
-                        <h3>Opiniones y Calificaciones</h3>
-                    </label>
-                    <input type="text" class="form-control" id="Opinion" placeholder="Opinión" maxlength="500" required style="height: 5em;">
-                    <div class="invalid-feedback">
-                        Ingrese una Opinión
-                    </div>
-                </div>
-            </div>
+            </tr>
         </main>
 
         <footer class="text-muted py-5 text-center">
