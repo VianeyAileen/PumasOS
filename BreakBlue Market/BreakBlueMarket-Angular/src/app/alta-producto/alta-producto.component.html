@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-md-7 col-lg-8  position-relative bottom-20 start-50 translate-middle-x">
-                    <!-- Inicia el formulario -->
+                    <!-- Inicia el formulario  (submit)="agregarProducto()" -->
                     <form [formGroup]="agregarForm" (submit)="agregarProducto()">
                         <div class="row g-4">
                             <!-- Pedimos el nombre del producto -->
@@ -57,7 +57,7 @@
 
                             <!-- Pedimos el precio del producto -->
                             <div class="col-6 form-group">
-                                <label for="Price" class="form-label">Precio del Producto</label>                                
+                                <label for="Price" class="form-label">Precio del Producto</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input [(ngModel)]="producto.precio" type="text" class="form-control" id="precio" formControlName="precioProducto" placeholder="Precio del Producto">
@@ -68,7 +68,7 @@
                                             Indica un Precio.
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
 
                             <!-- Pedimos las Unidades Disponibles -->
@@ -96,10 +96,17 @@
                             </div>
 
                             <!-- Pedimos las imágenes del producto -->
-                            <div>
+                            <div class="form-group">
+                                <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
                                 <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="100">
                             </div>
-                            <input type="file" multiple (change)="detectFiles($event)">
+                            <input [(ngModel)]="producto.imagen" class="form-control" formControlName="imagenProducto" type="file" (change)="onSelectFile($event)">
+                            <!-- Si no nos dan una imagen, mandamos un mesaje de error -->
+                            <div class="alert alert-danger" *ngIf="agregarForm.controls['imagenProducto'].invalid && (agregarForm.controls['imagenProducto'].dirty || agregarForm.controls['imagenProducto'].touched)">
+                                <div *ngIf="agregarForm.controls['imagenProducto'].errors?.required">
+                                    No se eligió una imagen
+                                </div>
+                            </div>
                         </div>
 
                         <hr>
@@ -107,8 +114,7 @@
                         <!-- Botón Siguiente -->
                         <div class="text-center">
                             <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
-                            <!-- aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" -->
-                            <button class="w-50 btn btn-primary btn-lg" [disabled]="agregarForm.pristine || agregarForm.invalid">Siguiente</button>
+                            <button class="w-50 btn btn-primary btn-lg" (click)="mensajeAltaProducto" [disabled]="agregarForm.pristine || agregarForm.invalid">Siguiente</button>
                         </div>
                     </form>
                 </div>

@@ -18,7 +18,7 @@ import { DatosPagoComponent } from './datos-pago/datos-pago.component';
 const routes: Routes = [
   { path: '', component: CoverComponent },
   { path: 'login', component: IniciarSesionComponent},
-  { path: 'registro', component: RegistrarseComponent},
+  { path: 'comprador', component: RegistrarseComponent},
   { path: 'homeVendedor', component: HomeVendedorComponent},
   { path: 'altaProducto', component: AltaProductoComponent},
   { path: 'informacionVendedor', component: ProductoVendedorComponent},
