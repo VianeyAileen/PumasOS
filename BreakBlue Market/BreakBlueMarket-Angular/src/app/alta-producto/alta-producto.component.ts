@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
 
-import { Imagen } from '../_modelos/imagenModelo';
-import { imagenService } from '../_services/imagenService';
+// import { Imagen } from '../_modelos/imagenModelo';
+// import { imagenService } from '../_services/imagenService';
 
 import Swal from 'sweetalert2'
 
@@ -18,9 +18,9 @@ import Swal from 'sweetalert2'
 export class AltaProductoComponent implements OnInit {
 
   //Datos que pedimos para dar de alta un producto
-  @Input() producto: Producto = {nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com'}
+  @Input() producto: Producto = {nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
 
-  @Input() imagenes: Imagen = {id:0, imagen:''}
+  // @Input() imagenes: Imagen = {id:0, imagen:''}
 
   agregarForm!: FormGroup;
 
@@ -28,10 +28,10 @@ export class AltaProductoComponent implements OnInit {
   error: any = [];
 
 
+  
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,
-    private imagenService : imagenService,
     private _router: Router) {
       this.createForm();
    }
@@ -45,7 +45,8 @@ export class AltaProductoComponent implements OnInit {
       marcaProducto: ['', Validators.required],
       precioProducto: ['', Validators.required],
       unidadesProducto: ['', Validators.required],
-      descripcionProducto: ['', Validators.required]
+      descripcionProducto: ['', Validators.required],
+      imagenProducto: ['', Validators.required]
     });
   }
 
@@ -56,23 +57,6 @@ export class AltaProductoComponent implements OnInit {
     this.productoService.agregarProducto(this.producto).subscribe(
       // Si no hay errores mandamos un mensaje de exito
       respuesta => {
-        let producto = this.productoService.obtenerProducto(this.producto.nombre).subscribe(
-          respuesta => {
-            // if (respuesta) {
-            //   for (let r of this.respuesta) {
-            //     let p : Producto;
-            //     let id = r[7];
-            //     console.log(id);
-            //     p = r;
-            //     if (p.descripcion==this.producto.descripcion) {
-            //       this.agregarImagenes(id);
-            //     }                
-            //   }
-            // }
-            console.log(respuesta)
-          }
-        )
-        console.log(producto);
         console.log('Producto dado de alta');
         // Mandamos el mensaje de que el producto fue dado de alta
         this.mensajeAltaProducto();
@@ -91,14 +75,14 @@ export class AltaProductoComponent implements OnInit {
     )
   }
 
-  agregarImagenes(id:number) {
-    for (let url of this.urls) {
-      let img: Imagen = {id: id, imagen: url};
-      this.imagenService.agregarImagenes(id, img).subscribe(respuesta =>{
-        console.log('Imagen dada de alta');
-      })      
-    }
-  }
+  // agregarImagenes(id:number) {
+  //   for (let url of this.urls) {
+  //     let img: Imagen = {id: id, imagen: url};
+  //     this.imagenService.agregarImagenes(id, img).subscribe(respuesta =>{
+  //       console.log('Imagen dada de alta');
+  //     })      
+  //   }
+  // }
 
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa
   mensajeAltaProducto(){
@@ -124,7 +108,7 @@ export class AltaProductoComponent implements OnInit {
 
   // Función para subir una imagen
   urls = new Array<string>();
-  detectFiles(event: any) {
+  onSelectFile(event: any) {
     this.urls = [];
     let files = event.target.files;
     if (files) {

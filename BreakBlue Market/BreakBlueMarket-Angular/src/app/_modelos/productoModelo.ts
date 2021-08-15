@@ -6,4 +6,5 @@ export interface Producto {
     descripcion: String;
     unidadesDisponibles: number;
     correo: String;
+    imagen: String;
 }

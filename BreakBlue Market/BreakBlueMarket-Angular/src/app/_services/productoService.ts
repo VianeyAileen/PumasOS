@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 import { Producto } from "../_modelos/productoModelo";
 
@@ -19,8 +20,7 @@ export class productoService {
         return this.http.post<Producto>(this.useUrl + "/altaProducto", producto);
     }
 
-    obtenerProducto(nombre: String) {
-        let json = this.http.get(this.useUrl + "/producto/"+ nombre);
-        return json;
+    obtenerProducto(nombre: String): Observable<Producto> {
+        return this.http.get<Producto>(this.useUrl + "/producto/"+ nombre);
     }
 }
