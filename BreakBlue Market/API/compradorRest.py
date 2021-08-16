@@ -45,7 +45,7 @@ def aniadir_comprador():
         return jsonify('error al registrar al comprador')
     finally:
         if conn is not None and cursor is not None:
-            print("verificacion del if")
+            print('error correo duplicado en la tabla')
             cursor.close()
             conn.close()
 

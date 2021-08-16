@@ -29,15 +29,15 @@
 
         <div class="col-md-7 col-lg-8 position-relative bottom-20 start-50 translate-middle-x">
           <!-- Inicia el formulario -->
-          <form [formGroup]="actualizarForm" novalidate>
+          <form [formGroup]="agregarForm" (submit)="actualizarProducto()">
             <div class="row g-3">
               <!-- Pedimos el nuevo nombre -->
               <div class="col-sm-6 form-group">
                 <label for="newName" class="form-label">Ingresa Nuevo Nombre</label>
-                <input type="text" class="form-control" id="nuevoNombre" formControlName="nuevoNombreProducto" placeholder="Ingresar Nombre del Producto" value="">
+                <input [(ngModel)]="producto.nombre" type="text" class="form-control" id="nuevoNombre" formControlName="nuevoNombreProducto" placeholder="Ingresar Nombre del Producto" value="">
                 <!-- Si no se ingresa un nuevo nombre, mandamos un mensaje de error -->
-                <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevoNombreProducto'].invalid && (actualizarForm.controls['nuevoNombreProducto'].dirty || actualizarForm.controls['nuevoNombreProducto'].touched)">
-                  <div *ngIf="actualizarForm.controls['nuevoNombreProducto'].errors?.required">
+                <div class="alert alert-danger" *ngIf="agregarForm.controls['nuevoNombreProducto'].invalid && (agregarForm.controls['nuevoNombreProducto'].dirty || agregarForm.controls['nuevoNombreProducto'].touched)">
+                  <div *ngIf="agregarForm.controls['nuevoNombreProducto'].errors?.required">
                     Indica un nombre.
                   </div>
                 </div>
@@ -48,10 +48,10 @@
                 <label for="newPrice" class="form-label">Igresa Nuevo Precio</label>
                 <div class="input-group">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" id="nuevoPrecio" formControlName="nuevoPrecioProducto" placeholder="Precio del Producto">
+                  <input [(ngModel)]="producto.precio" type="text" class="form-control" id="nuevoPrecio" formControlName="nuevoPrecioProducto" placeholder="Precio del Producto">
                   <!-- Si no nos dan un precio, mandamos un mesaje de error -->
-                  <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevoPrecioProducto'].invalid && (actualizarForm.controls['nuevoPrecioProducto'].dirty || actualizarForm.controls['nuevoPrecioProducto'].touched)">
-                    <div *ngIf="actualizarForm.controls['nuevoPrecioProducto'].errors?.required">
+                  <div class="alert alert-danger" *ngIf="agregarForm.controls['nuevoPrecioProducto'].invalid && (agregarForm.controls['nuevoPrecioProducto'].dirty || agregarForm.controls['nuevoPrecioProducto'].touched)">
+                    <div *ngIf="agregarForm.controls['nuevoPrecioProducto'].errors?.required">
                         Indica un Precio.
                     </div>
                 </div>
@@ -62,10 +62,10 @@
               <div class="col-12 form-group">
                 <label for="unidadesDisponibles" class="form-label">Ingresar No. de Unidades Disponbles<span
                     class="text-muted"></span></label>
-                <input type="text" class="form-control" id="nuvasUnidades" formControlName="nuevasUnidadesProducto" placeholder="Ingresar Cantidad">
+                <input [(ngModel)]="producto.unidadesDisponibles" type="text" class="form-control" id="nuvasUnidades" formControlName="nuevasUnidadesProducto" placeholder="Ingresar Cantidad">
                 <!-- Si no nos dan las unidades disponibles, mandamos un mesaje de error -->
-                <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevasUnidadesProducto'].invalid && (actualizarForm.controls['nuevasUnidadesProducto'].dirty || actualizarForm.controls['nuevasUnidadesProducto'].touched)">
-                  <div *ngIf="actualizarForm.controls['nuevasUnidadesProducto'].errors?.required">
+                <div class="alert alert-danger" *ngIf="agregarForm.controls['nuevasUnidadesProducto'].invalid && (agregarForm.controls['nuevasUnidadesProducto'].dirty || agregarForm.controls['nuevasUnidadesProducto'].touched)">
+                  <div *ngIf="agregarForm.controls['nuevasUnidadesProducto'].errors?.required">
                       Indica las Unidades Disponibles.
                   </div>
               </div>
@@ -74,11 +74,11 @@
               <!-- Pedimos la descripción -->
               <div class="col-12 form-group">
                 <label for="description" class="form-label">Ingresar Descripción<span class="text-muted"></span></label>
-                <input type="text" class="form-control" id="nuevaDescripcion" formControlName="nuevaDescripcionProducto" placeholder="INGRESA DESCRIPCIÓN NUEVA"
+                <input [(ngModel)]="producto.descripcion" type="text" class="form-control" id="nuevaDescripcion" formControlName="nuevaDescripcionProducto" placeholder="INGRESA DESCRIPCIÓN NUEVA"
                   maxlength="500" required style="height: 5em;">
                 <!-- Si no nos dan una descripción, mandamos un mesaje de error -->
-                <div class="alert alert-danger" *ngIf="actualizarForm.controls['nuevaDescripcionProducto'].invalid && (actualizarForm.controls['nuevaDescripcionProducto'].dirty || actualizarForm.controls['nuevaDescripcionProducto'].touched)">
-                  <div *ngIf="actualizarForm.controls['nuevaDescripcionProducto'].errors?.required">
+                <div class="alert alert-danger" *ngIf="agregarForm.controls['nuevaDescripcionProducto'].invalid && (agregarForm.controls['nuevaDescripcionProducto'].dirty || agregarForm.controls['nuevaDescripcionProducto'].touched)">
+                  <div *ngIf="agregarForm.controls['nuevaDescripcionProducto'].errors?.required">
                       Ingrese una Descripción.
                   </div>
                 </div>
@@ -97,13 +97,32 @@
               <input type="checkbox" class="form-check-input" id="noDisponible">
               <label class="form-check-label" for="noDisponible">No Disponible</label>
             </div>
+
+            <!-- Pedimos las imágenes del producto -->
+            <div class="form-group">
+              <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
+              <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="100">
+            </div>
+
+            <input [(ngModel)]="producto.imagen" class="form-control" formControlName="nuevaImagenProducto" type="file" (change)="onSelectFile($event)">
+
+            <!-- Si no nos dan una imagen, mandamos un mesaje de error -->
+            <div class="alert alert-danger" *ngIf="agregarForm.controls['nuevaImagenProducto'].invalid && (agregarForm.controls['nuevaImagenProducto'].dirty || agregarForm.controls['nuevaImagenProducto'].touched)">
+                <div *ngIf="agregarForm.controls['nuevaImagenProducto'].errors?.required">
+                    No se eligió una imagen
+                </div>
+              </div>
+
+
+
+
             
             <hr>
 
             <!-- Botón Aceptar -->
             <div class="text-center">
               <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
-              <button aria-current="page" routerLink="/editar" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeActualizar()" [disabled]="actualizarForm.pristine || actualizarForm.invalid">Aceptar</button>
+              <button aria-current="page" routerLink="/actualizar" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeActualizar()" [disabled]="agregarForm.pristine || agregarForm.invalid">Aceptar</button>
             </div>
           </form>
         </div>

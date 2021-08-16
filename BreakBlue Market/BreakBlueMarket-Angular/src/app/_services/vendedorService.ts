@@ -1,20 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { Observable} from "rxjs";
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-
-import { Vendedor } from '../_modelos/vendedorModelo';
+import { Vendedor } from "../_modelos/vendedorModelo";
 
 @Injectable({ providedIn: 'root' })
 export class vendedorService {
 
-    private userUrl = 'http://localhost:5000';  // URL to REST API
+    headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    private userUrl = 'http://127.0.0.1:5000/';  // URL to REST API
 
     constructor(private http: HttpClient) { }
 
-    obtenerVendedor(correo: string): Observable<any> {
-        const url = `${this.userUrl}/login/${correo}`;
-        return this.http.get<Vendedor>(url);
+    obtenerVendedor(correo: String): Observable<Vendedor> {
+        return this.http.get<Vendedor>(this.userUrl+"/vendedor/"+ correo);
+    }
+
+    //POST: agregamos un usuario comprador a la base de datos.
+    agregarVendedor(vendedor: Vendedor): Observable<Vendedor>{
+      return this.http.post<Vendedor>(this.userUrl + "/vendedor", vendedor);
     }
 }

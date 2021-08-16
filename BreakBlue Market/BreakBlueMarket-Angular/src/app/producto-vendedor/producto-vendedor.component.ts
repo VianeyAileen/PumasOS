@@ -1,7 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2'
+// Importando Modelos
+import { Producto } from '../_modelos/productoModelo';
+import { Imagen } from '../_modelos/imagenModelo';
+import { Vendedor } from '../_modelos/vendedorModelo';
+import { Comentario } from '../_modelos/comentarioModelo';
+import { Calificacion } from '../_modelos/calificacionModelo';
+
+//  Importando Servicios
+import { productoService } from '../_services/productoService';
+import { imagenService } from '../_services/imagenService';
+import { vendedorService } from '../_services/vendedorService';
+import { comentarioService } from '../_services/comentarioService';
+import { calificacionService } from '../_services/calificacionService';
+
+
 
 @Component({
   selector: 'app-producto-vendedor',
@@ -10,10 +26,62 @@ import Swal from 'sweetalert2'
 })
 export class ProductoVendedorComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  // Constantes de cada producto
+  id :number|any = 0;
+  nombre : string | any;
+  correo : string | any;
+  // Objeto Producto
+  productos : Producto[] = [];
+  // Objeto imagen que contiene las imagenes del producto
+  imagenes : Imagen[] = [];
+  // Objeto vendedor para saber quien es el que vende el producto
+  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2: "", nombreUsuario: "", tipo: "", genero: "", edad: 0};
 
-  ngOnInit(): void {
+  comentarios : Comentario[] = [];
+
+  calificaciones : Calificacion[] = [];
+
+  constructor(
+    private _router: Router,
+    private productoService : productoService,
+    private imagenService : imagenService,
+    private vendedorService : vendedorService,
+    private comentarioService : comentarioService,
+    private calificacionService : calificacionService,
+    private rutaActiva: ActivatedRoute) {}
+
+  ngOnInit(){
+    //  Asignamos el id y el nombre
+    this.id = this.rutaActiva.snapshot.paramMap.get('id');
+    this.nombre = this.rutaActiva.snapshot.paramMap.get('nombre');
+    this.correo = this.rutaActiva.snapshot.paramMap.get('correo');
+
+    // Buscamos el producto
+    this.productoService.obtenerProducto(this.nombre).subscribe(data => {
+      this.productos = data;
+    });
+
+    // Buscamos el vendedor
+    this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
+      this.vendedor = data2;
+    });
+
+    // Buscamos las imagenes
+    this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
+      this.imagenes = data3;
+    });
+
+    //  Buscamos los comentarios
+    this.comentarioService.obtenerComentarios(this.id).subscribe(data4 => {
+      this.comentarios = data4;
+    })
+
+    //  Obtenemos las calificaciones
+    this.calificacionService.obtenerCalificaciones(this.id).subscribe(data5 => {
+      this.calificaciones = data5;
+    })
   }
+
 
   mensajeBorrar(){
     Swal.fire({
@@ -34,7 +102,7 @@ export class ProductoVendedorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
         this._router.navigate(["/informacionVendedor"])
-      } 
+      }
     })
   }
 
@@ -56,7 +124,7 @@ export class ProductoVendedorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
          this._router.navigate(["/informacionVendedor"])
-      } 
+      }
     })
   }
 }

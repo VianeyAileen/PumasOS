@@ -38,7 +38,7 @@
                             <!-- Pedimos el nombre -->
                             <div class="col-sm-6 form-group">
                                 <label for="firstName" class="form-label">Nombres</label>
-                                <input [(ngModel)]= 'comprador.nombre' type="text" class="form-control" id="nombres" formControlName="nombre" placeholder="Nombres">
+                                <input [(ngModel)]= 'comprador.nombre' [(ngModel)]= 'vendedor.nombre' type="text" class="form-control" id="nombres" formControlName="nombre" placeholder="Nombres">
                                 <!-- Si no se ingresa el nombre, mandamos un mensaje de error -->
                                 <div class="alert alert-danger" *ngIf="registroForm.controls['nombre'].invalid && (registroForm.controls['nombre'].dirty || registroForm.controls['nombre'].touched)">
                                     <div *ngIf="registroForm.controls['nombre'].errors?.required">
@@ -50,7 +50,7 @@
                             <!-- Pedimos los apellidos -->
                             <div class="col-sm-6 form-group">
                                 <label for="lastName" class="form-label">Apellidos</label>
-                                <input [(ngModel)]= 'comprador.apellidos' type="text" class="form-control" id="apellidos" formControlName="apellidos" placeholder="Apellidos">
+                                <input [(ngModel)]= 'comprador.apellidos' [(ngModel)]= 'vendedor.apellidos' type="text" class="form-control" id="apellidos" formControlName="apellidos" placeholder="Apellidos">
                                 <!-- Si no se ingresan los apellidos, mandamos un mensaje de error -->
                                 <div class="alert alert-danger" *ngIf="registroForm.controls['apellidos'].invalid && (registroForm.controls['apellidos'].dirty || registroForm.controls['apellidos'].touched)">
                                     <div *ngIf="registroForm.controls['apellidos'].errors?.required">
@@ -64,7 +64,7 @@
                                 <label for="username" class="form-label">Nombre de Usuario</label>
                                 <div class="input-group">
                                     <span class="input-group-text">@</span>
-                                    <input [(ngModel)]= 'comprador.nombreUsuario' type="text" class="form-control" id="username" formControlName="usuario" placeholder="Nombre de Usuario">
+                                    <input [(ngModel)]= 'comprador.nombreUsuario' [(ngModel)]= 'vendedor.nombreUsuario' type="text" class="form-control" id="username" formControlName="usuario" placeholder="Nombre de Usuario">
                                     <!-- Si no se ingresa el nombre de usuario, mandamos un mensaje de error -->
                                     <div class="alert alert-danger" *ngIf="registroForm.controls['usuario'].invalid && (registroForm.controls['usuario'].dirty || registroForm.controls['usuario'].touched)">
                                         <div *ngIf="registroForm.controls['usuario'].errors?.required">
@@ -77,7 +77,7 @@
                             <!-- Pedimos un correo electrónico -->
                             <div class="col-12 form-group">
                                 <label for="email" class="form-label">Email <span class="text-muted"></span></label>
-                                <input [(ngModel)]= 'comprador.correo' type="email" class="form-control" id="email" formControlName="email" placeholder="correo@ejemplo.com">
+                                <input [(ngModel)]= 'comprador.correo' [(ngModel)]= 'vendedor.correo' type="email" class="form-control" id="email" formControlName="email" placeholder="correo@ejemplo.com">
                                 <!-- Si no se ingresa el nombre de usuario, mandamos un mensaje de error -->
                                 <div class="alert alert-danger" *ngIf="registroForm.controls['email'].invalid && (registroForm.controls['email'].dirty || registroForm.controls['email'].touched)">
                                     <div *ngIf="registroForm.controls['email'].errors?.required">
@@ -89,7 +89,7 @@
                             <!-- Pedimos la edad -->
                             <div class="col-12 form-group">
                                 <label for="age" class="form-label">Edad</label>
-                                <input [(ngModel)]= 'comprador.edad' type="text" class="form-control" id="age" formControlName="edad" placeholder="edad">
+                                <input [(ngModel)]= 'comprador.edad' [(ngModel)]= 'vendedor.edad' type="text" class="form-control" id="age" formControlName="edad" placeholder="edad">
                                 <!-- Si no se ingresa una edad, mandamos un mensaje de error -->
                                 <div class="alert alert-danger" *ngIf="registroForm.controls['edad'].invalid && (registroForm.controls['edad'].dirty || registroForm.controls['edad'].touched)">
                                     <div *ngIf="registroForm.controls['edad'].errors?.required">
@@ -101,7 +101,7 @@
                             <!-- Pedimos una contraseña -->
                             <div class="col-12 form-group">
                                 <label for="password" class="form-label">Contraseña <span class="text-muted"></span></label>
-                                <input [(ngModel)]= 'comprador.contrasena' type="password" class="form-control" id="password" formControlName="contrasena" placeholder="********">
+                                <input [(ngModel)]= 'comprador.contrasena' [(ngModel)]= 'vendedor.contrasena' type="password" class="form-control" id="password" formControlName="contrasena" placeholder="********">
                                 <!-- Si no se ingresa una contraseña, mandamos un mensaje de error -->
                                 <div class="alert alert-danger" *ngIf="registroForm.controls['contrasena'].invalid && (registroForm.controls['contrasena'].dirty || registroForm.controls['contrasena'].touched)">
                                     <div *ngIf="registroForm.controls['contrasena'].errors?.required">
@@ -114,7 +114,7 @@
                             <div class="col-12 form-group">
                                 <label for="password2" class="form-label">Confirmación de la Contraseña <span
                                         class="text-muted"></span></label>
-                                <input [(ngModel)]= 'comprador.contrasena2' type="password" class="form-control" id="password2" formControlName="contrasena2" placeholder="********">
+                                <input [(ngModel)]= 'comprador.contrasena2' [(ngModel)]= 'vendedor.contrasena2' type="password" class="form-control" id="password2" formControlName="contrasena2" placeholder="********">
                                 <!-- Si no se ingresa una contraseña, mandamos un mensaje de error -->
                                 <div class="alert alert-danger" *ngIf="registroForm.controls['contrasena2'].invalid && (registroForm.controls['contrasena2'].dirty || registroForm.controls['contrasena2'].touched)">
                                     <div *ngIf="registroForm.controls['contrasena2'].errors?.required">
@@ -142,7 +142,7 @@
                             <!-- Pedimos el género del usuario -->
                             <div class="col-md-4 form-group">
                                 <label for="gender" class="form-label">Género</label>
-                                <select [(ngModel)]= 'comprador.genero' class="form-select" id="gender" formControlName="genero">
+                                <select [(ngModel)]= 'comprador.genero' [(ngModel)]= 'vendedor.genero' class="form-select" id="gender" formControlName="genero">
                                     <option value="">Elegir...</option>
                                     <option>Hombre</option>
                                     <option>Mujer</option>

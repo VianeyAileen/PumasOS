@@ -20,21 +20,21 @@ CREATE TABLE `producto` (
 
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (
-		`id` int(11) NOT NULL auto_increment,
-		`imagen` varchar(900) NOT NULL,
+	`id` int(11) NOT NULL auto_increment,
+	`imagen` varchar(900) NOT NULL,
 
-		PRIMARY KEY (`id`, `imagen`),
-		imagen_id int NULL REFERENCES producto(id) ON DELETE CASCADE
-		) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+	PRIMARY KEY (`id`, `imagen`),
+	imagen_id int NULL REFERENCES producto(id) ON DELETE CASCADE
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `comentario`;
 CREATE TABLE `comentario` (
-		`id` int(11) NOT NULL auto_increment,
-		`comentario` varchar(900) NOT NULL,
+	`id` int(11) NOT NULL auto_increment,
+	`comentario` varchar(900) NOT NULL,
 
-		PRIMARY KEY (`id`, `comentario`),
-		comentario_id int NULL REFERENCES producto(id) ON DELETE CASCADE
-		) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+	PRIMARY KEY (`id`, `comentario`),
+	comentario_id int NULL REFERENCES producto(id) ON DELETE CASCADE
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 DROP TABLE IF EXISTS `calificacion`;
 CREATE TABLE `calificacion` (
