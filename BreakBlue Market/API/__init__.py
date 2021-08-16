@@ -1,4 +1,13 @@
 from flask_cors import CORS 
+from flask import session, jsonify
+from app import app
+
+#funcion que nos ayuda a cerrar la sesion del comprador.
+@app.route("/cerrarsesionUser")
+def cerrarsesion():
+    if 'correo' in session:
+            session.pop('correo', None)
+    return jsonify('haz salido de la sesion correctamente')
 
 if __name__ == "__main__":
     from app import app
