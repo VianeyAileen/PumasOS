@@ -19,13 +19,15 @@ const routes: Routes = [
   { path: '', component: CoverComponent },
   { path: 'login', component: IniciarSesionComponent},
   { path: 'comprador', component: RegistrarseComponent},
-  { path: 'homeVendedor', component: HomeVendedorComponent, pathMatch: 'full'},
+  { path: 'vendedor', component: RegistrarseComponent},
+  { path: 'homeVendedor', component: HomeVendedorComponent},
   { path: 'altaProducto', component: AltaProductoComponent},
   { path: 'informacionVendedor/:id/:nombre/:correo', component: ProductoVendedorComponent},
-  { path: 'editar/:id', component: ActualizarComponent},
+  { path: 'actualizar/:id', component: ActualizarComponent},
   { path: 'homeComprador', component: HomeCompradorComponent},
   { path: 'informacionComprador/:id/:nombre', component: ProductoCompradorComponent},
   { path: 'opinion/:id', component: OpinionComponent},
+  { path: 'calificacion/:id', component: OpinionComponent},
   { path: 'datosPago/:id', component: DatosPagoComponent},
 ];
 

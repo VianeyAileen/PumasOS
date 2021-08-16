@@ -1,11 +1,11 @@
 export interface Vendedor {
-    correo: String;
-    nombre: String;
-    apellidos: String;
-    contrasena: String;
-    contrasena2: String;
-    tipo: String;
-    nombreUsuario: String;
-    genero: String;
-    edad: number;
+    correo: string,
+    nombre: string,
+    apellidos: string,
+    contrasena: string,
+    contrasena2: string,
+    tipo: string,
+    nombreUsuario: string,
+    genero: string,
+    edad: number
 }

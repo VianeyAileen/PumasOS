@@ -35,6 +35,7 @@ export class ProductoVendedorComponent implements OnInit {
   // Objeto imagen que contiene las imagenes del producto
   imagenes : Imagen[] = [];
   // Objeto vendedor para saber quien es el que vende el producto
+  
   vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", genero: "", tipo:"", edad: 0};
 
   comentarios : Comentario[] = [];
@@ -123,7 +124,7 @@ export class ProductoVendedorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
         this._router.navigate(["/informacionVendedor"])
-      } 
+      }
     })
   }
 
@@ -156,7 +157,7 @@ export class ProductoVendedorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
          this._router.navigate(["/informacionVendedor"])
-      } 
+      }
     })
   }
 }

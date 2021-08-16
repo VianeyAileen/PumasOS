@@ -74,11 +74,12 @@ def actualizar_producto(id):
         precio = _json['precio']
         descripcion = _json['descripcion']
         unidadesDisponibles = _json['unidadesDisponibles']
+        imagen = _json['unidadesDisponibles']
 
-        if nombre and precio and descripcion and unidadesDisponibles and request.method == 'PUT':
+        if nombre and precio and descripcion and unidadesDisponibles and imagen and request.method == 'PUT':
             #save edits
-            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s WHERE id = %s"
-            data = (nombre, precio, descripcion, unidadesDisponibles, id)
+            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s, imagen = %s WHERE id = %s"
+            data = (nombre, precio, descripcion, unidadesDisponibles, imagen, id)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -88,6 +89,7 @@ def actualizar_producto(id):
             return resp
     except Exception as e:
         print(e)
+        return jsonify("Error al actualizar")
     finally:
         cursor.close()
         conn.close()
@@ -247,7 +249,7 @@ def agregar_imagen(id):
         _json = request.json
         imagen = _json['imagen']
         print("id => "+ id)
-        
+
         if imagen and request.method == 'POST':
             sql = "INSERT INTO imagen (id, imagen) VALUES (%s, %s)"
             data = (id, imagen)

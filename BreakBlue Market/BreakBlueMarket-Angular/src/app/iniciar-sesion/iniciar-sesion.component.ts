@@ -4,7 +4,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Comprador } from '../_modelos/compradorModelo';
+import { Vendedor } from '../_modelos/vendedorModelo';
+
 import { compradorService } from '../_services/compradorService';
+import { vendedorService } from '../_services/vendedorService';
 
 import Swal from 'sweetalert2'
 
@@ -17,16 +20,23 @@ export class IniciarSesionComponent implements OnInit{
   
   @Input() comprador: Comprador = {correo: '', nombre: 'x' , apellidos: 'x', contrasena: '',contrasena2: 'x', tipo: 'Comprador', nombreUsuario: 'x', genero: 'x', edad: 0}
 
+  @Input() vendedor: Vendedor = {correo: '', nombre: 'x' , apellidos: 'x', contrasena: '',contrasena2: 'x', tipo: 'Vendedor', nombreUsuario: 'x', genero: 'x', edad: 0}
+
   respuesta: any = [];
   error: any = [];
   
   loginForm!: FormGroup;
+
+  loginFormV!: FormGroup;
   
   constructor(
     private fb: FormBuilder,
+    private lfv: FormBuilder,
     private compradorService: compradorService,
+    private vendedorService: vendedorService,
     private _router: Router ) {
       this.createForm();
+      this.createFormV();
     }
 
   ngOnInit(): void{ } 
@@ -38,25 +48,45 @@ export class IniciarSesionComponent implements OnInit{
     });
   }
 
-  //Iniciamos Sesión
+  createFormV() {
+    this.loginFormV = this.lfv.group({
+      emailV: ['', Validators.required ],
+      passwordV: ['', Validators.required]
+    });
+  }
+
+  //Iniciamos Sesión de Vendedor
+  loginVendedor() {
+    console.log(this.vendedor.correo, this.vendedor.contrasena, this.vendedor.tipo)
+    this.vendedorService.loginVendedor(this.vendedor).subscribe(
+      respuesta => {
+        console.log('Sesión Iniciada');
+        this.mensajeLogin();
+        this._router.navigate(["/homeVendedor"]);
+      },
+      error => {
+        console.log('error');
+        this.mensajeError();
+        this._router.navigate(["/"]);
+      }
+    )
+  }
+
+  //Iniciamos Sesión del Ccomprador
   loginComprador() {
-    if (this.comprador.tipo === 'Comprador') {
-      console.log(this.comprador.correo, this.comprador.contrasena)
-      this.compradorService.loginComprador(this.comprador).subscribe(
-        respuesta => {
-          console.log('Sesión Iniciada');
-          this.mensajeLogin();
-          this._router.navigate(["/homeComprador"]);
-        },
-        error => {
-          console.log('error');
-          this.mensajeError();
-          this._router.navigate(["/"]);
-        }
-      )
-    } else {
-      this._router.navigate(["homeVendedor"])
-    }
+    console.log(this.comprador.correo, this.comprador.contrasena)
+    this.compradorService.loginComprador(this.comprador).subscribe(
+      respuesta => {
+        console.log('Sesión Iniciada');
+        this.mensajeLogin();
+        this._router.navigate(["/homeComprador"]);
+      },
+      error => {
+        console.log('error');
+        this.mensajeError();
+        this._router.navigate(["/"]);
+      }
+    )
   }
   
   // Mensaje que se manda cuando se inicia sesión correctamente
@@ -70,7 +100,17 @@ export class IniciarSesionComponent implements OnInit{
       position: 'center',
       icon: 'error',
       title: 'Ocurrio un error en el servidor',
-      text: 'Por favor intente subir su producto de nuevo, sino intentarlo más tarde',
+      text: 'Por favor intente iniciar sesión de nuevo, sino intentarlo más tarde',
+      showConfirmButton: true,
+    })
+  }
+
+  mensajeAuth(){
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Correo o Contraseña invpalido',
+      text: 'Por favor intente iniciar sesión de nuevo, sino intentarlo más tarde',
       showConfirmButton: true,
     })
   }

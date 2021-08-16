@@ -20,6 +20,11 @@ export class productoService {
         return this.http.post<Producto>(this.useUrl + "/altaProducto", producto);
     }
 
+    // UPDATE
+    actualizarProducto(id: number, producto : Producto): Observable<Producto> {
+        return this.http.put<Producto>(this.useUrl + "/actualizar/"+id, producto);
+    }
+    
     obtenerProducto(nombre: string): Observable<Producto[]> {
         return this.http.get<Producto[]>(this.useUrl + "/producto/"+ nombre);
     }

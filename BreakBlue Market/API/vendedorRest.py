@@ -46,7 +46,7 @@ def añadir_vendedor():
         return jsonify('error al registrar al comprador')
     finally:
         if conn is not None and cursor is not None:
-            print("verificacion del if")
+            print('error correo duplicado en la tabla')
             cursor.close()
             conn.close()
 
@@ -95,9 +95,8 @@ def loginVendedor():
     except Exception as e:
         print(e)
     finally:
-        if cursor and conn:
-            cursor.close()
-            conn.close()
+        cursor.close()
+        conn.close()
 
 @app.errorhandler(404)
 def not_found(error=None):

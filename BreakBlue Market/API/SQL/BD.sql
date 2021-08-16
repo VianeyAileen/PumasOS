@@ -3,7 +3,6 @@ use `BreakBlueMarket`;
 
 DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto` (
-<<<<<<< HEAD
 		`id` int(11) NOT NULL auto_increment,
 		`nombre` varchar(50) NOT NULL,
 		`precio` float(10) NOT NULL,
@@ -18,22 +17,6 @@ CREATE TABLE `producto` (
 		FOREIGN KEY (`correo`) REFERENCES vendedor(`correo`),
 		UNIQUE(`id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-=======
-	`id` int(11) NOT NULL auto_increment,
-    `nombre` varchar(50) NOT NULL,
-    `precio` float(10) NOT NULL,
-    `marca` varchar(50) NOT NULL,
-    `descripcion` varchar(500) NOT NULL,
-    `unidadesDisponibles` int NOT NULL,
-    `correo` varchar(500) NOT NULL,
-    `imagen` varchar(500) NOT NULL,
-
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`correo`) REFERENCES comprador(`correo`),
-    FOREIGN KEY (`correo`) REFERENCES vendedor(`correo`),
-    UNIQUE(`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
->>>>>>> Jose
 
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (

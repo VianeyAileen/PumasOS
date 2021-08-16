@@ -17,16 +17,17 @@
     </head>
 
     <body class="bg-light">
-        <div class="container">
+        <div style="display: flex;">
             <main>
                 <div class="py-5 text-center">
                     <img class="d-block mx-auto mb-5" src="../../assets/img/icon.PNG" alt="" width="72" height="57">
                     <h2>INICIO DE SESIÓN</h2>
                 </div>
 
-                <div class="col-md-6 col-lg-8 position-relative bottom-20 start-50 translate-middle-x">
+                <div style="float: left;">
+                    <h3>Comprador</h3>
                     <!-- Inicia el formulario -->
-                    <form [formGroup]="loginForm" (submit)="loginComprador()" >
+                    <form [formGroup]="loginForm" (submit)="loginComprador()">
                         <div class="row g-3">
                             <!-- Pedimos el email -->
                             <div class="col-7 position-relative bottom-20 start-50 translate-middle-x form-group">
@@ -58,6 +59,45 @@
                             <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
                             <!-- aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" (click)="mensajeLogin()" -->
                             <button  class="w-40 btn btn-primary btn-lg" type="submit" [disabled]="loginForm.pristine || loginForm.invalid">Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="float: right;">
+                    <h3>Vendedor</h3>
+                    <!-- Inicia el formulario -->
+                    <form [formGroup]="loginFormV" (submit)="loginVendedor()">
+                        <div class="row g-3">
+                            <!-- Pedimos el email -->
+                            <div class="col-7 position-relative bottom-20 start-50 translate-middle-x form-group">
+                                <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+                                <input [(ngModel)]= 'vendedor.correo' type="email" class="form-control" formControlName="emailV" placeholder="correo@ejemplo.com">
+                                <!-- Si no se ingresa un email, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="loginFormV.controls['emailV'].invalid && (loginFormV.controls['emailV'].dirty || loginFormV.controls['emailV'].touched)">
+                                    <div *ngIf="loginFormV.controls['emailV'].errors?.required">
+                                        Por favor ingrese un email válido.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos la contraseña -->
+                            <div class="col-7 position-relative bottom-20 start-50 translate-middle-x form-group">
+                                <label for="password" class="form-label">Contraseña <span class="text-muted"></span></label>
+                                <input [(ngModel)]= 'vendedor.contrasena' type="password" class="form-control" formControlName="passwordV" placeholder="********">
+                                <!-- Si no se ingresa una contraseña, mandamos un mensaje de error -->
+                                <div class="alert alert-danger" *ngIf="loginFormV.controls['passwordV'].invalid && (loginFormV.controls['passwordV'].dirty || loginFormV.controls['passwordV'].touched)">
+                                    <div *ngIf="loginFormV.controls['passwordV'].errors?.required">
+                                        Ingrese una contraseña.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Botón aceptar -->
+                        <div class="text-center">
+                            <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
+                            <!-- aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" (click)="mensajeLogin()" -->
+                            <button  class="w-40 btn btn-primary btn-lg" type="submit" [disabled]="loginFormV.pristine || loginFormV.invalid">Aceptar</button>
                         </div>
                     </form>
                 </div>

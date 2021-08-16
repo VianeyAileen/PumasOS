@@ -45,7 +45,7 @@ def aniadir_comprador():
         return jsonify('error al registrar al comprador')
     finally:
         if conn is not None and cursor is not None:
-            print("verificacion del if")
+            print('error correo duplicado en la tabla')
             cursor.close()
             conn.close()
 
@@ -62,7 +62,7 @@ def cerrarsesion():
     return redirect('/')
 
 
-# Método para inicair sesión del comprador
+# Método para inicair sesión del vendedor
 @app.route('/login', methods=['GET','POST'])
 def loginComprador():
     conn = None
@@ -99,8 +99,9 @@ def loginComprador():
             return resp
     except Exception as e:
         print(e)
+        return jsonify('Errorrrr')
     finally:
-        if cursor and conn:
+        if conn is not None and cursor is not None:
             cursor.close()
             conn.close()
 

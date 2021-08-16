@@ -6,6 +6,7 @@ import { Vendedor } from '../_modelos/vendedorModelo';
 import { Comprador } from '../_modelos/compradorModelo';
 
 import{ compradorService } from '../_services/compradorService';
+import{ vendedorService } from '../_services/vendedorService';
 
 import Swal from 'sweetalert2'
 
@@ -19,11 +20,13 @@ export class RegistrarseComponent implements OnInit {
   //Datos solicitados para el registro
   @Input() comprador: Comprador = {correo: '', nombre: '', apellidos: '', contrasena: '',contrasena2: '', tipo: '', nombreUsuario: '', genero: '', edad: 0}
 
+  @Input() vendedor: Vendedor = {correo: '', nombre: '', apellidos: '', contrasena: '',contrasena2: '', tipo: '', nombreUsuario: '', genero: '', edad: 0}
+
   registroForm!: FormGroup;
 
   respuesta: any = [];
 
-  constructor(private fb: FormBuilder, private compradorService: compradorService, private _router: Router) {
+  constructor(private fb: FormBuilder, private compradorService: compradorService, private vendedorService: vendedorService, private _router: Router) {
     this.createForm();
    }
 
@@ -38,7 +41,7 @@ export class RegistrarseComponent implements OnInit {
       usuario: ['', Validators.required],
       email: ['', Validators.required],
       edad: ['', Validators.required],
-      contrasena: ['', Validators.required],
+      contrasena: ['', Validators.required, ],
       contrasena2: ['', Validators.required],
       tipo: ['', Validators.required],
       genero: ['', Validators.required]
@@ -46,13 +49,41 @@ export class RegistrarseComponent implements OnInit {
   }
 
   registraComprador(){
-    console.log(this.comprador)
-    this.compradorService.agregarComprador(this.comprador).subscribe(respuesta => {
-      console.log('comprador registrado');
-
-      this.mensajeUsuarioRegistrado();
-      this._router.navigate(["/login"]);
-    })
+    if(this.comprador.tipo === 'Comprador'){
+      console.log(this.comprador)
+      this.compradorService.agregarComprador(this.comprador).subscribe(respuesta => {
+        var str1 =new String(respuesta.toString());
+        console.log(str1);
+        console.log(respuesta);
+        if(str1 != 'error al registrar al comprador'){
+          console.log('1');
+          console.log('comprador registrado');
+          this.mensajeUsuarioRegistrado();
+          this._router.navigate(["/login"]);
+        }else{
+          console.log('0');
+          this.mensajeUsuarioCorreoRegistrado();
+          this._router.navigate(["/comprador"]);
+        }
+      })
+    }else{
+      console.log(this.vendedor)
+      this.vendedorService.agregarVendedor(this.vendedor).subscribe(respuesta => {
+        var str2 =new String(respuesta.toString());
+        console.log(str2);
+        console.log(respuesta);
+        if(str2 != 'error al registrar al vendedor'){
+          console.log('1');
+          console.log('vendedor registrado');
+          this.mensajeUsuarioRegistrado2();
+          this._router.navigate(["/login"]);
+        }else{
+          console.log('0');
+          this.mensajeUsuarioCorreoRegistrado();
+          this._router.navigate(["/comprador"]);
+        }
+      })
+    }
   }
 
   mensajeUsuarioRegistrado(){
@@ -61,7 +92,27 @@ export class RegistrarseComponent implements OnInit {
       icon: 'success',
       title: 'Comprador Registrado',
       showConfirmButton: false,
-      timer: 1500
+      timer: 2500
+    })
+  }
+
+  mensajeUsuarioRegistrado2(){
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Vendedor Registrado',
+      showConfirmButton: false,
+      timer: 2500
+    })
+  }
+
+  mensajeUsuarioCorreoRegistrado(){
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'El correo ingresado ya se encuentra registrado',
+      showConfirmButton: false,
+      timer: 2500
     })
   }
 
