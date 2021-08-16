@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { productoService } from '../_services/productoService';
+import { Producto } from '../_modelos/productoModelo';
+import { Imagen } from '../_modelos/imagenModelo';
+
 import Swal from 'sweetalert2'
 
 @Component({
@@ -10,9 +14,18 @@ import Swal from 'sweetalert2'
 })
 export class HomeCompradorComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  productos : Producto[] = [];
+  imagenes : Imagen[] = [];
+  nombre : String | any;
+
+  constructor(
+    private _router: Router,
+    private productoService : productoService) { }
 
   ngOnInit(): void {
+    this.productoService.obtenerProductos().subscribe( data => {
+      this.productos = data;
+    })
   }
 
   mensajeCerrar(){

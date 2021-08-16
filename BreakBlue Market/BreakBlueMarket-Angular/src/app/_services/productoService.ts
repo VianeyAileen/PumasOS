@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { Producto } from "../_modelos/productoModelo";
@@ -20,7 +20,21 @@ export class productoService {
         return this.http.post<Producto>(this.useUrl + "/altaProducto", producto);
     }
 
-    obtenerProducto(nombre: String): Observable<Producto> {
-        return this.http.get<Producto>(this.useUrl + "/producto/"+ nombre);
+    // UPDATE
+    actualizarProducto(id: number, producto : Producto): Observable<Producto> {
+        return this.http.put<Producto>(this.useUrl + "/actualizar/"+id, producto);
+    }
+    
+    obtenerProducto(nombre: string): Observable<Producto[]> {
+        return this.http.get<Producto[]>(this.useUrl + "/producto/"+ nombre);
+    }
+
+    obtenerProductos() :Observable<Producto[]>{
+        return this.http.get<Producto[]>(this.useUrl + "/producto");
+    }
+
+    // DELETE: elimina un producto dado un id
+    eliminaProducto(id: number) {        
+        return this.http.delete<any>(this.useUrl + "/eliminar/" + id);
     }
 }

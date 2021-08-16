@@ -20,21 +20,21 @@ CREATE TABLE `producto` (
 
 DROP TABLE IF EXISTS `imagen`;
 CREATE TABLE `imagen` (
-		`id` int(11) NOT NULL auto_increment,
-		`imagen` varchar(900) NOT NULL,
+	`id` int(11) NOT NULL auto_increment,
+	`imagen` varchar(900) NOT NULL,
 
-		PRIMARY KEY (`id`, `imagen`),
-		imagen_id int NULL REFERENCES producto(id) ON DELETE CASCADE
-		) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+	PRIMARY KEY (`id`, `imagen`),
+	imagen_id int NULL REFERENCES producto(id) ON DELETE CASCADE
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `comentario`;
 CREATE TABLE `comentario` (
-		`id` int(11) NOT NULL auto_increment,
-		`comentario` varchar(900) NOT NULL,
+	`id` int(11) NOT NULL auto_increment,
+	`comentario` varchar(900) NOT NULL,
 
-		PRIMARY KEY (`id`, `comentario`),
-		comentario_id int NULL REFERENCES producto(id) ON DELETE CASCADE
-		) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+	PRIMARY KEY (`id`, `comentario`),
+	comentario_id int NULL REFERENCES producto(id) ON DELETE CASCADE
+	) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 DROP TABLE IF EXISTS `calificacion`;
 CREATE TABLE `calificacion` (
@@ -81,14 +81,14 @@ CREATE TABLE `vendedor` (
 		SELECT * FROM comentario;
 		SELECT * FROM calificacion;
 
-		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`)
-		VALUES ('Celular', 11000.00, 'Iphone', 'Bonito celular nuevo 100% calidad (no es clon)', 10, 'misalvaje14@gmail.com');
-		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`)
-		VALUES ('Computadora', 10000.00, 'HP', 'Computadora HP nueva con SSD de 250 GB', 2, 'micorreito@gmail.com');
-		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`)
-		VALUES ('PlayStation5', 20000.00, 'Sony', 'Consola de playstation 5 nueva ultimo modelo', 5, 'misalvaje14@gmail.com');
-		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`)
-		VALUES ('Reloj', 500.00, 'Timex', 'Bonito reloj timex, muy preciso en los segundos', 20, 'elbuendicter@gmail.com');
+		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`, `imagen`)
+		VALUES ('Celular', 11000.00, 'Iphone', 'Bonito celular nuevo 100% calidad (no es clon)', 10, 'misalvaje14@gmail.com', '../../assets/img/play1.jpg');
+		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`, `imagen`)
+		VALUES ('Computadora', 10000.00, 'HP', 'Computadora HP nueva con SSD de 250 GB', 2, 'micorreito@gmail.com', '../../assets/img/play1.jpg');
+		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`, `imagen`)
+		VALUES ('PlayStation5', 20000.00, 'Sony', 'Consola de playstation 5 nueva ultimo modelo', 5, 'misalvaje14@gmail.com', '../../assets/img/play1.jpg');
+		INSERT INTO `producto` (`nombre`,`precio`,`marca`,`descripcion`,`unidadesDisponibles`, `correo`, `imagen`)
+		VALUES ('Reloj', 500.00, 'Timex', 'Bonito reloj timex, muy preciso en los segundos', 20, 'elbuendicter@gmail.com', '../../assets/img/play1.jpg');
 
 
 		INSERT INTO vendedor (`correo`, `nombre`, `apellidos`, `contrasena`,`nombreUsuario`, `genero`, `edad`)
@@ -144,3 +144,6 @@ CREATE TABLE `vendedor` (
 
 
 		SELECT * FROM vendedor WHERE (correo = "micorreito@gmail.com" AND contrasena = "Pepegrillo");
+        SELECT * FROM comprador;
+        SELECT * FROM vendedor;
+        SELECT * FROM opinion;

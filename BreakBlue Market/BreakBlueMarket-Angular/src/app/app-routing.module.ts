@@ -19,14 +19,16 @@ const routes: Routes = [
   { path: '', component: CoverComponent },
   { path: 'login', component: IniciarSesionComponent},
   { path: 'comprador', component: RegistrarseComponent},
+  { path: 'vendedor', component: RegistrarseComponent},
   { path: 'homeVendedor', component: HomeVendedorComponent},
   { path: 'altaProducto', component: AltaProductoComponent},
-  { path: 'informacionVendedor', component: ProductoVendedorComponent},
-  { path: 'editar', component: ActualizarComponent},
+  { path: 'informacionVendedor/:id/:nombre/:correo', component: ProductoVendedorComponent},
+  { path: 'actualizar/:id', component: ActualizarComponent},
   { path: 'homeComprador', component: HomeCompradorComponent},
-  { path: 'informacionComprador', component: ProductoCompradorComponent},
-  { path: 'opinion', component: OpinionComponent},
-  { path: 'datosPago', component: DatosPagoComponent},
+  { path: 'informacionComprador/:id/:nombre', component: ProductoCompradorComponent},
+  { path: 'opinion/:id', component: OpinionComponent},
+  { path: 'calificacion/:id', component: OpinionComponent},
+  { path: 'datosPago/:id', component: DatosPagoComponent},
 ];
 
 @NgModule({

@@ -3,4 +3,5 @@
 /BreakBlue Market/API/schemas/__pycache__
 /BreakBlue Market/.DS_Store
 /BreakBlue Market/venv
-*.DS_Store
+/BreakBlue Market/API/flask_session
+*.pyc
