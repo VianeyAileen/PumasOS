@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
+import { imagenService } from '../_services/imagenService';
 
 import Swal from 'sweetalert2'
 
@@ -19,13 +20,14 @@ export class AltaProductoComponent implements OnInit {
 
 
   agregarForm!: FormGroup;
-
+  idProduct : number| any;
   previsualizacion : string |any;
 
   
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,
+    private imagenService: imagenService,
     private _router: Router) {
       this.createForm();
    }
@@ -40,18 +42,26 @@ export class AltaProductoComponent implements OnInit {
       precioProducto: ['', Validators.required],
       unidadesProducto: ['', Validators.required],
       descripcionProducto: ['', Validators.required],
-      imagenProducto: ['', Validators.required]
+      imagenProducto: [this.previsualizacion]
     });
   }
 
 
   // Subimos los datos a la BD
   agregarProducto() {
-    console.log(this.producto)
+    let nombre = this.producto.nombre;
+    console.log(nombre)
     this.productoService.agregarProducto(this.producto).subscribe(
       // Si no hay errores mandamos un mensaje de exito
       respuesta => {
         console.log('Producto dado de alta');
+
+        this.productoService.obtenerProducto(nombre).subscribe(dato => {
+          console.log(dato);
+          this.imagenService.agregarImagenes(dato[0].id, this.previsualizacion).subscribe(dta => {
+            console.log(dta)
+          })
+        })
         // Mandamos el mensaje de que el producto fue dado de alta
         this.mensajeAltaProducto();
         // Rederigimos al vendedor a la página donde estan todos sus productos
@@ -67,6 +77,7 @@ export class AltaProductoComponent implements OnInit {
 
       }
     )
+    
   }
 
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa

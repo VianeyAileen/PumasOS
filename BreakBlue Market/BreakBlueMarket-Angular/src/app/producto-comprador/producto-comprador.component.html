@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Producto Vendedor</title>
+        <title>Producto Comprador</title>
         <link rel="icon" href="../../assets/img/icon.PNG" type="image/x-icon">
 
         <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
@@ -72,8 +72,8 @@
                 <ngb-carousel>
                   <ng-template  ngbSlide>
                     <div>
-                      <!-- <img width="50%" height="50%" src="imagen"> -->
-                      <img *ngIf="imagen" [src]="imagen | async" class="rounded mb-3" width="100">
+                      <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                      <!-- <img *ngIf="imagen" [src]="imagen | async" class="rounded mb-3" width="100"> -->
                     </div>
                   </ng-template>
                   <!-- <ng-template ngbSlide>
@@ -123,7 +123,7 @@
                 </div>
                 <p></p>                
                 <div class="col-9">
-                    <a aria-current="page" routerLink="/opinion" routerLinkActive="active">
+                    <a aria-current="page" [routerLink]="['/opinion',producto.id]" routerLinkActive="active">
                         <p></p>
                         <button class="w-40 btn btn-primary btn-lg" type="submit">Dar Opinión</button>
                     </a>
