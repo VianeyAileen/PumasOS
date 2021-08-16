@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
-<<<<<<< HEAD
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-=======
-import { Observable } from "rxjs";
->>>>>>> Jose
 
 import { Producto } from "../_modelos/productoModelo";
 
@@ -32,13 +28,8 @@ export class productoService {
         return this.http.get<Producto[]>(this.useUrl + "/producto");
     }
 
-    // DELETE: elimina un producto
-    eliminaProducto(producto : Producto | number) {
-        if(confirm("estas seguro de borrralo?")) {
-            const id = typeof producto === 'number' ? producto : producto.id;
-            const url = `${this.useUrl}/delete/${id}`;
-            return this.http.delete(url);
-        }
-        return of({});
+    // DELETE: elimina un producto dado un id
+    eliminaProducto(id: number) {        
+        return this.http.delete<any>(this.useUrl + "/eliminar/" + id);
     }
 }

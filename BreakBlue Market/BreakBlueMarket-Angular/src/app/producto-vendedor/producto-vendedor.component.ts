@@ -35,11 +35,14 @@ export class ProductoVendedorComponent implements OnInit {
   // Objeto imagen que contiene las imagenes del producto
   imagenes : Imagen[] = [];
   // Objeto vendedor para saber quien es el que vende el producto
-  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "",nombreUsuario: ""};
+  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "",nombreUsuario: "", genero: "", edad: 0};
 
   comentarios : Comentario[] = [];
 
   calificaciones : Calificacion[] = [];
+
+  respuesta: any = [];
+  error: any = [];
 
   constructor(
     private _router: Router,
@@ -82,7 +85,25 @@ export class ProductoVendedorComponent implements OnInit {
     })
   }
 
+  //Borramos un producto dado su id
+  eliminaProducto(id: number) {
+    this.productoService.eliminaProducto(id).subscribe(
+      //Mandamos una alerta para confirmas los cambios
+      respuesta => {
+        console.log(respuesta);
+        this.mensajeBorrar();
+      },
+      //Si falla la conexión o hay un error, mandamos un mensaje
+      error => {
+        console.log('error');
+        this.mensajeError();
+        this._router.navigate(["/informacionVendedor"]);
+      }
+    )
+  }
 
+
+  // Alerta que nos saldrá para confirmar la eliminación del producto
   mensajeBorrar(){
     Swal.fire({
       title: '¿Esás seguro/a?',
@@ -94,7 +115,7 @@ export class ProductoVendedorComponent implements OnInit {
       confirmButtonText: 'Borrar'
     }).then((result) => {
       if (result.isConfirmed) {
-         this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(["/homeVendedor"]);
         Swal.fire(
           '¡Producto borrado!',
           'Acción realizada con éxito',
@@ -103,6 +124,17 @@ export class ProductoVendedorComponent implements OnInit {
       } else if (result.dismiss == Swal.DismissReason.cancel){
         this._router.navigate(["/informacionVendedor"])
       } 
+    })
+  }
+
+  // Mensaje que se manda cuando ocurre un error al conectarse con el servidor
+  mensajeError(){
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Ocurrio un error en el servidor',
+      text: 'Por favor intente subir su producto de nuevo, sino intentarlo más tarde',
+      showConfirmButton: true,
     })
   }
 
