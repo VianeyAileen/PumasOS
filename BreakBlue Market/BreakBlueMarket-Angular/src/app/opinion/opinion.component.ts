@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Calificacion } from '../_modelos/calificacionModelo';
+import { calificacionService } from '../_services/calificacionService';
+
 
 import Swal from 'sweetalert2'
+import { Comentario } from '../_modelos/comentarioModelo';
+import { comentarioService } from '../_services/comentarioService';
 
 @Component({
   selector: 'app-opinion',
@@ -9,9 +16,20 @@ import Swal from 'sweetalert2'
   styleUrls: ['./opinion.component.css']
 })
 export class OpinionComponent implements OnInit {
+  id: number | any = 0 ;  
+
+  @Input() calificacion: Calificacion = {id: 0, calificacion: ''}
+  @Input() comentario: Comentario = {id: 0, comentario: ''}
 
   opinionForm!: FormGroup;
-  constructor(private fb: FormBuilder) {
+  respuesta: any = [];
+  error: any = [];
+
+
+  constructor(private fb: FormBuilder, private _router: Router, 
+              private calificacionService: calificacionService, 
+              private comentarioService: comentarioService) {
+    
     this.createForm();
    }
 
@@ -25,13 +43,78 @@ export class OpinionComponent implements OnInit {
     });
   }
 
+
+  agregarCalificaion() {
+    console.log(this.calificacion)
+    this.calificacionService.agregarCalificacion(this.id, this.calificacion).subscribe(
+      // Si no hay errores mandamos un mensaje de exito
+      respuesta => {
+        this.mensajeOpinion();
+
+        // Rederigimos al vendedor a la página donde estan todos sus productos
+        this._router.navigate(["/homeComprador"]);
+      },
+      // En caso contrario Mandamos un error
+      error => {
+        console.log('error');
+        //Se manda el mensaje de error
+        this.mensajeError();
+        // Rederigimos al vendedor a la misma página
+        this._router.navigate(["/homeComprador"]);
+
+      }
+    )
+  }
+
+
+  agregarComentario() {
+    console.log(this.calificacionService)
+    this.comentarioService.agregarComentario(this.id, this.comentario).subscribe(
+      // Si no hay errores mandamos un mensaje de exito
+      respuesta => {
+        this.mensajeOpinion();
+
+        // Rederigimos al vendedor a la página donde estan todos sus productos
+        this._router.navigate(["/homeComprador"]);
+      },
+      // En caso contrario Mandamos un error
+      error => {
+        console.log('error');
+        //Se manda el mensaje de error
+        this.mensajeError();
+        // Rederigimos al vendedor a la misma página
+        this._router.navigate(["/homeComprador"]);
+
+      }
+    )
+  }
+
+  enviar  (){
+    this.agregarComentario(),
+    this.agregarCalificaion()
+  }
+
+
+// Mensaje que se manda cuando ocurre un error al conectarse con el servidor
+mensajeError(){
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: 'Ocurrio un error en el servidor',
+    text: 'Por favor intente enviar su opinión de nuevo, sino intentarlo más tarde',
+    showConfirmButton: true,
+  })
+}
+
   mensajeOpinion(){
+    console.log(this.opinionForm)
     Swal.fire({
       position: 'center',
       icon: 'success',
       title: 'Opinión Enviada',
       showConfirmButton: false,
       timer: 1500
+      
     })
   }
 }

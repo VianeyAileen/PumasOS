@@ -24,4 +24,7 @@ export class calificacionService {
     obtenerCalificaciones(id:number) : Observable<Calificacion[]>{
         return this.http.get<Calificacion[]>(this.useUrl + "/calificacion/" + id)
     }
+
+
+    
 }
