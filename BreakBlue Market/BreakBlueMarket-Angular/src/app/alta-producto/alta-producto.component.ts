@@ -23,7 +23,6 @@ export class AltaProductoComponent implements OnInit {
   idProduct : number| any;
   previsualizacion : string |any;
 
-  
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,

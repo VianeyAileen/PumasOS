@@ -48,8 +48,8 @@
 
                     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                         <!-- Botón Enviar Opinión -->
-                        <button aria-current="page" routerLink="/informacionComprador" routerLinkActive="active" type="button" class="w-100 btn btn-lg btn-outline-primary" (click)="mensajeOpinion()" [disabled]="opinionForm.pristine || opinionForm.invalid">Enviar Opinión</button>
-                        
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary" (click)="mensajeOpinion()" [disabled]="opinionForm.pristine || opinionForm.invalid">Enviar Opinión</button>
+
                     </nav>
                 </div>
 
@@ -59,7 +59,7 @@
             </header>
 
             <!-- Inicia el formulario -->
-            <form [formGroup]="opinionForm" novalidate>
+            <form [formGroup]="opinionForm" (submit) ="enviar()">
                 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                     <div class="col">
                         <div class="card mb-4 rounded-3 shadow-sm" style=width:1000px;>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- Pedimos la calificación -->
                 <div class="form-group">
                     <p> Ingresa una calificación (Rango entre 0.0 y 5.0)</p>

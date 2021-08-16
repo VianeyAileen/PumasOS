@@ -31,26 +31,25 @@
     </head>
 
     <body>
-<tr *ngFor="let producto of productos">
-    <div *ngIf="producto.id == id">
-        <header>
-            <div class="navbar navbar-dark bg-dark shadow-sm">
-                <div class="container">
-                    <a aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" class="navbar-brand d-flex align-items-center">
-                        <strong>BreakBlueMarket</strong>
-                    </a>
+        <tr *ngFor="let producto of productos">
+            <div *ngIf="producto.id == id">
+                <header>
+                    <div class="navbar navbar-dark bg-dark shadow-sm">
+                        <div class="container">
+                            <a aria-current="page" routerLink="/homeVendedor" routerLinkActive="active" class="navbar-brand d-flex align-items-center">
+                                <strong>BreakBlueMarket</strong>
+                            </a>
 
-                    <form class="d-flex">
-                        <a type="button" aria-current="page" [routerLink]="['/actualizar',producto.id]" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="mensajeBorrar()">Borrar</button>
-                        <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
-                    </form>
-                </div>
-            </div>
-        </header>
+                            <form class="d-flex">
+                                <a type="button" aria-current="page" routerLink="/editar" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="eliminaProducto(producto.id)">Borrar</button>
+                                <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
+                            </form>
+                        </div>
+                    </div>
+                </header>
 
-        <main>
-      
+                <main>
                     <section class="py-5 text-center container ">
                         <div class="row py-lg-5" >
                             <div class="col-lg-6 col-md-8 mx-auto">
@@ -62,29 +61,30 @@
                             </div>
                         </div>
                     </section>
-        
+            
                     <div style="text-align: center;">
                         <div class="album py-5 bg-light" >
-                          <ngb-carousel>
-                            <ng-template  ngbSlide>
-                              <div>
-                                <!-- <img width="50%" height="50%" src="../../assets/img/icon.PNG"> -->
-                                <img *ngIf="imagen" [src]="imagen | async" class="rounded mb-3" width="100">
-                              </div>
-                            </ng-template>
-                            <!-- <ng-template ngbSlide>
-                              <div>
-                                <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
-                              </div>
-                            </ng-template>
-                            <ng-template ngbSlide>
-                              <div>
-                                <img width="50%" height="50%" src="../../assets/img/icon.PNG">
-                              </div>
-                            </ng-template> -->
-                          </ngb-carousel>
+                            <ngb-carousel>
+                                <ng-template  ngbSlide>
+                                    <div>
+                                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                                    </div>
+                                </ng-template>
+                                    
+                                <ng-template ngbSlide>
+                                    <div>
+                                    <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
+                                    </div>
+                                </ng-template>
+                                
+                                <ng-template ngbSlide>
+                                    <div>
+                                    <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
                         </div>
-        
+            
                         <div class="col-9">
                             <label for="description" class="form-label">
                                 <h3 >Descripción del Producto</h3>
@@ -119,10 +119,9 @@
                             </div>
                         </div>
                     </div>
-          
-        </main>
-    </div>
-</tr>
+                </main>
+            </div>
+        </tr>
 
         <footer class="text-muted py-5 text-center">
             <p>&copy; BreakBlue Market</p>

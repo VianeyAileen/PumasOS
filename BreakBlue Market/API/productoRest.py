@@ -43,7 +43,7 @@ def obtener_producto(nombre):
         cursor.close()
         conn.close()
 
-#Metodo para comprar un producto 
+#Metodo para comprar un producto
 @app.route("/comprar/<int:id>", methods=['PUT'])
 def comprar_producto(id):
     conn = None
@@ -79,7 +79,7 @@ def actualizar_producto(id):
 
         if nombre and precio and descripcion and unidadesDisponibles and imagen and request.method == 'PUT':
             #save edits
-            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s, imagen = %s WHERE id = %s"  
+            sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s, imagen = %s WHERE id = %s"
             data = (nombre, precio, descripcion, unidadesDisponibles, imagen, id)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -170,7 +170,7 @@ def subir_calificacion(id):
     try:
         _json = request.json
         calificacion = _json['calificacion']
-        
+
         if calificacion and request.method == 'POST':
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -234,13 +234,14 @@ def agregar_producto():
             resp.status_code = 200
             return resp
     except Exception as e:
-        print(e) 
+        print(e)
+        return jsonify('error al añadir el producto')
     finally:
         cursor.close()
         conn.close()
 
 #Metodo para agregar una imagen
-@app.route('/imagen/<int:id>', methods=['POST'])        
+@app.route('/imagen/<int:id>', methods=['POST'])
 def agregar_imagen(id):
     conn = None
     cursor = None
@@ -249,7 +250,7 @@ def agregar_imagen(id):
         _json = request.json
         imagen = _json['imagen']
         print("id => "+ id)
-        
+
         if imagen and request.method == 'POST':
             sql = "INSERT INTO imagen (id, imagen) VALUES (%s, %s)"
             data = (id, imagen)
@@ -259,7 +260,7 @@ def agregar_imagen(id):
             conn.commit()
             resp = jsonify('Imagen agregada')
             resp.status_code = 200
-            return resp  
+            return resp
     except Exception as e:
         print(e)
     finally:
@@ -300,7 +301,7 @@ def actualizar_imagen(id):
         conn.commit()
         resp = jsonify('Imagen actualizada')
         resp.status_code = 200
-        return resp  
+        return resp
     except Exception as e:
         print(e)
     finally:
@@ -315,4 +316,4 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
-    return resp 
+    return resp

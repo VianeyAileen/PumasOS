@@ -1,9 +1,12 @@
 import { Component,OnInit, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { Comprador } from '../_modelos/compradorModelo';
 import { Vendedor } from '../_modelos/vendedorModelo';
+
+import { compradorService } from '../_services/compradorService';
 import { vendedorService } from '../_services/vendedorService';
 
 import Swal from 'sweetalert2'
@@ -15,11 +18,26 @@ import Swal from 'sweetalert2'
 })
 export class IniciarSesionComponent implements OnInit{
   
-  loginForm!: FormGroup;
+  @Input() comprador: Comprador = {correo: '', nombre: 'x' , apellidos: 'x', contrasena: '',contrasena2: 'x', tipo: 'Comprador', nombreUsuario: 'x', genero: 'x', edad: 0}
+
+  @Input() vendedor: Vendedor = {correo: '', nombre: 'x' , apellidos: 'x', contrasena: '',contrasena2: 'x', tipo: 'Vendedor', nombreUsuario: 'x', genero: 'x', edad: 0}
+
+  respuesta: any = [];
+  error: any = [];
   
-  constructor(private fb: FormBuilder) {
-    this.createForm();
-   }
+  loginForm!: FormGroup;
+
+  loginFormV!: FormGroup;
+  
+  constructor(
+    private fb: FormBuilder,
+    private lfv: FormBuilder,
+    private compradorService: compradorService,
+    private vendedorService: vendedorService,
+    private _router: Router ) {
+      this.createForm();
+      this.createFormV();
+    }
 
   ngOnInit(): void{ } 
 
@@ -29,10 +47,71 @@ export class IniciarSesionComponent implements OnInit{
       password: ['', Validators.required]
     });
   }
+
+  createFormV() {
+    this.loginFormV = this.lfv.group({
+      emailV: ['', Validators.required ],
+      passwordV: ['', Validators.required]
+    });
+  }
+
+  //Iniciamos Sesión de Vendedor
+  loginVendedor() {
+    console.log(this.vendedor.correo, this.vendedor.contrasena, this.vendedor.tipo)
+    this.vendedorService.loginVendedor(this.vendedor).subscribe(
+      respuesta => {
+        console.log('Sesión Iniciada');
+        this.mensajeLogin();
+        this._router.navigate(["/homeVendedor"]);
+      },
+      error => {
+        console.log('error');
+        this.mensajeError();
+        this._router.navigate(["/"]);
+      }
+    )
+  }
+
+  //Iniciamos Sesión del Ccomprador
+  loginComprador() {
+    console.log(this.comprador.correo, this.comprador.contrasena)
+    this.compradorService.loginComprador(this.comprador).subscribe(
+      respuesta => {
+        console.log('Sesión Iniciada');
+        this.mensajeLogin();
+        this._router.navigate(["/homeComprador"]);
+      },
+      error => {
+        console.log('error');
+        this.mensajeError();
+        this._router.navigate(["/"]);
+      }
+    )
+  }
   
+  // Mensaje que se manda cuando se inicia sesión correctamente
   mensajeLogin(){
     Swal.fire('Bienvenido/a a BreakBlueMarket :D')
   }
-
   
+  // Mensaje que se manda cuando ocurre un error al conectarse con el servidor
+  mensajeError(){
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Ocurrio un error en el servidor',
+      text: 'Por favor intente iniciar sesión de nuevo, sino intentarlo más tarde',
+      showConfirmButton: true,
+    })
+  }
+
+  mensajeAuth(){
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Correo o Contraseña invpalido',
+      text: 'Por favor intente iniciar sesión de nuevo, sino intentarlo más tarde',
+      showConfirmButton: true,
+    })
+  }
 }

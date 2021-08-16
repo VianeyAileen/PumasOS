@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
 
 import { Producto } from "../_modelos/productoModelo";
 
@@ -37,5 +38,10 @@ export class productoService {
         console.log(id);
         console.log(response)
         return response;
+    }
+    
+    // DELETE: elimina un producto dado un id
+    eliminaProducto(id: number) {        
+        return this.http.delete<any>(this.useUrl + "/eliminar/" + id);
     }
 }
