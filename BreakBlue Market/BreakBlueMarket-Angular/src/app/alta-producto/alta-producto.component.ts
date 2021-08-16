@@ -28,11 +28,6 @@ export class AltaProductoComponent implements OnInit {
   error: any = [];
 
 
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> Develop
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,

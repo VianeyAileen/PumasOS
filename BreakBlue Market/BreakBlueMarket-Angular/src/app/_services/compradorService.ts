@@ -17,4 +17,9 @@ export class compradorService {
     agregarComprador(comprador: Comprador): Observable<Comprador>{
       return this.http.post<Comprador>(this.baseUrl + "/comprador", comprador);
     }
+
+    //LoginVendedor
+    loginComprador(correo: string): Observable<Comprador> {
+      return this.http.post<Comprador>(this.baseUrl + "/login", correo);
+  }
 }
