@@ -33,6 +33,33 @@ def añadir_vendedor():
             return not_found()
     except Exception as e:
         print(e)
+        return jsonify( 'este correo ya se encuentra registrado')
+    finally:
+        if conn is not None and cursor is not None:
+            cursor.close()
+            conn.close()
+
+#def mail(correo):
+def mail():
+    msg = Message('BreakBlue Market', sender = 'dicteraulad@gmail.com', recipients = ['dicteraulad@ciencias.unam.mx'])
+    msg.body = "Haz sido registrado con exito en BreakBlue Market"
+    email.send(msg)
+
+# Método para obtener a un vendedor
+@app.route('/vendedor/<string:correo>', methods=["GET"])
+def obtener_vendedor(correo):
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM vendedor WHERE correo = %s",correo)
+        row = cursor.fetchone()
+        resp = jsonify(row)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
     finally:
         cursor.close()
         conn.close()

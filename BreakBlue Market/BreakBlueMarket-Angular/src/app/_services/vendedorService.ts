@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
+<<<<<<< HEAD
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
+=======
+import { HttpClient } from '@angular/common/http';
+
+import { Observable} from 'rxjs';
+>>>>>>> Jose
 
 import { Vendedor } from '../_modelos/vendedorModelo';
 
@@ -12,10 +18,15 @@ export class vendedorService {
 
     constructor(private http: HttpClient) { }
 
+<<<<<<< HEAD
     headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     //LoginVendedor
     loginVendedor(correo: string): Observable<any> {
         return this.http.post<Vendedor>(this.userUrl + "/login", correo);
+=======
+    obtenerVendedor(correo: String): Observable<Vendedor> {
+        return this.http.get<Vendedor>(this.userUrl+"/vendedor/"+ correo);
+>>>>>>> Jose
     }
 }
