@@ -4,3 +4,4 @@
 /BreakBlue Market/.DS_Store
 /BreakBlue Market/venv
 *.DS_Store
+*.pyc
