@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'homeComprador', component: HomeCompradorComponent},
   { path: 'informacionComprador/:id/:nombre', component: ProductoCompradorComponent},
   { path: 'opinion/:id', component: OpinionComponent},
+  { path: 'calificacion/:id', component: OpinionComponent},
   { path: 'datosPago/:id', component: DatosPagoComponent},
 ];
 
