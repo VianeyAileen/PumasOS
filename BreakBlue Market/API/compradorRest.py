@@ -4,7 +4,7 @@ from db import mysql
 from mail import email
 from flask import jsonify, session
 from flask import flash, request
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash,  check_password_hash
 from flask_mail import Message
 from flask_login import logout_user
 
@@ -25,7 +25,7 @@ def aniadir_comprador():
 
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        duplicado = cursor.execute("SELECT * FROM comprador WHERE correo = %s", correo)
+        duplicado = cursor.execute("SELECT * FROM vendedor WHERE correo = %s", correo)
         if duplicado != 0:
             return jsonify('correo ya registrado')
         if correo and nombre and apellidos and contrasena and nombreUsuario and genero and edad and request.method == 'POST':
@@ -35,7 +35,7 @@ def aniadir_comprador():
             cursor.execute(sql, data)
             conn.commit()
             resp = jsonify('Usuario comprador añadido correctamente')
-            mail()
+            mail(correo)
             resp.status_code = 200
             return resp
         else:
@@ -50,16 +50,37 @@ def aniadir_comprador():
             conn.close()
 
 #funcion que crea un mensaje y manda un email al usuario registrado.
-def mail():
-    msg = Message('BreakBlue Market', sender = 'dicter05@gmail.com', recipients = ['dicteraulad@ciencias.unam.mx'])
+def mail(correo):
+    msg = Message('BreakBlue Market', sender = 'dicter05@gmail.com', recipients = [correo])
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
 #funcion que nos ayuda a cerrar la sesion del comprador.
 @app.route("/cerrarsesion")
 def cerrarsesion():
-    logout_user()
-    return redirect('/')
+    if 'correo' in session:
+            session.pop('correo', None)
+    return jsonify('haz salido de la sesion correctamente')
+
+#Método para obtener a un comprador a través del email
+@app.route('/comprador/<string:correo>', methods=["GET"])
+def obtener_comprador(correo):
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM comprador WHERE correo = %s", correo)
+        row = cursor.fetchone()
+        resp = jsonify(row)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+        # Holiiiii
 
 
 # Método para inicair sesión del comprador
