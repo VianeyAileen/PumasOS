@@ -15,7 +15,7 @@ import Swal from 'sweetalert2'
 })
 export class IniciarSesionComponent implements OnInit{
   
-  @Input() comprador: Comprador = {correo: '', nombre: 'x' , apellidos: 'x', contrasena: '',contrasena2: 'x', tipo: 'x', nombreUsuario: 'x', genero: 'x', edad: 0}
+  @Input() comprador: Comprador = {correo: '', nombre: 'x' , apellidos: 'x', contrasena: '',contrasena2: 'x', tipo: 'Comprador', nombreUsuario: 'x', genero: 'x', edad: 0}
 
   respuesta: any = [];
   error: any = [];
@@ -40,19 +40,23 @@ export class IniciarSesionComponent implements OnInit{
 
   //Iniciamos Sesión
   loginComprador() {
-    console.log(this.comprador.correo, this.comprador.contrasena)
-    this.compradorService.loginComprador(this.comprador.correo && this.comprador.contrasena).subscribe(
-      respuesta => {
-        console.log('Sesión Iniciada');
-        this.mensajeLogin();
-        this._router.navigate(["/homeVendedor"]);
-      },
-      error => {
-        console.log('error');
-        this.mensajeError();
-        this._router.navigate(["/"]);
-      }
-    )
+    if (this.comprador.tipo === 'Comprador') {
+      console.log(this.comprador.correo, this.comprador.contrasena)
+      this.compradorService.loginComprador(this.comprador).subscribe(
+        respuesta => {
+          console.log('Sesión Iniciada');
+          this.mensajeLogin();
+          this._router.navigate(["/homeComprador"]);
+        },
+        error => {
+          console.log('error');
+          this.mensajeError();
+          this._router.navigate(["/"]);
+        }
+      )
+    } else {
+      this._router.navigate(["homeVendedor"])
+    }
   }
   
   // Mensaje que se manda cuando se inicia sesión correctamente

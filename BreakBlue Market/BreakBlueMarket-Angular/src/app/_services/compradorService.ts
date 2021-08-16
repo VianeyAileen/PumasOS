@@ -18,8 +18,8 @@ export class compradorService {
       return this.http.post<Comprador>(this.baseUrl + "/comprador", comprador);
     }
 
-    //LoginVendedor
-    loginComprador(correo: string): Observable<Comprador> {
-      return this.http.post<Comprador>(this.baseUrl + "/login", correo);
+    //Login Comprador
+    loginComprador(comprador: Comprador): Observable<Comprador> {
+      return this.http.post<Comprador>(this.baseUrl + "/login", comprador);
   }
 }

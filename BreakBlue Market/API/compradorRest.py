@@ -2,7 +2,7 @@ import pymysql
 from app import app
 from db import mysql
 from mail import email
-from flask import jsonify
+from flask import jsonify, session
 from flask import flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message
@@ -62,30 +62,45 @@ def cerrarsesion():
     return redirect('/')
 
 
-# Método para inicair sesión del vendedor
-@app.route('/login', methods=['POST'])
+# Método para inicair sesión del comprador
+@app.route('/login', methods=['GET','POST'])
 def loginComprador():
     conn = None
     cursor = None
+
     try:
         _json = request.json
         correo = _json['correo']
         contrasena = _json['contrasena']
 
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        # validamos los parámteros recividos
+        if correo and contrasena:
+            #verificamos al usuario
+            conn = mysql.connect()
+            cursor = conn.cursor()
 
-        usuario = cursor.execute("SELECT correo, contrasena FROM comprador WHERE correo = %s", correo)
+            sql = "SELECT * FROM comprador WHERE correo=%s"
+            sql_where = (correo)
 
-        if usuario is not None or check_password_hash(usuario.contrasena, request.json['contrasena']) is not None :
-            return jsonify('Falso')
+            cursor.execute(sql, sql_where)
+            row = cursor.fetchone()
+
+            if row:
+                if check_password_hash(row[3], contrasena):
+                    session['correo'] = row[1]
+                    return jsonify({'message': 'Inicio de sesión exitosó'})
+                else:
+                    resp = jsonify({'messsage': 'Bad Request - contraseña inválida'})
+                    resp.status_code = 400
+                    return resp
         else:
-            return jsonify('Sesión')
+            resp = jsonify({'message': 'Bad Request - credenciales inválidas'})
+            resp.status_code = 400
+            return resp
     except Exception as e:
         print(e)
-        return not_found()
     finally:
-        if conn is not None and cursor is not None:
+        if cursor and conn:
             cursor.close()
             conn.close()
 

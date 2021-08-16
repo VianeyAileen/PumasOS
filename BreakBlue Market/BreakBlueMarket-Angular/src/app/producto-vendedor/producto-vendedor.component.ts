@@ -35,7 +35,7 @@ export class ProductoVendedorComponent implements OnInit {
   // Objeto imagen que contiene las imagenes del producto
   imagenes : Imagen[] = [];
   // Objeto vendedor para saber quien es el que vende el producto
-  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "",nombreUsuario: "", genero: "", edad: 0};
+  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", genero: "", tipo:"", edad: 0};
 
   comentarios : Comentario[] = [];
 

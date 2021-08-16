@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 
 import { Vendedor } from '../_modelos/vendedorModelo';
+
 
 @Injectable({ providedIn: 'root' })
 export class vendedorService {
@@ -18,8 +19,8 @@ export class vendedorService {
         return this.http.get<Vendedor>(this.userUrl+"/vendedor/"+ correo);
     }
 
-    //LoginVendedor
-    loginVendedor(correo: string): Observable<any> {
-        return this.http.post<Vendedor>(this.userUrl + "/login", correo);
+    //Login Vendedor
+    loginVendedor(vendedor: Vendedor): Observable<Vendedor> {
+        return this.http.post<Vendedor>(this.userUrl + "/login", vendedor);
     }
 }
