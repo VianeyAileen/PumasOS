@@ -62,8 +62,8 @@ def cerrarsesion():
     return redirect('/')
 
 
-# Método para inicair sesión del vendedor
-@app.route('/login', methods=['GET','POST'])
+# Método para inicair sesión del comprador
+@app.route('/login', methods=['POST'])
 def loginComprador():
     conn = None
     cursor = None
@@ -100,9 +100,9 @@ def loginComprador():
     except Exception as e:
         print(e)
     finally:
-        cursor.close()
-        conn.close() 
-        # Holiiiii
+        if cursor and conn:
+            cursor.close()
+            conn.close() 
 
 
 @app.errorhandler(404)
