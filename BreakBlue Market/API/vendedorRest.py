@@ -54,14 +54,14 @@ def mail():
     email.send(msg)
 
 # Método para obtener a un vendedor
-@app.route('/login/<string:correo>', methods=["GET"])
+@app.route('/vendedor/<string:correo>', methods=["GET"])
 def obtener_vendedor(correo):
     conn = None
     cursor = None
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM vendedor WHERE correo = %s")
+        cursor.execute("SELECT * FROM vendedor WHERE correo = %s",correo)
         row = cursor.fetchone()
         resp = jsonify(row)
         resp.status_code = 200

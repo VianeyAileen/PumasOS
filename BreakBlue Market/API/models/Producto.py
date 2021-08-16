@@ -26,5 +26,9 @@ def serialize(self):
         'unidadesDisponibles': self.unidadesDisponibles,
         'comentario': self.comentario,
         'correo': self.correo,
+<<<<<<< HEAD
         'imagen':self.imagen
+=======
+        'imagen': self.imagen
+>>>>>>> Jose
     }
