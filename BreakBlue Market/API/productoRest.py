@@ -49,9 +49,10 @@ def comprar_producto(id):
     conn = None
     cursor = None
     try:
+        print(id)
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("UPDATE producto SET unidadesDisponibles = unidadesDisponibles - 1 WHERE id = %s", id )
+        cursor.execute("UPDATE producto SET unidadesDisponibles = (unidadesDisponibles - 1) WHERE id = %s", id )
         row = cursor.fetchone()
         conn.commit()
         resp = jsonify("El producto fue comprado exitosamente")

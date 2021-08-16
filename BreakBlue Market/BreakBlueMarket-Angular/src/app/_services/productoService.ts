@@ -31,4 +31,11 @@ export class productoService {
     obtenerProductos() :Observable<Producto[]>{
         return this.http.get<Producto[]>(this.useUrl + "/producto");
     }
+
+    comprarProducto(id: number, producto :Producto): Observable<Producto> {
+        let response = this.http.put<Producto>(this.useUrl + "/comprar/"+ id, producto);
+        console.log(id);
+        console.log(response)
+        return response;
+    }
 }
