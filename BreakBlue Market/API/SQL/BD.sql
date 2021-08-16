@@ -66,6 +66,8 @@ CREATE TABLE `vendedor` (
     `apellidos` varchar(50) NOT NULL,
     `contrasena` varchar(255) NOT NULL,
     `nombreUsuario` varchar(20) NOT NULL,
+    `genero` varchar(20) NOT NULL,
+	`edad` int(3) NOT NULL,
 
     PRIMARY KEY (`correo`),
     UNIQUE(`correo`)

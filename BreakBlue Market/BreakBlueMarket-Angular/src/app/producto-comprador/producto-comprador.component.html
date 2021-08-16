@@ -31,7 +31,9 @@
     </head>
 
     <body>
-        <header>
+      <tr *ngFor="let producto of productos">
+        <div *ngIf="producto.id == id">
+          <header>
             <div class="navbar navbar-dark bg-dark shadow-sm">
                 <div class="container">
                     <a aria-current="page" routerLink="/homeComprador" routerLinkActive="active" class="navbar-brand d-flex align-items-center">
@@ -46,61 +48,83 @@
         </header>
 
         <main>
-            <section class="py-5 text-center container">
-                <div class="row py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Nombre del Producto</h1>
-                        <p class="lead text-muted">Nombre del Vendedor/Compañia</p>
-                        <h2>$ precio del producto</h2>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <a aria-current="page" routerLink="/datosPago" routerLinkActive="active">
-                      <button class="w-40 btn btn-primary btn-lg" type="submit">Comprar</button>
-                    </a>
-                    
-                </div>
-            </section>
-
-            <div style="text-align: center;">
-                <div class="album py-5 bg-light">
-                  <ngb-carousel>
-                    <ng-template  ngbSlide>
-                      <div>
-                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+          <section class="py-5 text-center container">
+              <div class="row py-lg-5">
+                  <div class="col-lg-6 col-md-8 mx-auto">
+                      <h1 class="fw-light">{{producto.nombre}}</h1>
+                      <div *ngIf="comprador.correo == producto.correo">
+                        <p class="lead text-muted">{{comprador.nombreUsuario}}</p>
                       </div>
-                    </ng-template>
-                    <ng-template ngbSlide>
-                      <div>
-                        <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
-                      </div>
-                    </ng-template>
-                    <ng-template ngbSlide>
-                      <div>
-                        <img width="50%" height="50%" src="../../assets/img/icon.PNG">
-                      </div>
-                    </ng-template>
-                  </ngb-carousel>
-                </div>
-
-                <div class="col-9">
-                    <label for="description" class="form-label"><H3>Descripción del Producto </H3></label>
-                    <input type="text" class="form-control" id="Descripcion" placeholder="Descripción" maxlength="500" required
-                                style="height: 5em;">
-                    <div class="invalid-feedback">
-                      Ingrese una descripción.
-                    </div>
+                      <h2>$ {{producto.precio}}</h2>
                   </div>
-                <p></p>                
-                <div class="col-9">
-                    <label for="opinion" class="form-label"><H3>Opiniones y Calificaciones</H3></label>
-                    <a aria-current="page" routerLink="/opinion" routerLinkActive="active">
-                        <p></p>
-                        <button class="w-40 btn btn-primary btn-lg" type="submit">Dar Opinión</button>
-                    </a>
+              </div>
+              <div class="text-center">
+                <div *ngIf="producto.unidadesDisponibles > 0">
+                  <a aria-current="page" [routerLink]="['/datosPago', producto.id, producto.nombre]" routerLinkActive="active">
+                    <button class="w-40 btn btn-primary btn-lg" type="submit">Comprar</button>
+                  </a>
+                </div>
+              </div>
+          </section>
+
+          <div style="text-align: center;">
+              <div class="album py-5 bg-light">
+                <ngb-carousel>
+                  <ng-template  ngbSlide>
+                    <div>
+                      <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                    </div>
+                  </ng-template>
+                  <ng-template ngbSlide>
+                    <div>
+                      <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
+                    </div>
+                  </ng-template>
+                  <ng-template ngbSlide>
+                    <div>
+                      <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+              </div>
+
+              <div class="col-9">
+                <label for="description" class="form-label">
+                    <h3 >Descripción del Producto</h3>
+                </label>
+                <h4 class="recuadro">
+                    {{producto.descripcion}}
+                </h4>
+              </div>
+              <p></p>                
+              <div class="col-9" style="text-align: center;">
+                <label>
+                    <h3>Opiniones</h3>
+                </label>
+                <div class="recuadro">
+                    <tr *ngFor="let coment of comentarios" >
+                        <label>
+                            <h4 >{{coment.comentario}}</h4>
+                        </label>
+                    </tr>
+                </div>
+                
+
+                <label>
+                    <h3>Calificaciones</h3>
+                </label>
+                <div class="recuadro">
+                    <tr *ngFor="let calif of calificaciones">
+                        <label>
+                            <h4 >{{calif.calificacion}}</h4>
+                        </label>
+                    </tr>
                 </div>
             </div>
-        </main>
+          </div>
+      </main>
+        </div>
+      </tr>
 
         <footer class="text-muted py-5 text-center">
             <p>&copy; BreakBlue Market</p>

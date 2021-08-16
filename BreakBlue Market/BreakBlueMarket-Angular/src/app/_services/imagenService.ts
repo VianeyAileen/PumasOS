@@ -16,9 +16,9 @@ export class imagenService {
     headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     // POST: agrega un nuevo producto
-    // agregarImagenes(id: number, imagen : string): Observable<Imagen>{
-    //     return this.http.post<Imagen>(this.useUrl +"/imagen/"+id);
-    // }
+    agregarImagenes(id: number, imagen : Observable<any>): Observable<Imagen>{
+        return this.http.post<Imagen>(this.useUrl +"/imagen/"+id, imagen);
+    }
 
     // GET: obtiene las imagenes
     obtenerImagenes(id:number) : Observable<Imagen[]>{
