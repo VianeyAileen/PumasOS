@@ -126,7 +126,7 @@
                             <!-- Pedimos el tipo de usuario -->
                             <div class="col-md-5 form-group">
                                 <label for="user" class="form-label">Tipo de Usuario</label>
-                                <select [(ngModel)]= 'comprador.tipo' class="form-select" id="user" formControlName="tipo">
+                                <select [(ngModel)]= 'comprador.tipo' [(ngModel)]= 'vendedor.tipo' class="form-select" id="user" formControlName="tipo">
                                     <option value="">Elegir...</option>
                                     <option>Comprador</option>
                                     <option>Vendedor</option>
