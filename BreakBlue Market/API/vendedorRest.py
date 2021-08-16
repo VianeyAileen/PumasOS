@@ -2,14 +2,16 @@ import pymysql
 from app import app
 from db import mysql
 from mail import email
-from flask import jsonify
+from flask import jsonify, session
 from flask import flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message
+from flask_login import logout_user
 
-#funcion que registra a un usuario de tipo vendedor
-@app.route('/vendedor', methods=['POST'])
-def aniadir_vendedor():
+
+# Método para agregar a un vendedor
+@app.route('/vendedor', methods=['GET','POST'])
+def añadir_vendedor():
     conn = None
     cursor = None
     try:
@@ -24,7 +26,7 @@ def aniadir_vendedor():
 
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        duplicado = cursor.execute("SELECT * FROM comprador WHERE correo = %s", correo)
+        duplicado = cursor.execute("SELECT * FROM vendedor WHERE correo = %s", correo)
         if duplicado != 0:
             return jsonify('correo ya registrado')
         if correo and nombre and apellidos and contrasena and nombreUsuario and genero and edad and request.method == 'POST':
@@ -33,7 +35,7 @@ def aniadir_vendedor():
             data = (correo, nombre, apellidos, contrasena_hash, nombreUsuario, genero, edad)
             cursor.execute(sql, data)
             conn.commit()
-            resp = jsonify('Usuario vendedor añadido correctamente')
+            resp = jsonify('Usuario comprador añadido correctamente')
             mail()
             resp.status_code = 200
             return resp
@@ -41,7 +43,7 @@ def aniadir_vendedor():
             return not_found()
     except Exception as e:
         print(e)
-        return jsonify('error al registrar al vendedor')
+        return jsonify('error al registrar al comprador')
     finally:
         if conn is not None and cursor is not None:
             print('error correo duplicado en la tabla')
@@ -54,19 +56,42 @@ def mail():
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
-# Método para obtener a un vendedor
-@app.route('/vendedor/<string:correo>', methods=["GET"])
-def obtener_vendedor(correo):
+
+# Método para inicair sesión del vendedor
+@app.route('/login', methods=['GET','POST'])
+def loginVendedor():
     conn = None
     cursor = None
+
     try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM vendedor WHERE correo = %s",correo)
-        row = cursor.fetchone()
-        resp = jsonify(row)
-        resp.status_code = 200
-        return resp
+        _json = request.json
+        correo = _json['correo']
+        contrasena = _json['contrasena']
+
+        # validamos los parámteros recividos
+        if correo and contrasena:
+            #verificamos al usuario
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            sql = "SELECT * FROM vendedor WHERE correo=%s"
+            sql_where = (correo)
+
+            cursor.execute(sql, sql_where)
+            row = cursor.fetchone()
+
+            if row:
+                if check_password_hash(row[3], contrasena):
+                    session['correo'] = row[1]
+                    return jsonify({'message': 'Inicio de sesión exitosó'})
+                else:
+                    resp = jsonify({'messsage': 'Bad Request - contraseña inválida'})
+                    resp.status_code = 400
+                    return resp
+        else:
+            resp = jsonify({'message': 'Bad Request - credenciales inválidas'})
+            resp.status_code = 400
+            return resp
     except Exception as e:
         print(e)
     finally:
