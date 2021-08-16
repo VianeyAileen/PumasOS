@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import { Comentario } from "../_modelos/comentarioModelo";
+//import { Comentario } from "../_modelos/comentarioModelo";
 
 
 @Injectable({ providedIn: 'root'})
