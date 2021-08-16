@@ -79,7 +79,7 @@ def actualizar_producto(id):
         if nombre and precio and descripcion and unidadesDisponibles and imagen and request.method == 'PUT':
             #save edits
             sql = "UPDATE producto SET nombre = %s, precio = %s, descripcion = %s, unidadesDisponibles = %s, imagen = %s WHERE id = %s"  
-            data = (nombre, precio, descripcion, unidadesDisponibles, imagen)
+            data = (nombre, precio, descripcion, unidadesDisponibles, imagen, id)
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(sql, data)
@@ -89,6 +89,7 @@ def actualizar_producto(id):
             return resp
     except Exception as e:
         print(e)
+        return jsonify("Error al actualizar")
     finally:
         cursor.close()
         conn.close()

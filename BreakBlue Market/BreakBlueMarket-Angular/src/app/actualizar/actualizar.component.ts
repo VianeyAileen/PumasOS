@@ -35,6 +35,7 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.rutaActiva.snapshot.paramMap.get('id');
+    console.log(this.rutaActiva.snapshot.paramMap.get('id'))
   }
 
   createForm() {
@@ -54,11 +55,12 @@ export class ActualizarComponent implements OnInit {
       this.productoService.actualizarProducto(this.id, this.producto).subscribe(
         // Si no hay errores mandamos un mensaje de exito
         respuesta => {
-          console.log('Producto actualizado');
-          // Mandamos el mensaje de que el producto fue dado de alta
           this.mensajeActualizar();
+          
+          // Mandamos el mensaje de que el producto fue dado de alta
+          console.log('Producto actualizado');
           // Rederigimos al vendedor a la página donde estan todos sus productos
-          this._router.navigate(["/homeVendedor"]);
+          // this._router.navigate(["/homeVendedor"]);
         },
         // En caso contrario Mandamos un error
         error => {
@@ -83,14 +85,14 @@ export class ActualizarComponent implements OnInit {
       confirmButtonText: 'Guardar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._router.navigate(["/informacionVendedor"]);
+        this._router.navigate(["/homeVendedor"]);
         Swal.fire(
           '¡Producto actualizado!',
           'Acción realizada con éxito',
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-        this._router.navigate(["/informacionVendedor"])
+        this._router.navigate(["/homeVendedor"])
       } 
     })
   }

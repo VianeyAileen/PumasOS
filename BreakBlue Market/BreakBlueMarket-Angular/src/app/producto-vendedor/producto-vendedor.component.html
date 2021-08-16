@@ -31,6 +31,8 @@
     </head>
 
     <body>
+<tr *ngFor="let producto of productos">
+    <div *ngIf="producto.id == id">
         <header>
             <div class="navbar navbar-dark bg-dark shadow-sm">
                 <div class="container">
@@ -39,7 +41,7 @@
                     </a>
 
                     <form class="d-flex">
-                        <a type="button" aria-current="page" routerLink="/actualizar" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <a type="button" aria-current="page" [routerLink]="['/actualizar',producto.id]" routerLinkActive="active" class="btn btn-sm btn-outline-secondary">Editar</a>
                         <button type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary" style="margin-left: 10px;" (click)="mensajeBorrar()">Borrar</button>
                         <a type="button" aria-current="page" routerLink="/informacionVendedor" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
                     </form>
@@ -48,8 +50,7 @@
         </header>
 
         <main>
-            <tr *ngFor="let producto of productos">
-                <div *ngIf="producto.id == id">
+      
                     <section class="py-5 text-center container ">
                         <div class="row py-lg-5" >
                             <div class="col-lg-6 col-md-8 mx-auto">
@@ -122,9 +123,10 @@
                             </div> -->
                         </div>
                     </div>
-                </div>
-            </tr>
+          
         </main>
+    </div>
+</tr>
 
         <footer class="text-muted py-5 text-center">
             <p>&copy; BreakBlue Market</p>

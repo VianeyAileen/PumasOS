@@ -21,7 +21,7 @@ export class productoService {
 
     // UPDATE
     actualizarProducto(id: number, producto : Producto): Observable<Producto> {
-        return this.http.post<Producto>(this.useUrl + "/actualizar/"+id, producto);
+        return this.http.put<Producto>(this.useUrl + "/actualizar/"+id, producto);
     }
     
     obtenerProducto(nombre: string): Observable<Producto[]> {

@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'homeVendedor', component: HomeVendedorComponent, pathMatch: 'full'},
   { path: 'altaProducto', component: AltaProductoComponent},
   { path: 'informacionVendedor/:id/:nombre/:correo', component: ProductoVendedorComponent},
-  { path: 'editar/:id', component: ActualizarComponent},
+  { path: 'actualizar/:id', component: ActualizarComponent},
   { path: 'homeComprador', component: HomeCompradorComponent},
   { path: 'informacionComprador/:id/:nombre', component: ProductoCompradorComponent},
   { path: 'opinion/:id', component: OpinionComponent},
