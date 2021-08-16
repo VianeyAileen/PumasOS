@@ -2,9 +2,9 @@ import pymysql
 from app import app
 from db import mysql
 from mail import email
-from flask import jsonify
+from flask import jsonify, session
 from flask import flash, request
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash,  check_password_hash
 from flask_mail import Message
 from flask_login import logout_user
 
@@ -35,7 +35,7 @@ def aniadir_comprador():
             cursor.execute(sql, data)
             conn.commit()
             resp = jsonify('Usuario comprador añadido correctamente')
-            mail()
+            mail(correo)
             resp.status_code = 200
             return resp
         else:
@@ -50,8 +50,8 @@ def aniadir_comprador():
             conn.close()
 
 #funcion que crea un mensaje y manda un email al usuario registrado.
-def mail():
-    msg = Message('BreakBlue Market', sender = 'dicter05@gmail.com', recipients = ['dicteraulad@ciencias.unam.mx'])
+def mail(correo):
+    msg = Message('BreakBlue Market', sender = 'dicter05@gmail.com', recipients = [correo])
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
@@ -80,6 +80,50 @@ def obtener_comprador(correo):
     finally:
         cursor.close()
         conn.close()
+        # Holiiiii
+
+
+# Método para inicair sesión del vendedor
+@app.route('/login', methods=['GET','POST'])
+def loginComprador():
+    conn = None
+    cursor = None
+
+    try:
+        _json = request.json
+        correo = _json['correo']
+        contrasena = _json['contrasena']
+
+        # validamos los parámteros recividos
+        if correo and contrasena:
+            #verificamos al usuario
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            sql = "SELECT * FROM comprador WHERE correo=%s"
+            sql_where = (correo)
+
+            cursor.execute(sql, sql_where)
+            row = cursor.fetchone()
+
+            if row:
+                if check_password_hash(row[3], contrasena):
+                    session['correo'] = row[1]
+                    return jsonify({'message': 'Inicio de sesión exitosó'})
+                else:
+                    resp = jsonify({'messsage': 'Bad Request - contraseña inválida'})
+                    resp.status_code = 400
+                    return resp
+        else:
+            resp = jsonify({'message': 'Bad Request - credenciales inválidas'})
+            resp.status_code = 400
+            return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+        # Holiiiii
 
 
 @app.errorhandler(404)

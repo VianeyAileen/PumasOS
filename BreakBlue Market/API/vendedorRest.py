@@ -36,7 +36,7 @@ def añadir_vendedor():
             cursor.execute(sql, data)
             conn.commit()
             resp = jsonify('Usuario comprador añadido correctamente')
-            mail()
+            mail(correo)
             resp.status_code = 200
             return resp
         else:
@@ -51,11 +51,17 @@ def añadir_vendedor():
             conn.close()
 
 #def mail(correo):
-def mail():
-    msg = Message('BreakBlue Market', sender = 'dicteraulad@gmail.com', recipients = ['dicteraulad@ciencias.unam.mx'])
+def mail(correo):
+    msg = Message('BreakBlue Market', sender = 'dicteraulad@gmail.com', recipients = [correo])
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
+#funcion que nos ayuda a cerrar la sesion del comprador.
+@app.route("/cerrarsesion")
+def cerrarsesion():
+    if 'correo' in session:
+            session.pop('correo', None)
+    return jsonify('haz salido de la sesion correctamente')
 
 # Método para inicair sesión del vendedor
 @app.route('/login', methods=['GET','POST'])
