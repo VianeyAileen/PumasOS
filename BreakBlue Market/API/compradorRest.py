@@ -99,11 +99,10 @@ def loginComprador():
             return resp
     except Exception as e:
         print(e)
-        return jsonify('Errorrrr')
     finally:
-        if conn is not None and cursor is not None:
-            cursor.close()
-            conn.close()
+        cursor.close()
+        conn.close() 
+        # Holiiiii
 
 
 @app.errorhandler(404)
