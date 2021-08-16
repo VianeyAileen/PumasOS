@@ -55,9 +55,9 @@
                         <div class="row py-lg-5" >
                             <div class="col-lg-6 col-md-8 mx-auto">
                                 <h1 class="fw-light">{{producto.nombre}}</h1>
-                                <div *ngIf="vendedor.correo == producto.correo">
+                                <!-- <div *ngIf="vendedor.correo == producto.correo"> -->
                                     <p class="lead text-muted">{{vendedor.nombreUsuario}}</p>
-                                </div>
+                                <!-- </div> -->
                                 <h2>$ {{producto.precio}}</h2>
                             </div>
                         </div>
@@ -68,10 +68,11 @@
                           <ngb-carousel>
                             <ng-template  ngbSlide>
                               <div>
-                                <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                                <!-- <img width="50%" height="50%" src="../../assets/img/icon.PNG"> -->
+                                <img *ngIf="imagen" [src]="imagen | async" class="rounded mb-3" width="100">
                               </div>
                             </ng-template>
-                            <ng-template ngbSlide>
+                            <!-- <ng-template ngbSlide>
                               <div>
                                 <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
                               </div>
@@ -80,7 +81,7 @@
                               <div>
                                 <img width="50%" height="50%" src="../../assets/img/icon.PNG">
                               </div>
-                            </ng-template>
+                            </ng-template> -->
                           </ngb-carousel>
                         </div>
         

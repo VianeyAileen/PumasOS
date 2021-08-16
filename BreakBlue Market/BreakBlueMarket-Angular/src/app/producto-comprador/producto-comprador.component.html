@@ -72,10 +72,11 @@
                 <ngb-carousel>
                   <ng-template  ngbSlide>
                     <div>
-                      <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                      <!-- <img width="50%" height="50%" src="imagen"> -->
+                      <img *ngIf="imagen" [src]="imagen | async" class="rounded mb-3" width="100">
                     </div>
                   </ng-template>
-                  <ng-template ngbSlide>
+                  <!-- <ng-template ngbSlide>
                     <div>
                       <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
                     </div>
@@ -84,7 +85,7 @@
                     <div>
                       <img width="50%" height="50%" src="../../assets/img/icon.PNG">
                     </div>
-                  </ng-template>
+                  </ng-template> -->
                 </ngb-carousel>
               </div>
 
@@ -119,6 +120,13 @@
                             <h4 >{{calif.calificacion}}</h4>
                         </label>
                     </tr>
+                </div>
+                <p></p>                
+                <div class="col-9">
+                    <a aria-current="page" routerLink="/opinion" routerLinkActive="active">
+                        <p></p>
+                        <button class="w-40 btn btn-primary btn-lg" type="submit">Dar Opinión</button>
+                    </a>
                 </div>
             </div>
           </div>

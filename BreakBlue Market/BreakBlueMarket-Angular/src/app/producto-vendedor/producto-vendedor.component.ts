@@ -16,6 +16,7 @@ import { imagenService } from '../_services/imagenService';
 import { vendedorService } from '../_services/vendedorService';
 import { comentarioService } from '../_services/comentarioService';
 import { calificacionService } from '../_services/calificacionService';
+import { Observable } from 'rxjs';
 
 
 
@@ -30,10 +31,11 @@ export class ProductoVendedorComponent implements OnInit {
   id :number|any = 0;
   nombre : string | any;
   correo : string | any;
+  imagen : Observable<any> | undefined;
   // Objeto Producto
   productos : Producto[] = [];
   // Objeto imagen que contiene las imagenes del producto
-  imagenes : Imagen[] = [];
+  // imagenes : Imagen = {id:0, imagen:""};
   // Objeto vendedor para saber quien es el que vende el producto
   vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "",nombreUsuario: ""};
 
@@ -58,17 +60,20 @@ export class ProductoVendedorComponent implements OnInit {
 
     // Buscamos el producto
     this.productoService.obtenerProducto(this.nombre).subscribe(data => {
+      console.log(data)
       this.productos = data;
     });
 
+    console.log(this.correo)
     // Buscamos el vendedor
     this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
+      console.log(data2)
       this.vendedor = data2;
     });
 
     // Buscamos las imagenes
     this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
-      this.imagenes = data3;
+      this.imagen = data3.imagen;
     });
 
     //  Buscamos los comentarios
@@ -81,6 +86,7 @@ export class ProductoVendedorComponent implements OnInit {
       this.calificaciones = data5;
     })
   }
+
 
 
   mensajeBorrar(){

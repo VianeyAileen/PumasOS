@@ -21,7 +21,10 @@ export class imagenService {
     }
 
     // GET: obtiene las imagenes
-    obtenerImagenes(id:number) : Observable<Imagen[]>{
-        return this.http.get<Imagen[]>(this.useUrl + "/imagen/" + id)
+    obtenerImagenes(id:number) : Observable<Imagen>{
+        console.log(id)
+        let response = this.http.get<Imagen>(this.useUrl + "/imagen/" + id)
+        console.log(response)
+        return response
     }
 }

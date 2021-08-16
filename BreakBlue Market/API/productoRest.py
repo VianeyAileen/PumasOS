@@ -274,7 +274,7 @@ def obtener_imagen(id):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT imagen FROM imagen WHERE id = %s",id)
+        cursor.execute("SELECT imagen FROM producto WHERE id = %s",id)
         rows = cursor.fetchall()
         resp = jsonify(rows)
         resp.status_code = 200
@@ -291,10 +291,9 @@ def actualizar_imagen(id):
     cursor = None
     try:
         _json = request.json
-        imagen = _json['imagenAnt']
         _imagen = _json['imagenNueva']
-        sql = "UPDATE imagen SET imagen = %s WHERE imagen = %s AND id = %s"
-        data = (_imagen, imagen, id)
+        sql = "UPDATE producto SET imagen = %s WHERE id = %s"
+        data = (_imagen, id)
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(sql, data)

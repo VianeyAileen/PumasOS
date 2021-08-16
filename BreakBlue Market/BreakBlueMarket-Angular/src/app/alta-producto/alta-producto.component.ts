@@ -5,9 +5,6 @@ import { Router } from '@angular/router';
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
 
-// import { Imagen } from '../_modelos/imagenModelo';
-// import { imagenService } from '../_services/imagenService';
-
 import Swal from 'sweetalert2'
 
 @Component({
@@ -20,13 +17,10 @@ export class AltaProductoComponent implements OnInit {
   //Datos que pedimos para dar de alta un producto
   @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
 
-  // @Input() imagenes: Imagen = {id:0, imagen:''}
 
   agregarForm!: FormGroup;
 
-  respuesta: any = [];
-  error: any = [];
-
+  previsualizacion : string |any;
 
   
   constructor(
@@ -75,15 +69,6 @@ export class AltaProductoComponent implements OnInit {
     )
   }
 
-  // agregarImagenes(id:number) {
-  //   for (let url of this.urls) {
-  //     let img: Imagen = {id: id, imagen: url};
-  //     this.imagenService.agregarImagenes(id, img).subscribe(respuesta =>{
-  //       console.log('Imagen dada de alta');
-  //     })      
-  //   }
-  // }
-
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa
   mensajeAltaProducto(){
     Swal.fire({
@@ -107,18 +92,32 @@ export class AltaProductoComponent implements OnInit {
   }
 
   // Función para subir una imagen
-  urls = new Array<string>();
-  onSelectFile(event: any) {
-    this.urls = [];
-    let files = event.target.files;
-    if (files) {
-      for (let file of files) {
-        let reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.urls.push(e.target.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    }
+  onSelectFile(event : Event|any) : any{
+    console.log(event)
+    const archivoCapturado = event.target.files[0];
+    this.extraerBase64(archivoCapturado).then( (imagen : any) => {
+      this.previsualizacion = imagen.base;
+      console.log(imagen);
+    })
   }
+  
+
+  extraerBase64 = async ($event : any) => new Promise((resolve, reject) => {
+    try{
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base : reader.result
+        });
+      };
+      reader.onerror = error => {
+        resolve({
+          base : null
+        });
+      };
+    }catch(e){
+      reject ;
+    }
+  })
 }

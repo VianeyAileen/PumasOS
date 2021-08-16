@@ -98,7 +98,7 @@
                             <!-- Pedimos las imágenes del producto -->
                             <div class="form-group">
                                 <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
-                                <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="100">
+                                <img *ngIf="previsualizacion" [src]="previsualizacion" class="rounded mb-3" width="100">
                             </div>
                             <input [(ngModel)]="producto.imagen" class="form-control" formControlName="imagenProducto" type="file" (change)="onSelectFile($event)">
                             <!-- Si no nos dan una imagen, mandamos un mesaje de error -->
