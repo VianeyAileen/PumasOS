@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
 import { Producto } from '../_modelos/productoModelo';
 import { Imagen } from '../_modelos/imagenModelo';
 
 import Swal from 'sweetalert2'
+import { Observable, Subscriber } from 'rxjs';
+import { imagenService } from '../_services/imagenService';
 
 @Component({
   selector: 'app-home-vendedor',
@@ -14,22 +16,29 @@ import Swal from 'sweetalert2'
 })
 export class HomeVendedorComponent implements OnInit {
 
+  previsualizacion : string | any;
   productos : Producto[] = [];
-  imagenes : Imagen[] = []
+  // imagen : Observable<any> | undefined;
   nombre : String| any;
+
+  correo : string | any;
 
   constructor(
     private _router: Router,
-    private productoService : productoService) { }
+    private productoService : productoService,
+    private imagenService : imagenService,
+    private activateRoute : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.correo = this.activateRoute.snapshot.paramMap.get('correo');
     this.productoService.obtenerProductos().subscribe( data => {
       this.productos = data;
     })
   }
 
-  buscar(search: String){
-
+  obtenerImagen(imagen : String){
+    this.onSelectFile(imagen);
+    return true;
   }
 
   mensajeCerrar(){
@@ -53,4 +62,34 @@ export class HomeVendedorComponent implements OnInit {
       } 
     })
   }
+
+   // Función para subir una imagen
+   onSelectFile(event : Event|any) : any{
+    console.log(event)
+    const archivoCapturado = event.target.files[0];
+    this.extraerBase64(archivoCapturado).then( (imagen : any) => {
+      this.previsualizacion = imagen.base;
+      console.log(imagen);
+    })
+  }
+  
+
+  extraerBase64 = async ($event : any) => new Promise((resolve, reject) => {
+    try{
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base : reader.result
+        });
+      };
+      reader.onerror = error => {
+        resolve({
+          base : null
+        });
+      };
+    }catch(e){
+      reject ;
+    }
+  })
 }

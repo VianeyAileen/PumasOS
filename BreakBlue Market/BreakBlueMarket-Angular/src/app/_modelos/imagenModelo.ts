@@ -1,4 +1,6 @@
+import { Observable } from "rxjs";
+
 export interface Imagen {
     id: number;
-    imagen: String
+    imagen: Observable<any>
 }

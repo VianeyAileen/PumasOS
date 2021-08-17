@@ -26,8 +26,9 @@ export class IniciarSesionComponent implements OnInit{
   error: any = [];
   
   loginForm!: FormGroup;
-
   loginFormV!: FormGroup;
+
+  correo : string  | any;
   
   constructor(
     private fb: FormBuilder,

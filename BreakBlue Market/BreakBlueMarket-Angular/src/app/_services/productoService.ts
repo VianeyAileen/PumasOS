@@ -25,7 +25,7 @@ export class productoService {
         return this.http.put<Producto>(this.useUrl + "/actualizar/"+id, producto);
     }
     
-    obtenerProducto(nombre: string): Observable<Producto[]> {
+    obtenerProducto(nombre: String): Observable<Producto[]> {
         return this.http.get<Producto[]>(this.useUrl + "/producto/"+ nombre);
     }
 
@@ -33,6 +33,13 @@ export class productoService {
         return this.http.get<Producto[]>(this.useUrl + "/producto");
     }
 
+    comprarProducto(id: number, producto :Producto): Observable<Producto> {
+        let response = this.http.put<Producto>(this.useUrl + "/comprar/"+ id, producto);
+        console.log(id);
+        console.log(response)
+        return response;
+    }
+    
     // DELETE: elimina un producto dado un id
     eliminaProducto(id: number) {        
         return this.http.delete<any>(this.useUrl + "/eliminar/" + id);

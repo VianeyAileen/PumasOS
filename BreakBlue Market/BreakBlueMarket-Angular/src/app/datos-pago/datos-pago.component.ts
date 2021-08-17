@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2'
+
+import { Producto } from '../_modelos/productoModelo';
+import { productoService } from '../_services/productoService';
+
 
 @Component({
   selector: 'app-datos-pago',
@@ -11,13 +16,24 @@ import Swal from 'sweetalert2'
 })
 export class DatosPagoComponent implements OnInit {
 
+  id :number|any;
+  nombre : string|any;
+  producto : any |Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''};
+
+
   pagoForm!: FormGroup;
-  constructor(private _router: Router, private fb: FormBuilder) {
+  constructor(
+    private _router: Router,
+    private activatedRoute: ActivatedRoute,
+    private productoService: productoService,
+    private fb: FormBuilder) {
     this.createForm();
    }
 
   ngOnInit(): void {
-  }
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.nombre = this.activatedRoute.snapshot.paramMap.get('nombre');
+    }
 
   createForm() {
     this.pagoForm = this.fb.group({
@@ -37,6 +53,7 @@ export class DatosPagoComponent implements OnInit {
   }
 
   mensajeCompra(){
+
     Swal.fire({
       title: '¿Esás seguro/a?',
       text: "¡No podrás revertir los cambios!",
@@ -47,6 +64,14 @@ export class DatosPagoComponent implements OnInit {
       confirmButtonText: 'Continuar'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.productoService.obtenerProducto(this.nombre).subscribe(data => {
+          this.producto = data;
+        });
+        
+        this.productoService.comprarProducto(this.id, this.producto).subscribe(data2 => {
+          console.log(data2);
+        });
+
         this._router.navigate(["/homeComprador"]);
         Swal.fire(
           '¡Producto comprado!',

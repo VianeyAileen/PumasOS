@@ -50,6 +50,26 @@ def añadir_vendedor():
             cursor.close()
             conn.close()
 
+@app.route('/vendedor/<string:correo>', methods=['GET'])
+def obtenerVendedor(correo):
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM vendedor WHERE correo = %s",correo)
+        rows = cursor.fetchall()
+        resp = jsonify(rows)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+        return jsonify("Error"),404
+    finally:
+        cursor.close()
+        conn.close()
+
+
 #def mail(correo):
 def mail(correo):
     msg = Message('BreakBlue Market', sender = 'dicteraulad@gmail.com', recipients = [correo])
