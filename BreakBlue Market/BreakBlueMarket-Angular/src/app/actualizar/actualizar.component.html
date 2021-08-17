@@ -45,7 +45,7 @@
 
               <!-- Pedimos el precio nuevo -->
               <div class="col-12 form-group">
-                <label for="newPrice" class="form-label">Igresa Nuevo Precio</label>
+                <label for="newPrice" class="form-label">Ingresa Nuevo Precio</label>
                 <div class="input-group">
                   <span class="input-group-text">$</span>
                   <input [(ngModel)]="producto.precio" type="text" class="form-control" id="nuevoPrecio" formControlName="nuevoPrecioProducto" placeholder="Precio del Producto">
@@ -101,7 +101,7 @@
             <!-- Pedimos las imágenes del producto -->
             <div class="form-group">
               <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
-              <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="100">
+              <img *ngIf="previsualizacion" [src]="previsualizacion" class="rounded mb-3" width="100">
             </div>
 
             <input [(ngModel)]="producto.imagen" class="form-control" formControlName="nuevaImagenProducto" type="file" (change)="onSelectFile($event)">
@@ -112,17 +112,13 @@
                     No se eligió una imagen
                 </div>
               </div>
-
-
-
-
-            
             <hr>
 
             <!-- Botón Aceptar -->
             <div class="text-center">
               <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
-              <button aria-current="page" routerLink="/actualizar" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeActualizar()" [disabled]="agregarForm.pristine || agregarForm.invalid">Aceptar</button>
+              <!-- [routerLink]="['/homeVendedor',correo]" routerLinkActive="active" -->
+              <button aria-current="page"  class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeActualizar()" [disabled]="agregarForm.pristine || agregarForm.invalid">Aceptar</button>
             </div>
           </form>
         </div>
