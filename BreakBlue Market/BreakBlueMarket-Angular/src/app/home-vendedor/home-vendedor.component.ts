@@ -8,6 +8,7 @@ import { Imagen } from '../_modelos/imagenModelo';
 
 import Swal from 'sweetalert2'
 import { Observable, Subscriber } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { imagenService } from '../_services/imagenService';
 
 @Component({
@@ -19,23 +20,49 @@ export class HomeVendedorComponent implements OnInit {
 
   previsualizacion : string | any;
   productos : Producto[] = [];
-  // imagen : Observable<any> | undefined;
   nombre : String| any;
 
   correo : string | any;
 
+  searchForm!: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
     private _router: Router,
     private productoService : productoService,
     private vendedorService: vendedorService,
     private imagenService : imagenService,
-    private activateRoute : ActivatedRoute) { }
+    private activateRoute : ActivatedRoute) { 
+      this.createForm();
+    }
 
   ngOnInit(): void {
     this.correo = this.activateRoute.snapshot.paramMap.get('correo');
     this.productoService.obtenerProductos().subscribe( data => {
       this.productos = data;
     })
+  }
+
+  createForm() {
+    this.searchForm = this.fb.group({
+      search: ['', Validators.required]
+  });
+  }
+
+  submit(){
+    let search = this.searchForm.value.search;
+    if(search){
+      this.productoService.obtenerProducto(search).subscribe(data => {
+        if(data[0]){
+          this._router.navigate(['/informacionVendedor',data[0].id, data[0].nombre, data[0].correo]);
+        }else{
+          Swal.fire(
+            'No se encontro el producto',
+            'Ninguna coincidencia en la base de datos'
+          )
+        }
+      })
+    }
   }
 
   obtenerImagen(imagen : String){
