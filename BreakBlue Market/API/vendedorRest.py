@@ -114,6 +114,7 @@ def loginVendedor():
             return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"), 400
     finally:
         if cursor and conn:
             cursor.close()
