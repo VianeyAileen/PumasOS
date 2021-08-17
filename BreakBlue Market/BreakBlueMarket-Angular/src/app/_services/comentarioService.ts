@@ -21,7 +21,7 @@ export class comentarioService {
     }
 
     // POST: agrega un nuevo comentario
-    agregarComentario(id: number, comentario : Comentario): Observable<Comentario>{
-        return this.http.post<Comentario>(this.useUrl +"/calificacion/"+id, comentario);
+    agregarComentario(id: number, comentario :string): Observable<Comentario>{
+        return this.http.post<Comentario>(this.useUrl +"/comentario/"+id, {comentario});
     }
 }

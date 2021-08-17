@@ -64,7 +64,7 @@ export class IniciarSesionComponent implements OnInit{
         respuesta => {
           console.log('Sesión Iniciada');
           this.mensajeLogin();
-          this._router.navigate(["/homeVendedor"]);
+          this._router.navigate(['/homeVendedor',this.vendedor.correo]);
         },
         error => {
           console.log('Correo o contraseña inválido');

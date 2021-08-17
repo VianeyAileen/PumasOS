@@ -72,11 +72,13 @@ export class ProductoCompradorComponent implements OnInit {
      //  Buscamos los comentarios
      this.comentarioService.obtenerComentarios(this.id).subscribe(data4 => {
        this.comentarios = data4;
+       console.log(this.comentarios);
      })
  
      //  Obtenemos las calificaciones
      this.calificacionService.obtenerCalificaciones(this.id).subscribe(data5 => {
        this.calificaciones = data5;
+       console.log(this.calificaciones);
      })
   }
 
