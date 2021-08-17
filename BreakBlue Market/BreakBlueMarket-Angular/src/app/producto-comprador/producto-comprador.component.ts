@@ -17,11 +17,7 @@ import { imagenService } from '../_services/imagenService';
 import { compradorService } from '../_services/compradorService';
 import { comentarioService } from '../_services/comentarioService';
 import { calificacionService } from '../_services/calificacionService';
-<<<<<<< HEAD
-import { Observable, Subscriber } from 'rxjs';
-=======
->>>>>>> Develop
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-producto-comprador',
@@ -33,16 +29,11 @@ export class ProductoCompradorComponent implements OnInit {
   id : number|any;
   nombre : string |any;
   correo : string | any;
-<<<<<<< HEAD
-  productos: Producto[] = [];
-  imagen : Observable<any> | undefined ;
-  comprador : Comprador = {correo: "",nombre: "",apellidos: "",contrasena: "",nombreUsuario: ""};
-=======
 
   productos: Producto[] = [];
-  imagenes : Imagen[] = [];
+  
+  // imagen : Imagen = {id:0};
   comprador : Comprador = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", tipo:"", genero:"", edad:0};
->>>>>>> Develop
   comentarios: Comentario[] = [];
   calificaciones : Calificacion[] = [];
 
@@ -74,12 +65,8 @@ export class ProductoCompradorComponent implements OnInit {
  
      // Buscamos las imagenes
      this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
-<<<<<<< HEAD
        console.log(data3)
-       this.imagen = data3.imagen;
-=======
-       this.imagenes = data3;
->>>>>>> Develop
+      //  this.imagen = data3.imagen;
      });
  
      //  Buscamos los comentarios

@@ -17,6 +17,7 @@ export class imagenService {
 
     // POST: agrega un nuevo producto
     agregarImagenes(id: number, imagen: string): Observable<Imagen>{
+        console.log(imagen)
         return this.http.post<Imagen>(this.useUrl +"/imagen/"+id, "imagen : "+imagen);
     }
 

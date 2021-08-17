@@ -27,12 +27,8 @@ const routes: Routes = [
   { path: 'homeComprador', component: HomeCompradorComponent},
   { path: 'informacionComprador/:id/:nombre/:correo', component: ProductoCompradorComponent},
   { path: 'opinion/:id', component: OpinionComponent},
-<<<<<<< HEAD
-  { path: 'datosPago/:id/:nombre', component: DatosPagoComponent},
-=======
   { path: 'calificacion/:id', component: OpinionComponent},
-  { path: 'datosPago/:id', component: DatosPagoComponent},
->>>>>>> Develop
+  { path: 'datosPago/:id/:nombre', component: DatosPagoComponent},
 ];
 
 @NgModule({

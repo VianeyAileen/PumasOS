@@ -3,15 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import { Comprador } from "../_modelos/compradorModelo";
-import { Observable } from "rxjs";
 
-<<<<<<< HEAD
-@Injectable({
-    providedIn: "root"
-})
-=======
 @Injectable({providedIn: 'root'})
->>>>>>> Develop
 
 export class compradorService {
     private baseUrl = 'http://127.0.0.1:5000/';
@@ -37,12 +30,4 @@ export class compradorService {
     obtenerComprador(correo: String):Observable<Comprador> {
         return this.http.get<Comprador>(this.baseUrl+"/");
     }
-<<<<<<< HEAD
-
-    obtenerComprador(correo: String):Observable<Comprador> {
-        return this.http.get<Comprador>(this.baseUrl+"/");
-    }
 }
-=======
-}
->>>>>>> Develop

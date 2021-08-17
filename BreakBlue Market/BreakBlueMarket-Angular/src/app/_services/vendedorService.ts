@@ -20,7 +20,7 @@ export class vendedorService {
 
     //Login Vendedor
     loginVendedor(vendedor: Vendedor): Observable<Vendedor> {
-        return this.http.post<Vendedor>(this.userUrl + "/login", vendedor);
+        return this.http.post<Vendedor>(this.userUrl + "/loginVendedor", vendedor);
     }
     
     //POST: agregamos un usuario comprador a la base de datos.
