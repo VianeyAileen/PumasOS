@@ -52,8 +52,8 @@ def añadir_vendedor():
 
 #def mail(correo):
 def mail(correo):
-    msg = Message('BreakBlue Market', sender = 'dicteraulad@gmail.com', recipients = [correo])
-    msg.body = "Haz sido registrado con exito en BreakBlue Market"
+    msg = Message('BreakBlue Market', sender = 'breakbluemarket@gmail.com', recipients = [correo])
+    msg.body = "Has sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
 #funcion que nos ayuda a cerrar la sesion del vendedor.
@@ -61,7 +61,7 @@ def mail(correo):
 def cerrarSesionVendedor():
     if 'correo' in session:
         session.pop('correo', None)
-    return jsonify('haz salido de la sesion correctamente')
+    return jsonify('Has salido de la sesion correctamente')
 
 # Método para inicair sesión del vendedor
 @app.route('/loginVendedor', methods=['GET','POST'])

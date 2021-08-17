@@ -51,8 +51,8 @@ def aniadir_comprador():
 
 #funcion que crea un mensaje y manda un email al usuario registrado.
 def mail(correo):
-    msg = Message('BreakBlue Market', sender = 'dicter05@gmail.com', recipients = [correo])
-    msg.body = "Haz sido registrado con exito en BreakBlue Market"
+    msg = Message('BreakBlue Market', sender = 'breakbluemarket@gmail.com', recipients = [correo])
+    msg.body = "Has sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
 # Método para inicair sesión del comprador
@@ -102,7 +102,7 @@ def loginComprador():
 def cerrarSesionComprador():
     if 'correo' in session:
         session.pop('correo', None)
-    return jsonify('haz salido de la sesion correctamente')
+    return jsonify('has salido de la sesion correctamente')
 
 @app.errorhandler(404)
 def not_found(error=None):
