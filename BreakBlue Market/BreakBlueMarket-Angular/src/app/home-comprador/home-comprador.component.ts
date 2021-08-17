@@ -2,14 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
-import { compradorService } from '../_services/compradorService';
 import { imagenService } from '../_services/imagenService';
 import { Producto } from '../_modelos/productoModelo';
 
 import Swal from 'sweetalert2'
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Busqueda } from '../_modelos/busquedaModelo';
+import { compradorService } from '../_services/compradorService';
 
 @Component({
   selector: 'app-home-comprador',
@@ -29,6 +28,7 @@ export class HomeCompradorComponent implements OnInit {
     private fb: FormBuilder,
     private _router: Router,
     private productoService : productoService,
+    private compradorService : compradorService,
     private imagenService: imagenService) {
       this.createForm();
      }
