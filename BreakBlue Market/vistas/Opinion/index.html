@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Opinion</title>
+    <link rel="icon" href="../icon.PNG" type="image/x-icon">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+
+
+
+    <!-- Bootstrap core CSS -->
+<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="pricing.css" rel="stylesheet">
+  </head>
+  <body>
+
+
+<div class="container py-3">
+  <header>
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <span class="fs-4">BreakBlue Market</span>
+      </a>
+
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a href="/BreakBlue Market/vistas/ListadeComprasComprador/index.html">
+          <button type="button" class="w-100 btn btn-lg btn-outline-primary">Enviar Opinión</button>
+        </a>
+        
+      </nav>
+    </div>
+
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+      <h2 class="fs-5 text-muted">Escribe tu opinión y deja una calificación.</h2>
+    </div>
+  </header>
+
+  <main>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm" style= width:1000px;>
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Opinión</h4>
+          </div>
+          <div class="card-body" style="height: 10em;">
+            <input type="text" class="form-control" style="height: 8em;" id="productName" style= width:900px; placeholder="Opinión" required>
+            <div class="invalid-feedback">
+              Indica una opinión.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <p> Ingresa una calificación (Rango entre 0.0 y 5.0)</p>
+  <input type="text" class="form-control" id="productName" placeholder="Ingresar calificación" value="" required>
+  <div class="invalid-feedback">
+    Indica una calificación.
+  </div>
+
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md text-center">
+        <small class="d-block mb-3 text-muted">&copy; BreakBlue Market</small>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+</html>

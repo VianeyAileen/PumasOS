@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Dar de alta Producto</title>
+        <link rel="icon" href="../../assets/img/icon.PNG" type="image/x-icon">
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/BreakBlue Market/BreakBlueMarket-Flask/BreakBlueMarket/src/assets/dist/css/bootstrap.min.css">
+
+        <!-- Custom styles for this template -->
+        <link href="alta-producto.component.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+        <div class="container">
+            <main>
+                <div class="py-5 text-center">
+                    <img class="d-block mx-auto mb-5" src="../../assets/img/icon.PNG" alt="" width="72" height="57">
+                    <h3>DAR DE ALTA PRODUCTO</h3>
+                    <p> Por favor llene el siguiente formulario de acuerdo a la información <br>
+                        solicitada en cada campo</p>
+                </div>
+
+                <div class="col-md-7 col-lg-8  position-relative bottom-20 start-50 translate-middle-x">
+                    <!-- Inicia el formulario  (submit)="agregarProducto()" -->
+                    <form [formGroup]="agregarForm" (submit)="agregarProducto()">
+                        <div class="row g-4">
+                            <!-- Pedimos el nombre del producto -->
+                            <div class="col-sm-6 form-group">
+                                <label for="productName" class="form-label">Nombre del Producto</label>
+                                <input [(ngModel)]="producto.nombre" type="text" class="form-control" id="productName" formControlName="nombreProducto" placeholder="Nombre del Producto">
+                                <!-- Si no nos dan un nombre, mandamos un mensaje de error-->
+                                <div class="alert alert-danger" *ngIf="agregarForm.controls['nombreProducto'].invalid && (agregarForm.controls['nombreProducto'].dirty || agregarForm.controls['nombreProducto'].touched)">
+                                    <div *ngIf="agregarForm.controls['nombreProducto'].errors?.required">
+                                        Indica un nombre.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos la marca del producto -->
+                            <div class="col-sm-6 form-group">
+                                <label for="Brand" class="form-label">Marca del Producto</label>
+                                <input [(ngModel)]="producto.marca" type="text" class="form-control" id="Marca" formControlName="marcaProducto" placeholder="Marca del Producto">
+                                <!-- Si no nos dan una marca, mandamos un mesaje de error -->
+                                <div class="alert alert-danger" *ngIf="agregarForm.controls['marcaProducto'].invalid && (agregarForm.controls['marcaProducto'].dirty || agregarForm.controls['marcaProducto'].touched)">
+                                    <div *ngIf="agregarForm.controls['marcaProducto'].errors?.required">
+                                        Indica una Marca.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos el precio del producto -->
+                            <div class="col-6 form-group">
+                                <label for="Price" class="form-label">Precio del Producto</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input [(ngModel)]="producto.precio" type="text" class="form-control" id="precio" formControlName="precioProducto" placeholder="Precio del Producto">
+                                    <p></p>
+                                    <!-- Si no nos dan un precio, mandamos un mesaje de error -->
+                                    <div class="alert alert-danger" *ngIf="agregarForm.controls['precioProducto'].invalid && (agregarForm.controls['precioProducto'].dirty || agregarForm.controls['precioProducto'].touched)">
+                                        <div *ngIf="agregarForm.controls['precioProducto'].errors?.required">
+                                            Indica un Precio.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos las Unidades Disponibles -->
+                            <div class="col-6 form-group">
+                                <label for="Unidades" class="form-label">Unidades Disponibles <span class="text-muted"></span></label>
+                                <input [(ngModel)]="producto.unidadesDisponibles" type="text" class="form-control" id="Unidades" formControlName="unidadesProducto" placeholder="Unidades">
+                                <!-- Si no nos dan las unidades disponibles, mandamos un mesaje de error -->
+                                <div class="alert alert-danger" *ngIf="agregarForm.controls['unidadesProducto'].invalid && (agregarForm.controls['unidadesProducto'].dirty || agregarForm.controls['unidadesProducto'].touched)">
+                                    <div *ngIf="agregarForm.controls['unidadesProducto'].errors?.required">
+                                        Indica las Unidades Disponibles.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos la Descripción-->
+                            <div class="col-12 form-group">
+                                <label for="" class="form-label">Descripción del Producto <span class="text-muted"></span></label>
+                                <input [(ngModel)]="producto.descripcion" type="text" class="form-control" id="Descripcion" formControlName="descripcionProducto" placeholder="Descripción" maxlength="500" style="height: 5em;">
+                                <!-- Si no nos dan una descripción, mandamos un mesaje de error -->
+                                <div class="alert alert-danger" *ngIf="agregarForm.controls['descripcionProducto'].invalid && (agregarForm.controls['descripcionProducto'].dirty || agregarForm.controls['descripcionProducto'].touched)">
+                                    <div *ngIf="agregarForm.controls['descripcionProducto'].errors?.required">
+                                        Ingrese una Descripción.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedimos las imágenes del producto -->
+                            <div class="form-group">
+                                <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label>
+                                <img *ngIf="previsualizacion" [src]="previsualizacion" class="rounded mb-3" width="100">
+                            </div>
+                            <input [(ngModel)]="producto.imagen" class="form-control" formControlName="imagenProducto" type="file" (change)="onSelectFile($event)">
+                            <!-- Si no nos dan una imagen, mandamos un mesaje de error -->
+                            <div class="alert alert-danger" *ngIf="agregarForm.controls['imagenProducto'].invalid && (agregarForm.controls['imagenProducto'].dirty || agregarForm.controls['imagenProducto'].touched)">
+                                <div *ngIf="agregarForm.controls['imagenProducto'].errors?.required">
+                                    No se eligió una imagen
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Botón Siguiente -->
+                        <div class="text-center">
+                            <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
+                            <button class="w-50 btn btn-primary btn-lg" (click)="mensajeAltaProducto" [disabled]="agregarForm.pristine || agregarForm.invalid">Siguiente</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+
+            <footer class="my-3 pt-5 text-muted text-center text-small">
+                <p class="mb-1">&copy; BreakBlue Market</p>
+            </footer>
+        </div>
+    </body>
+</html>
