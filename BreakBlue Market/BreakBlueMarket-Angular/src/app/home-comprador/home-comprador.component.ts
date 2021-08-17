@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
 import { imagenService } from '../_services/imagenService';
 import { Producto } from '../_modelos/productoModelo';
-import { Imagen } from '../_modelos/imagenModelo';
 
 import Swal from 'sweetalert2'
 import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Busqueda } from '../_modelos/busquedaModelo';
 
 @Component({
   selector: 'app-home-comprador',
@@ -20,15 +21,44 @@ export class HomeCompradorComponent implements OnInit {
   imagen : Observable<any> | undefined;
   nombre : String | any;
 
+  searchForm!: FormGroup;
+
+
   constructor(
+    private fb: FormBuilder,
     private _router: Router,
     private productoService : productoService,
-    private imagenService: imagenService) { }
+    private imagenService: imagenService) {
+      this.createForm();
+     }
 
   ngOnInit(): void {
     this.productoService.obtenerProductos().subscribe( data => {
       this.productos = data;
     })
+  }
+
+  createForm() {
+    this.searchForm = this.fb.group({
+      search: ['', Validators.required]
+  });
+  }
+
+
+  submit(){
+    let search = this.searchForm.value.search;
+    if(search){
+      this.productoService.obtenerProducto(search).subscribe(data => {
+        if(data[0]){
+          this._router.navigate(['/informacionComprador',data[0].id, data[0].nombre, data[0].correo]);
+        }else{
+          Swal.fire(
+            'No se encontro el producto',
+            'Ninguna coincidencia en la base de datos'
+          )
+        }
+      })
+    }
   }
 
   obtenerImagen(id : number){
