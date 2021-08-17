@@ -3,7 +3,7 @@ from app import app
 from db import mysql
 from mail import email
 from flask import jsonify, session
-from flask import request
+from flask import flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message
 from flask_login import logout_user
@@ -72,10 +72,16 @@ def obtenerVendedor(correo):
 
 #def mail(correo):
 def mail(correo):
-    msg = Message('BreakBlue Market', sender = 'dicteraulad@gmail.com', recipients = [correo])
-    msg.body = "Haz sido registrado con exito en BreakBlue Market"
+    msg = Message('BreakBlue Market', sender = 'breakbluemarket@gmail.com', recipients = [correo])
+    msg.body = "Has sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
+#funcion que nos ayuda a cerrar la sesion del vendedor.
+@app.route("/cerrarsesionVendedor")
+def cerrarSesionVendedor():
+    if 'correo' in session:
+        session.pop('correo', None)
+    return jsonify('Has salido de la sesion correctamente')
 
 # Método para inicair sesión del vendedor
 @app.route('/loginVendedor', methods=['GET','POST'])
@@ -119,14 +125,6 @@ def loginVendedor():
         if cursor and conn:
             cursor.close()
             conn.close()
-
-# Método para cerrar la sesión de un vendedor
-@app.route('/cerrarSesion')
-def cerrarSesionVendedor():
-    if 'correo' in session:
-        session.pop('correo', None)
-    return jsonify({'message' : 'Haz salido de la sesión correctamente'})
-
 
 @app.errorhandler(404)
 def not_found(error=None):

@@ -90,9 +90,9 @@ export class RegistrarseComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Comprador Registrado',
+      title: 'Comprador Registrado, se ha enviado un email confirmando su registro.',
       showConfirmButton: false,
-      timer: 2500
+      timer: 3000
     })
   }
 
@@ -100,9 +100,9 @@ export class RegistrarseComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Vendedor Registrado',
+      title: 'Vendedor Registrado, se ha enviado un email confirmando su registro.',
       showConfirmButton: false,
-      timer: 2500
+      timer: 3000
     })
   }
 
@@ -112,7 +112,7 @@ export class RegistrarseComponent implements OnInit {
       icon: 'warning',
       title: 'El correo ingresado ya se encuentra registrado',
       showConfirmButton: false,
-      timer: 2500
+      timer: 3000
     })
   }
 

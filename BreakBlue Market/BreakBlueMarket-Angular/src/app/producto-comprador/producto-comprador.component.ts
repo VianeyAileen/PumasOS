@@ -51,30 +51,30 @@ export class ProductoCompradorComponent implements OnInit {
      this.id = this.rutaActiva.snapshot.paramMap.get('id');
      this.nombre = this.rutaActiva.snapshot.paramMap.get('nombre');
      this.correo = this.rutaActiva.snapshot.paramMap.get('correo');
- 
+
      // Buscamos el producto
      this.productoService.obtenerProducto(this.nombre).subscribe(data => {
         this.productos = data;
         console.log(this.productos)
      });
- 
+
      // Buscamos el vendedor
      this.compradorService.obtenerComprador(this.correo).subscribe(data2 => {
        this.comprador = data2;
      });
- 
+
      // Buscamos las imagenes
      this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
        console.log(data3)
       //  this.imagen = data3.imagen;
      });
- 
+
      //  Buscamos los comentarios
      this.comentarioService.obtenerComentarios(this.id).subscribe(data4 => {
        this.comentarios = data4;
        console.log(this.comentarios);
      })
- 
+
      //  Obtenemos las calificaciones
      this.calificacionService.obtenerCalificaciones(this.id).subscribe(data5 => {
        this.calificaciones = data5;
@@ -91,7 +91,9 @@ export class ProductoCompradorComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar'
     }).then((result) => {
+
       if (result.isConfirmed) {
+          this.compradorService.cerrarSesionComprador();
          this._router.navigate(["/"]);
         Swal.fire(
           'Sesión Cerrada',
@@ -100,7 +102,7 @@ export class ProductoCompradorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
          this._router.navigate(["/informacionComprador"])
-      } 
+      }
     })
   }
 }

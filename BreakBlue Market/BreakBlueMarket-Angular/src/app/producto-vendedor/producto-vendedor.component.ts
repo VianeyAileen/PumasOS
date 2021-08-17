@@ -34,8 +34,8 @@ export class ProductoVendedorComponent implements OnInit {
   imagen : Observable<any> | undefined;
   nombreUsuario : string | any;
   productos : Producto[] = [];
-  
- 
+
+
   comentarios : Comentario[] = [];
   calificaciones : Calificacion[] = [];
 
@@ -143,6 +143,8 @@ export class ProductoVendedorComponent implements OnInit {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
+         this.vendedorService.cerrarSesionVendedor();
+         console.log("verificacion");
          this._router.navigate(["/"]);
         Swal.fire(
           'Sesión Cerrada',

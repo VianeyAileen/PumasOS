@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
+import { vendedorService } from '../_services/vendedorService';
 import { Producto } from '../_modelos/productoModelo';
 import { Imagen } from '../_modelos/imagenModelo';
 
@@ -26,6 +27,7 @@ export class HomeVendedorComponent implements OnInit {
   constructor(
     private _router: Router,
     private productoService : productoService,
+    private vendedorService: vendedorService,
     private imagenService : imagenService,
     private activateRoute : ActivatedRoute) { }
 
@@ -51,6 +53,8 @@ export class HomeVendedorComponent implements OnInit {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.vendedorService.cerrarSesionVendedor();
+        console.log("verificacion");
          this._router.navigate(["/"]);
         Swal.fire(
           'Sesión Cerrada',
@@ -59,7 +63,7 @@ export class HomeVendedorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
          this._router.navigate(["/homeVendedor"])
-      } 
+      }
     })
   }
 
@@ -72,7 +76,7 @@ export class HomeVendedorComponent implements OnInit {
       console.log(imagen);
     })
   }
-  
+
 
   extraerBase64 = async ($event : any) => new Promise((resolve, reject) => {
     try{
