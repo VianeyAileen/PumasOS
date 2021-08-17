@@ -3,8 +3,8 @@ from app import app
 from db import mysql
 from mail import email
 from flask import jsonify, session
-from flask import request
-from werkzeug.security import generate_password_hash,  check_password_hash
+from flask import flash, request
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message
 from flask_login import logout_user
 
@@ -55,14 +55,6 @@ def mail(correo):
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
-#funcion que nos ayuda a cerrar la sesion del comprador.
-@app.route("/cerrarsesionComprador")
-def cerrarsesion():
-    if 'correo' in session:
-        session.pop('correo', None)
-    return jsonify('haz salido de la sesion correctamente')
-
-
 # Método para inicair sesión del comprador
 @app.route('/login', methods=['GET','POST'])
 def loginComprador():
@@ -103,8 +95,14 @@ def loginComprador():
     finally:
         if cursor and conn:
             cursor.close()
-            conn.close() 
+            conn.close()
 
+#funcion que nos ayuda a cerrar la sesion del comprador.
+@app.route("/cerrarsesion")
+def cerrarSesionComprador():
+    if 'correo' in session:
+        session.pop('correo', None)
+    return jsonify('haz salido de la sesion correctamente')
 
 @app.errorhandler(404)
 def not_found(error=None):

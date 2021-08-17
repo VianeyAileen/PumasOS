@@ -58,7 +58,7 @@ def mail(correo):
 
 #funcion que nos ayuda a cerrar la sesion del vendedor.
 @app.route("/cerrarsesionVendedor")
-def cerrarsesion2():
+def cerrarSesionVendedor():
     if 'correo' in session:
         session.pop('correo', None)
     return jsonify('haz salido de la sesion correctamente')

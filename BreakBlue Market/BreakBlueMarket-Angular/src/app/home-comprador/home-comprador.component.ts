@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
+import { compradorService } from '../_services/compradorService';
 import { Producto } from '../_modelos/productoModelo';
 import { Imagen } from '../_modelos/imagenModelo';
 
@@ -20,14 +21,14 @@ export class HomeCompradorComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private productoService : productoService) { }
+    private productoService : productoService,
+    private compradorService: compradorService) { }
 
   ngOnInit(): void {
     this.productoService.obtenerProductos().subscribe( data => {
       this.productos = data;
     })
   }
-
   mensajeCerrar(){
     Swal.fire({
       text: "¿Está seguro de querer cerrar la sesión?",
@@ -38,6 +39,8 @@ export class HomeCompradorComponent implements OnInit {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
+         this.compradorService.cerrarSesionComprador();
+         console.log("verificacion de cerrar sesion")
          this._router.navigate(["/"]);
         Swal.fire(
           'Sesión Cerrada',
@@ -46,7 +49,7 @@ export class HomeCompradorComponent implements OnInit {
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
          this._router.navigate(["/homeComprador"])
-      } 
+      }
     })
   }
 }

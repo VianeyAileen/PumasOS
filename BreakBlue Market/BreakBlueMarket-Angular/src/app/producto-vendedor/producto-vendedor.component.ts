@@ -35,7 +35,7 @@ export class ProductoVendedorComponent implements OnInit {
   // Objeto imagen que contiene las imagenes del producto
   imagenes : Imagen[] = [];
   // Objeto vendedor para saber quien es el que vende el producto
-  
+
   vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", genero: "", tipo:"", edad: 0};
 
   comentarios : Comentario[] = [];
@@ -149,6 +149,8 @@ export class ProductoVendedorComponent implements OnInit {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
+         this.vendedorService.cerrarSesionVendedor();
+         console.log("verificacion");
          this._router.navigate(["/"]);
         Swal.fire(
           'Sesión Cerrada',

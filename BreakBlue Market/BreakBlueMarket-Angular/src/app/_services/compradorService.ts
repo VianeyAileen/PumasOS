@@ -30,4 +30,9 @@ export class compradorService {
     obtenerComprador(correo: String):Observable<Comprador> {
         return this.http.get<Comprador>(this.baseUrl+"/");
     }
+
+    //logout para comprador
+    cerrarSesionComprador(){
+      return this.http.get<any>(this.baseUrl + "/cerrarsesion");
+    }
 }
