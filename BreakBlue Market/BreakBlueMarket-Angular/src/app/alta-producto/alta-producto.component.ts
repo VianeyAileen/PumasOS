@@ -1,12 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
-
-// import { Imagen } from '../_modelos/imagenModelo';
-// import { imagenService } from '../_services/imagenService';
 
 import Swal from 'sweetalert2'
 
@@ -31,7 +28,8 @@ export class AltaProductoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,
-    private _router: Router) {
+    private _router: Router,
+    private rutaActiva: ActivatedRoute) {
       this.createForm();
    }
 

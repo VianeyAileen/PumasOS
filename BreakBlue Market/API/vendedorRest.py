@@ -58,7 +58,7 @@ def mail(correo):
 
 
 # Método para inicair sesión del vendedor
-@app.route('/login', methods=['GET'])
+@app.route('/loginVendedor', methods=['GET','POST'])
 def loginVendedor():
     conn = None
     cursor = None
