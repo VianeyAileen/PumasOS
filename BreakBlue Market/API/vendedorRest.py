@@ -64,7 +64,7 @@ def cerrarsesion2():
     return jsonify('haz salido de la sesion correctamente')
 
 # Método para inicair sesión del vendedor
-@app.route('/login', methods=['GET','POST'])
+@app.route('/loginVendedor', methods=['GET','POST'])
 def loginVendedor():
     conn = None
     cursor = None
@@ -101,8 +101,9 @@ def loginVendedor():
     except Exception as e:
         print(e)
     finally:
-        cursor.close()
-        conn.close()
+        if cursor and conn:
+            cursor.close()
+            conn.close()
 
 @app.errorhandler(404)
 def not_found(error=None):

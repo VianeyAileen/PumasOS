@@ -34,7 +34,7 @@ export class IniciarSesionComponent implements OnInit{
     private lfv: FormBuilder,
     private compradorService: compradorService,
     private vendedorService: vendedorService,
-    private _router: Router ) {
+    private _router: Router) {
       this.createForm();
       this.createFormV();
     }
