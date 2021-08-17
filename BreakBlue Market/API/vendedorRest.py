@@ -95,8 +95,9 @@ def loginVendedor():
     except Exception as e:
         print(e)
     finally:
-        cursor.close()
-        conn.close()
+        if cursor and conn:
+            cursor.close()
+            conn.close()
 
 @app.errorhandler(404)
 def not_found(error=None):
