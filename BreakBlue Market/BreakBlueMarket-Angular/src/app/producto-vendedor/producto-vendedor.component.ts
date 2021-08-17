@@ -32,16 +32,11 @@ export class ProductoVendedorComponent implements OnInit {
   nombre : string | any;
   correo : string | any;
   imagen : Observable<any> | undefined;
-  // Objeto Producto
+  nombreUsuario : string | any;
   productos : Producto[] = [];
-  // Objeto imagen que contiene las imagenes del producto
-  // imagenes : Imagen = {id:0, imagen:""};
-  // Objeto vendedor para saber quien es el que vende el producto
   
-  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", genero: "", tipo:"", edad: 0};
-
+ 
   comentarios : Comentario[] = [];
-
   calificaciones : Calificacion[] = [];
 
   respuesta: any = [];
@@ -70,10 +65,9 @@ export class ProductoVendedorComponent implements OnInit {
 
     console.log(this.correo)
     // Buscamos el vendedor
-    this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
-      console.log(data2)
-      this.vendedor = data2;
-    });
+    // this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
+    //   this.vendedor = data2;
+    // });
 
     // Buscamos las imagenes
     this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
@@ -103,7 +97,7 @@ export class ProductoVendedorComponent implements OnInit {
       error => {
         console.log('error');
         this.mensajeError();
-        this._router.navigate(["/informacionVendedor"]);
+        this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo]);
       }
     )
   }
@@ -121,14 +115,14 @@ export class ProductoVendedorComponent implements OnInit {
       confirmButtonText: 'Borrar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor',this.correo]);
         Swal.fire(
           '¡Producto borrado!',
           'Acción realizada con éxito',
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-        this._router.navigate(["/informacionVendedor"])
+        this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo])
       }
     })
   }
@@ -161,7 +155,7 @@ export class ProductoVendedorComponent implements OnInit {
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-         this._router.navigate(["/informacionVendedor"])
+         this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo])
       }
     })
   }

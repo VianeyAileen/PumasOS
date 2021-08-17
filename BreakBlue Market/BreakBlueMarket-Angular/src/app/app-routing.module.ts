@@ -20,10 +20,10 @@ const routes: Routes = [
   { path: 'login', component: IniciarSesionComponent},
   { path: 'comprador', component: RegistrarseComponent},
   { path: 'vendedor', component: RegistrarseComponent},
-  { path: 'homeVendedor', component: HomeVendedorComponent},
-  { path: 'altaProducto', component: AltaProductoComponent},
+  { path: 'homeVendedor/:correo', component: HomeVendedorComponent},
+  { path: 'altaProducto/:correo', component: AltaProductoComponent},
   { path: 'informacionVendedor/:id/:nombre/:correo', component: ProductoVendedorComponent},
-  { path: 'actualizar/:id', component: ActualizarComponent},
+  { path: 'actualizar/:id/:correo', component: ActualizarComponent},
   { path: 'homeComprador', component: HomeCompradorComponent},
   { path: 'informacionComprador/:id/:nombre/:correo', component: ProductoCompradorComponent},
   { path: 'opinion/:id', component: OpinionComponent},
@@ -35,6 +35,5 @@ const routes: Routes = [
   imports: [CommonModule ,RouterModule.forRoot(routes)],
   exports: [RouterModule],
   declarations: []
-  // providers: []
 })
 export class AppRoutingModule { }

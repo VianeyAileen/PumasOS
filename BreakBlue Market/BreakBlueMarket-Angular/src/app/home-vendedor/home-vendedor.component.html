@@ -41,9 +41,9 @@
                     <strong>BreakBlue Market</strong>
                 </a>
                 <form class="d-flex">
-                    <a type="button" aria-current="page" routerLink="/homeVendedor" routerLinkActive="active"
+                    <a type="button" aria-current="page" [routerLink]="['/homeVendedor',correo]" routerLinkActive="active"
                         class="btn btn-sm btn-outline-secondary d-flex align-items-center" (click)="mensajeCerrar()">Cerrar Sesión</a>
-                    <a type="button" aria-current="page" routerLink="/altaProducto" routerLinkActive="active"
+                    <a type="button" aria-current="page" [routerLink]="['/altaProducto',correo]" routerLinkActive="active"
                         class="btn btn-sm btn-outline-secondary">Dar de Alta Producto</a>
                 </form>
 
@@ -67,14 +67,8 @@
 
                         <div class="col">
                             <div class="card shadow-sm">
-                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                    preserveAspectRatio="xMidYMid slice" focusable="false"> -->
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" />
-                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                                      
-                                </svg>
+                                
+                                <img src={{prod.imagen}}>
                                 <div class="form-group">
                                     <!-- <label for="" class="form-label">Imágenes del Producto <span class="text-muted"></span></label> -->
                                     <!-- <img *ngIf="obtenerImagen(prod.imagen)" [src]="previsualizacion" class="rounded mb-3" width="100"> -->

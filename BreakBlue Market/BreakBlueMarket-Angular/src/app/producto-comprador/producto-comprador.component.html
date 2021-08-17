@@ -41,7 +41,7 @@
                     </a>
 
                     <form class="d-flex">
-                        <a type="button" aria-current="page" routerLink="/informacionComprador" routerLinkActive="active" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
+                        <a type="button" aria-current="page" class="btn btn-sm btn-outline-secondary d-flex align-items-center" style="margin-left: 10px;" (click)="mensajeCerrar()">Cerrar Sesión</a>
                     </form>
                 </div>
             </div>
@@ -72,19 +72,9 @@
                 <ngb-carousel>
                   <ng-template  ngbSlide>
                     <div>
-                      <img width="50%" height="50%" src="../../assets/img/icon.PNG">
+                      <img width="50%" height="50%" src={{producto.imagen}}>
                     </div>
                   </ng-template>
-                  <ng-template ngbSlide>
-                    <div>
-                      <img width="50%" height="50%" src="../../assets/img/Logotipo.jpeg">
-                    </div>
-                  </ng-template>
-                  <ng-template ngbSlide>
-                    <div>
-                      <img width="50%" height="50%" src="../../assets/img/icon.PNG">
-                    </div>
-                  </ng-template> 
                 </ngb-carousel>
               </div>
 

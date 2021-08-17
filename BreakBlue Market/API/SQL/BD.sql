@@ -10,7 +10,7 @@ CREATE TABLE `producto` (
 	`descripcion` varchar(500) NOT NULL,
 	`unidadesDisponibles` int NOT NULL,
 	`correo` varchar(500) NOT NULL,
-	`imagen` varchar(30000) NOT NULL,
+	`imagen` longtext NOT NULL,
 
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`correo`) REFERENCES comprador(`correo`),

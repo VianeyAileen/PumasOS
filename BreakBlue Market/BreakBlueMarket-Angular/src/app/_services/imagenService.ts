@@ -18,12 +18,11 @@ export class imagenService {
     // POST: agrega un nuevo producto
     agregarImagenes(id: number, imagen: string): Observable<Imagen>{
         console.log(imagen)
-        return this.http.post<Imagen>(this.useUrl +"/imagen/"+id, "imagen : "+imagen);
+        return this.http.put<Imagen>(this.useUrl +"/imagen/"+id, { imagen });
     }
 
     // GET: obtiene las imagenes
     obtenerImagenes(id:number) : Observable<Imagen>{
-        console.log(id)
         let response = this.http.get<Imagen>(this.useUrl + "/imagen/" + id)
         console.log(response)
         return response

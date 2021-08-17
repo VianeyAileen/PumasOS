@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
+import { imagenService } from '../_services/imagenService';
 
 @Component({
   selector: 'app-actualizar',
@@ -18,7 +19,8 @@ export class ActualizarComponent implements OnInit {
   //Datos que pedimos para actualizar
   @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
 
-
+  correo : string | any;
+  previsualizacion : string | any;
   agregarForm!: FormGroup;
 
   respuesta: any = [];
@@ -28,6 +30,7 @@ export class ActualizarComponent implements OnInit {
   constructor( private _router: Router, 
                private fb: FormBuilder,
                private productoService: productoService,
+               private imagenService: imagenService,
                private rutaActiva : ActivatedRoute
                ) { 
     this.createForm();
@@ -35,7 +38,8 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.rutaActiva.snapshot.paramMap.get('id');
-    console.log(this.rutaActiva.snapshot.paramMap.get('id'))
+    console.log(this.rutaActiva.snapshot.paramMap.get('id'));
+    this.correo =this.rutaActiva.snapshot.paramMap.get('correo');
   }
 
   createForm() {
@@ -51,14 +55,26 @@ export class ActualizarComponent implements OnInit {
 
     // Subimos los datos a la BD
     actualizarProducto() {
-      console.log(this.producto)
+      let nombre = this.producto.nombre;
+      console.log(nombre)
+      // console.log(this.producto)
       this.productoService.actualizarProducto(this.id, this.producto).subscribe(
         // Si no hay errores mandamos un mensaje de exito
         respuesta => {
-          this.mensajeActualizar();
-          
           // Mandamos el mensaje de que el producto fue dado de alta
           console.log('Producto actualizado');
+          this.productoService.obtenerProducto(nombre).subscribe(dato => {
+            console.log(dato);
+            this.imagenService.agregarImagenes(dato[0].id, this.previsualizacion).subscribe(dta => {
+            })
+          })
+          console.log(this.producto);
+
+          this.mensajeActualizar();
+
+          
+          
+          
           // Rederigimos al vendedor a la página donde estan todos sus productos
           // this._router.navigate(["/homeVendedor"]);
         },
@@ -68,7 +84,7 @@ export class ActualizarComponent implements OnInit {
           //Se manda el mensaje de error
           this.mensajeError();
           // Rederigimos al vendedor a la misma página
-          this._router.navigate(["/homeVendedor"]);
+          this._router.navigate(['/homeVendedor',this.correo]);
   
         }
       )
@@ -85,14 +101,14 @@ export class ActualizarComponent implements OnInit {
       confirmButtonText: 'Guardar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor',this.correo]);
         Swal.fire(
           '¡Producto actualizado!',
           'Acción realizada con éxito',
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-        this._router.navigate(["/homeVendedor"])
+        this._router.navigate(['/homeVendedor',this.correo])
       } 
     })
   }
@@ -111,21 +127,34 @@ export class ActualizarComponent implements OnInit {
     })
   }
 
-  // Función para subir una imagen
-  urls = new Array<string>();
-  onSelectFile(event: any) {
-    this.urls = [];
-    let files = event.target.files;
-    if (files) {
-      for (let file of files) {
-        let reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.urls.push(e.target.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    }
+ // Función para subir una imagen
+ onSelectFile(event : Event|any) : any{
+  console.log(event)
+  const archivoCapturado = event.target.files[0];
+  this.extraerBase64(archivoCapturado).then( (imagen : any) => {
+    this.previsualizacion = imagen.base;
+    console.log(imagen);
+  })
+}
+
+extraerBase64 = async ($event : any) => new Promise((resolve, reject) => {
+  try{
+    const reader = new FileReader();
+    reader.readAsDataURL($event);
+    reader.onload = () => {
+      resolve({
+        base : reader.result
+      });
+    };
+    reader.onerror = error => {
+      resolve({
+        base : null
+      });
+    };
+  }catch(e){
+    reject ;
   }
+})
 
   
 }

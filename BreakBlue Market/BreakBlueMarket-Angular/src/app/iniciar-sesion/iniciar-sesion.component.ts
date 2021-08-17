@@ -26,8 +26,9 @@ export class IniciarSesionComponent implements OnInit{
   error: any = [];
   
   loginForm!: FormGroup;
-
   loginFormV!: FormGroup;
+
+  correo : string  | any;
   
   constructor(
     private fb: FormBuilder,
@@ -60,9 +61,11 @@ export class IniciarSesionComponent implements OnInit{
     console.log(this.vendedor.correo, this.vendedor.contrasena, this.vendedor.tipo)
     this.vendedorService.loginVendedor(this.vendedor).subscribe(
       respuesta => {
+        this.correo = this.vendedor.correo
+        console.log(this.correo)
         console.log('Sesión Iniciada');
         this.mensajeLogin();
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor', this.correo]);
       },
       error => {
         console.log('error');

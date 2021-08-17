@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
 import { Producto } from '../_modelos/productoModelo';
@@ -21,12 +21,16 @@ export class HomeVendedorComponent implements OnInit {
   // imagen : Observable<any> | undefined;
   nombre : String| any;
 
+  correo : string | any;
+
   constructor(
     private _router: Router,
     private productoService : productoService,
-    private imagenService : imagenService) { }
+    private imagenService : imagenService,
+    private activateRoute : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.correo = this.activateRoute.snapshot.paramMap.get('correo');
     this.productoService.obtenerProductos().subscribe( data => {
       this.productos = data;
     })

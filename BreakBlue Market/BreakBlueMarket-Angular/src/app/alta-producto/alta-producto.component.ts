@@ -16,22 +16,26 @@ import Swal from 'sweetalert2'
 export class AltaProductoComponent implements OnInit {
 
   //Datos que pedimos para dar de alta un producto
-  @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
+  @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ""}
 
 
   agregarForm!: FormGroup;
   idProduct : number| any;
   previsualizacion : string |any;
+  correo : string | any;
 
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,
     private imagenService: imagenService,
+    private activateRoute : ActivatedRoute,
     private _router: Router) {
       this.createForm();
    }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.correo =this.activateRoute.snapshot.paramMap.get('correo');
+  }
 
   // Validamos que los campos no sean vacíos en el formulario
   createForm() {
@@ -50,21 +54,22 @@ export class AltaProductoComponent implements OnInit {
   agregarProducto() {
     let nombre = this.producto.nombre;
     console.log(nombre)
+    this.producto.correo = this.correo;
+    // this.producto.imagen = this.previsualizacion;
     this.productoService.agregarProducto(this.producto).subscribe(
       // Si no hay errores mandamos un mensaje de exito
       respuesta => {
         console.log('Producto dado de alta');
-
         this.productoService.obtenerProducto(nombre).subscribe(dato => {
           console.log(dato);
           this.imagenService.agregarImagenes(dato[0].id, this.previsualizacion).subscribe(dta => {
-            console.log(dta)
           })
         })
+        console.log(this.producto);
         // Mandamos el mensaje de que el producto fue dado de alta
         this.mensajeAltaProducto();
         // Rederigimos al vendedor a la página donde estan todos sus productos
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor',this.correo]);
       },
       // En caso contrario Mandamos un error
       error => {
@@ -72,7 +77,7 @@ export class AltaProductoComponent implements OnInit {
         //Se manda el mensaje de error
         this.mensajeError();
         // Rederigimos al vendedor a la misma página
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor', this.correo]);
 
       }
     )
