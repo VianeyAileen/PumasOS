@@ -27,7 +27,6 @@
             <main>
                 <div class="py-5 text-center">
                     <h2>Datos de Pago</h2>
-
                     <div class="col-md-7 col-lg-8">
                         <h4 class="mb-3">Ingresar Datos de Pago</h4>
                         <!-- Inicia el formulario -->
@@ -190,7 +189,9 @@
                             <!-- Botón Aceptar -->
                             <div class="text-center">
                                  <!-- El bottón estará deshabilitado al menos que se ingresen los datos que pide el formulario -->
-                                <button  aria-current="page" routerLink="/datosPago" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeCompra()" [disabled]="pagoForm.pristine || pagoForm.invalid">Aceptar</button>
+                                <!-- <button  aria-current="page" routerLink="/datosPago" routerLinkActive="active" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeCompra()" [disabled]="pagoForm.pristine || pagoForm.invalid">Aceptar</button> -->
+                                <button  aria-current="page" class="w-40 btn btn-primary btn-lg" type="submit" (click)="mensajeCompra()" [disabled]="pagoForm.pristine || pagoForm.invalid">Aceptar</button>
+                                
                             </div>
                         </form>
                     </div>

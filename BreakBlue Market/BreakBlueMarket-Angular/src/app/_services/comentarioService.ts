@@ -15,18 +15,13 @@ export class comentarioService {
 
     headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    // POST: agrega un nuevo comentario
-    agregarImagenes(id: number, comentario : Comentario): Observable<Comentario>{
-        return this.http.post<Comentario>(this.useUrl +"/calificacion/"+id, comentario);
-    }
-
     // GET: obtiene los comentarios
     obtenerComentarios(id:number) : Observable<Comentario[]>{
         return this.http.get<Comentario[]>(this.useUrl + "/comentario/" + id)
     }
 
     // POST: agrega un nuevo comentario
-    agregarComentario(id: number, comentario : Comentario): Observable<Comentario>{
-        return this.http.post<Comentario>(this.useUrl +"/calificacion/"+id, comentario);
+    agregarComentario(id: number, comentario :string): Observable<Comentario>{
+        return this.http.post<Comentario>(this.useUrl +"/comentario/"+id, {comentario});
     }
 }

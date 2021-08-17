@@ -16,6 +16,7 @@ import { imagenService } from '../_services/imagenService';
 import { vendedorService } from '../_services/vendedorService';
 import { comentarioService } from '../_services/comentarioService';
 import { calificacionService } from '../_services/calificacionService';
+import { Observable } from 'rxjs';
 
 
 
@@ -30,16 +31,12 @@ export class ProductoVendedorComponent implements OnInit {
   id :number|any = 0;
   nombre : string | any;
   correo : string | any;
-  // Objeto Producto
+  imagen : Observable<any> | undefined;
+  nombreUsuario : string | any;
   productos : Producto[] = [];
-  // Objeto imagen que contiene las imagenes del producto
-  imagenes : Imagen[] = [];
-  // Objeto vendedor para saber quien es el que vende el producto
 
-  vendedor : Vendedor = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", genero: "", tipo:"", edad: 0};
 
   comentarios : Comentario[] = [];
-
   calificaciones : Calificacion[] = [];
 
   respuesta: any = [];
@@ -62,17 +59,19 @@ export class ProductoVendedorComponent implements OnInit {
 
     // Buscamos el producto
     this.productoService.obtenerProducto(this.nombre).subscribe(data => {
+      console.log(data)
       this.productos = data;
     });
 
+    console.log(this.correo)
     // Buscamos el vendedor
-    this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
-      this.vendedor = data2;
-    });
+    // this.vendedorService.obtenerVendedor(this.correo).subscribe(data2 => {
+    //   this.vendedor = data2;
+    // });
 
     // Buscamos las imagenes
     this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
-      this.imagenes = data3;
+      this.imagen = data3.imagen;
     });
 
     //  Buscamos los comentarios
@@ -84,23 +83,6 @@ export class ProductoVendedorComponent implements OnInit {
     this.calificacionService.obtenerCalificaciones(this.id).subscribe(data5 => {
       this.calificaciones = data5;
     })
-  }
-
-  //Borramos un producto dado su id
-  eliminaProducto(id: number) {
-    this.productoService.eliminaProducto(id).subscribe(
-      //Mandamos una alerta para confirmas los cambios
-      respuesta => {
-        console.log(respuesta);
-        this.mensajeBorrar();
-      },
-      //Si falla la conexión o hay un error, mandamos un mensaje
-      error => {
-        console.log('error');
-        this.mensajeError();
-        this._router.navigate(["/informacionVendedor"]);
-      }
-    )
   }
 
 
@@ -116,14 +98,26 @@ export class ProductoVendedorComponent implements OnInit {
       confirmButtonText: 'Borrar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._router.navigate(["/homeVendedor"]);
+        this.productoService.eliminaProducto(this.id).subscribe(
+          //Mandamos una alerta para confirmas los cambios
+          respuesta => {
+            console.log(respuesta);
+          },
+          //Si falla la conexión o hay un error, mandamos un mensaje
+          error => {
+            console.log('error');
+            this.mensajeError();
+            this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo]);
+          }
+        )
+        this._router.navigate(['/homeVendedor',this.correo]);
         Swal.fire(
           '¡Producto borrado!',
           'Acción realizada con éxito',
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-        this._router.navigate(["/informacionVendedor"])
+        this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo])
       }
     })
   }
@@ -158,7 +152,7 @@ export class ProductoVendedorComponent implements OnInit {
           'success'
         )
       } else if (result.dismiss == Swal.DismissReason.cancel){
-         this._router.navigate(["/informacionVendedor"])
+         this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo])
       }
     })
   }

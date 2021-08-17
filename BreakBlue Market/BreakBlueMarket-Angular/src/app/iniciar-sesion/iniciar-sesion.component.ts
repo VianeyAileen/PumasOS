@@ -26,8 +26,9 @@ export class IniciarSesionComponent implements OnInit{
   error: any = [];
   
   loginForm!: FormGroup;
-
   loginFormV!: FormGroup;
+
+  correo : string  | any;
   
   constructor(
     private fb: FormBuilder,
@@ -58,35 +59,43 @@ export class IniciarSesionComponent implements OnInit{
   //Iniciamos Sesión de Vendedor
   loginVendedor() {
     console.log(this.vendedor.correo, this.vendedor.contrasena, this.vendedor.tipo)
-    this.vendedorService.loginVendedor(this.vendedor).subscribe(
-      respuesta => {
-        console.log('Sesión Iniciada');
-        this.mensajeLogin();
-        this._router.navigate(["/homeVendedor"]);
-      },
-      error => {
-        console.log('error');
-        this.mensajeError();
-        this._router.navigate(["/"]);
-      }
-    )
+    if (this.vendedor.tipo==='Vendedor') {
+      this.vendedorService.loginVendedor(this.vendedor).subscribe(
+        respuesta => {
+          console.log('Sesión Iniciada');
+          this.mensajeLogin();
+          this._router.navigate(['/homeVendedor',this.vendedor.correo]);
+        },
+        error => {
+          console.log('Correo o contraseña inválido');
+          this.mensajeAuth();
+          this._router.navigate(["/login"]);
+        }
+      )
+    } else {
+      this.mensajeError();
+    }   
   }
 
   //Iniciamos Sesión del Ccomprador
   loginComprador() {
     console.log(this.comprador.correo, this.comprador.contrasena)
-    this.compradorService.loginComprador(this.comprador).subscribe(
-      respuesta => {
-        console.log('Sesión Iniciada');
-        this.mensajeLogin();
-        this._router.navigate(["/homeComprador"]);
-      },
-      error => {
-        console.log('error');
-        this.mensajeError();
-        this._router.navigate(["/"]);
-      }
-    )
+    if (this.comprador.tipo==='Comprador') {
+      this.compradorService.loginComprador(this.comprador).subscribe(
+        respuesta => {
+          console.log('Sesión Iniciada');
+          this.mensajeLogin();
+          this._router.navigate(["/homeComprador"]);
+        },
+        error => {
+          console.log('Correo o contraseña inválido');
+          this.mensajeAuth();
+          this._router.navigate(["/login"]);
+        }
+      )
+    } else {
+      this.mensajeError();
+    }
   }
   
   // Mensaje que se manda cuando se inicia sesión correctamente
@@ -109,8 +118,8 @@ export class IniciarSesionComponent implements OnInit{
     Swal.fire({
       position: 'center',
       icon: 'error',
-      title: 'Correo o Contraseña invpalido',
-      text: 'Por favor intente iniciar sesión de nuevo, sino intentarlo más tarde',
+      title: 'Correo o Contraseña inválido',
+      text: 'Por favor verifique sus datos',
       showConfirmButton: true,
     })
   }

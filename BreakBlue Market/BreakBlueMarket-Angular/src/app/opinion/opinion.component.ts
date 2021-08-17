@@ -16,7 +16,8 @@ import Swal from 'sweetalert2'
   styleUrls: ['./opinion.component.css']
 })
 export class OpinionComponent implements OnInit {
-  id: number | any = 0 ;
+
+  id: number | any;
 
   @Input() calificacion: Calificacion = {id: 0, calificacion: ''}
   @Input() comentario: Comentario = {id: 0, comentario: ''}
@@ -27,11 +28,13 @@ export class OpinionComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private _router: Router,
               private calificacionService: calificacionService,
-              private comentarioService: comentarioService) {
+              private comentarioService: comentarioService,
+              private rutaActiva : ActivatedRoute) {
     this.createForm();
    }
 
   ngOnInit(): void {
+    this.id = this.rutaActiva.snapshot.paramMap.get('id');
   }
 
   createForm() {
@@ -41,53 +44,34 @@ export class OpinionComponent implements OnInit {
     });
   }
 
-  agregarCalificacion() {
-    console.log(this.calificacion)
-    this.calificacionService.agregarCalificacion(this.id, this.calificacion).subscribe(
-      // Si no hay errores mandamos un mensaje de exito
-      respuesta => {
-        this.mensajeOpinion();
-
-        // Rederigimos al vendedor a la página donde estan todos sus productos
-        this._router.navigate(["/homeComprador"]);
-      },
-      // En caso contrario Mandamos un error
-      error => {
-        console.log('error');
-        //Se manda el mensaje de error
-        this.mensajeError();
-        // Rederigimos al vendedor a la misma página
-        this._router.navigate(["/homeComprador"]);
-
-      }
-    )
-  }
-
-  agregarComentario() {
-    console.log(this.calificacionService)
-    this.comentarioService.agregarComentario(this.id, this.comentario).subscribe(
-      // Si no hay errores mandamos un mensaje de exito
-      respuesta => {
-        this.mensajeOpinion();
-
-        // Rederigimos al vendedor a la página donde estan todos sus productos
-        this._router.navigate(["/homeComprador"]);
-      },
-      // En caso contrario Mandamos un error
-      error => {
-        console.log('error');
-        //Se manda el mensaje de error
-        this.mensajeError();
-        // Rederigimos al vendedor a la misma página
-        this._router.navigate(["/homeComprador"]);
-
-      }
-    )
-  }
-
   enviar(){
-    this.agregarComentario(),
-    this.agregarCalificacion()
+    console.log(this.id);
+    let opinion = this.opinionForm.value.opinion;
+    console.log(opinion);
+    let calificacion = this.opinionForm.value.calificacion;
+    console.log(calificacion);
+    try{
+      this.comentarioService.agregarComentario(this.id, opinion).subscribe(data => {
+        console.log(data);
+      });
+      this.calificacionService.agregarCalificacion(this.id, calificacion).subscribe(dta => {
+        console.log(dta);
+      });
+      this.mensajeOpinion();
+      // Rederigimos al vendedor a la página donde estan todos sus productos
+      this._router.navigate(["/homeComprador"]);
+    }catch(e){
+      console.log('error');
+      //Se manda el mensaje de error
+      this.mensajeError();
+      // Rederigimos al vendedor a la misma página
+      this._router.navigate(["/homeComprador"]);
+
+    }
+
+    
+    // this.agregarComentario();
+    // this.agregarCalificacion();
   }
 
   // Mensaje que se manda cuando ocurre un error al conectarse con el servidor

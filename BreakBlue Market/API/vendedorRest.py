@@ -50,6 +50,26 @@ def añadir_vendedor():
             cursor.close()
             conn.close()
 
+@app.route('/vendedor/<string:correo>', methods=['GET'])
+def obtenerVendedor(correo):
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM vendedor WHERE correo = %s",correo)
+        rows = cursor.fetchall()
+        resp = jsonify(rows)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+        return jsonify("Error"),404
+    finally:
+        cursor.close()
+        conn.close()
+
+
 #def mail(correo):
 def mail(correo):
     msg = Message('BreakBlue Market', sender = 'breakbluemarket@gmail.com', recipients = [correo])
@@ -104,6 +124,14 @@ def loginVendedor():
         if cursor and conn:
             cursor.close()
             conn.close()
+
+# Método para cerrar la sesión de un vendedor
+@app.route('/cerrarSesion')
+def cerrarSesionVendedor():
+    if 'correo' in session:
+        session.pop('correo', None)
+    return jsonify({'message' : 'Haz salido de la sesión correctamente'})
+
 
 @app.errorhandler(404)
 def not_found(error=None):

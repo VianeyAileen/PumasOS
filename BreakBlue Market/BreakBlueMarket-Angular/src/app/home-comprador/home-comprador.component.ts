@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 
 import { productoService } from '../_services/productoService';
 import { compradorService } from '../_services/compradorService';
+import { imagenService } from '../_services/imagenService';
 import { Producto } from '../_modelos/productoModelo';
 import { Imagen } from '../_modelos/imagenModelo';
 
 import Swal from 'sweetalert2'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-comprador',
@@ -16,19 +18,27 @@ import Swal from 'sweetalert2'
 export class HomeCompradorComponent implements OnInit {
 
   productos : Producto[] = [];
-  imagenes : Imagen[] = [];
+  imagen : Observable<any> | undefined;
   nombre : String | any;
 
   constructor(
     private _router: Router,
     private productoService : productoService,
-    private compradorService: compradorService) { }
+    private compradorService: compradorService,
+    private imagenService: imagenService) { }
 
   ngOnInit(): void {
     this.productoService.obtenerProductos().subscribe( data => {
       this.productos = data;
     })
   }
+
+  obtenerImagen(id : number){
+    this.imagenService.obtenerImagenes(id).subscribe(data => {
+      this.imagen = data.imagen;
+    })
+  }
+
   mensajeCerrar(){
     Swal.fire({
       text: "¿Está seguro de querer cerrar la sesión?",

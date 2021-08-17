@@ -20,6 +20,7 @@ def obtener_productos():
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -39,6 +40,7 @@ def obtener_producto(nombre):
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -49,9 +51,10 @@ def comprar_producto(id):
     conn = None
     cursor = None
     try:
+        print(id)
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("UPDATE producto SET unidadesDisponibles = unidadesDisponibles - 1 WHERE id = %s", id )
+        cursor.execute("UPDATE producto SET unidadesDisponibles = (unidadesDisponibles - 1) WHERE id = %s", id )
         row = cursor.fetchone()
         conn.commit()
         resp = jsonify("El producto fue comprado exitosamente")
@@ -59,6 +62,7 @@ def comprar_producto(id):
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -109,6 +113,7 @@ def obtener_calificacion(id):
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -128,6 +133,7 @@ def obtener_comentario(id):
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -157,6 +163,7 @@ def subir_comentario(id):
             return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -182,6 +189,7 @@ def subir_calificacion(id):
             return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -202,6 +210,7 @@ def eliminar_producto(id):
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -262,6 +271,7 @@ def agregar_imagen(id):
             return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -274,13 +284,14 @@ def obtener_imagen(id):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT imagen FROM imagen WHERE id = %s",id)
+        cursor.execute("SELECT imagen FROM producto WHERE id = %s",id)
         rows = cursor.fetchall()
         resp = jsonify(rows)
         resp.status_code = 200
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
         cursor.close()
         conn.close()
@@ -291,10 +302,9 @@ def actualizar_imagen(id):
     cursor = None
     try:
         _json = request.json
-        imagen = _json['imagenAnt']
-        _imagen = _json['imagenNueva']
-        sql = "UPDATE imagen SET imagen = %s WHERE imagen = %s AND id = %s"
-        data = (_imagen, imagen, id)
+        _imagen = _json['imagen']
+        sql = "UPDATE producto SET imagen = %s WHERE id = %s"
+        data = (_imagen, id)
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(sql, data)
@@ -304,9 +314,11 @@ def actualizar_imagen(id):
         return resp
     except Exception as e:
         print(e)
+        return jsonify("Error"),404
     finally:
-        cursor.close()
-        conn.close()
+        if(cursor is not None and conn is not None):
+            cursor.close()
+            conn.close()
 
 @app.errorhandler(404)
 def not_found(error=None):

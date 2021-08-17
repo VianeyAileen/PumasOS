@@ -16,8 +16,8 @@ export class calificacionService {
     headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     // POST: agrega una nueva calificacion
-    agregarCalificacion(id: number, calificacion : Calificacion): Observable<Calificacion>{
-        return this.http.post<Calificacion>(this.useUrl +"/calificacion/"+id, calificacion);
+    agregarCalificacion(id: number, calificacion : number): Observable<Calificacion>{
+        return this.http.post<Calificacion>(this.useUrl +"/calificacion/"+id, {calificacion});
     }
 
     // GET: obtiene las calificaciones

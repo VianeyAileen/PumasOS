@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Producto } from '../_modelos/productoModelo';
 import { productoService } from '../_services/productoService';
+import { imagenService } from '../_services/imagenService';
 
 import Swal from 'sweetalert2'
 
@@ -15,25 +16,26 @@ import Swal from 'sweetalert2'
 export class AltaProductoComponent implements OnInit {
 
   //Datos que pedimos para dar de alta un producto
-  @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ''}
+  @Input() producto: Producto = {id: 0, nombre: '', marca: '', descripcion: '', precio: 0.00 ,unidadesDisponibles:0 , correo: 'hhdh@gmail.com', imagen: ""}
 
-  // @Input() imagenes: Imagen = {id:0, imagen:''}
 
   agregarForm!: FormGroup;
-
-  respuesta: any = [];
-  error: any = [];
-
+  idProduct : number| any;
+  previsualizacion : string |any;
+  correo : string | any;
 
   constructor(
     private fb: FormBuilder,
     private productoService: productoService,
-    private _router: Router,
-    private rutaActiva: ActivatedRoute) {
+    private imagenService: imagenService,
+    private activateRoute : ActivatedRoute,
+    private _router: Router) {
       this.createForm();
    }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.correo =this.activateRoute.snapshot.paramMap.get('correo');
+  }
 
   // Validamos que los campos no sean vacíos en el formulario
   createForm() {
@@ -43,22 +45,31 @@ export class AltaProductoComponent implements OnInit {
       precioProducto: ['', Validators.required],
       unidadesProducto: ['', Validators.required],
       descripcionProducto: ['', Validators.required],
-      imagenProducto: ['', Validators.required]
+      imagenProducto: [this.previsualizacion]
     });
   }
 
 
   // Subimos los datos a la BD
   agregarProducto() {
-    console.log(this.producto)
+    let nombre = this.producto.nombre;
+    console.log(nombre)
+    this.producto.correo = this.correo;
+    // this.producto.imagen = this.previsualizacion;
     this.productoService.agregarProducto(this.producto).subscribe(
       // Si no hay errores mandamos un mensaje de exito
       respuesta => {
         console.log('Producto dado de alta');
+        this.productoService.obtenerProducto(nombre).subscribe(dato => {
+          console.log(dato);
+          this.imagenService.agregarImagenes(dato[0].id, this.previsualizacion).subscribe(dta => {
+          })
+        })
+        console.log(this.producto);
         // Mandamos el mensaje de que el producto fue dado de alta
         this.mensajeAltaProducto();
         // Rederigimos al vendedor a la página donde estan todos sus productos
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor',this.correo]);
       },
       // En caso contrario Mandamos un error
       error => {
@@ -66,10 +77,11 @@ export class AltaProductoComponent implements OnInit {
         //Se manda el mensaje de error
         this.mensajeError();
         // Rederigimos al vendedor a la misma página
-        this._router.navigate(["/homeVendedor"]);
+        this._router.navigate(['/homeVendedor', this.correo]);
 
       }
     )
+    
   }
 
   // Mensaje que se manda cuando el producto fue dado de alta de forma exitosa
@@ -95,18 +107,32 @@ export class AltaProductoComponent implements OnInit {
   }
 
   // Función para subir una imagen
-  urls = new Array<string>();
-  onSelectFile(event: any) {
-    this.urls = [];
-    let files = event.target.files;
-    if (files) {
-      for (let file of files) {
-        let reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.urls.push(e.target.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    }
+  onSelectFile(event : Event|any) : any{
+    console.log(event)
+    const archivoCapturado = event.target.files[0];
+    this.extraerBase64(archivoCapturado).then( (imagen : any) => {
+      this.previsualizacion = imagen.base;
+      console.log(imagen);
+    })
   }
+  
+
+  extraerBase64 = async ($event : any) => new Promise((resolve, reject) => {
+    try{
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base : reader.result
+        });
+      };
+      reader.onerror = error => {
+        resolve({
+          base : null
+        });
+      };
+    }catch(e){
+      reject ;
+    }
+  })
 }

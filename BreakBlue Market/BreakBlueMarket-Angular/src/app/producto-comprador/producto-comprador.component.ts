@@ -17,7 +17,7 @@ import { imagenService } from '../_services/imagenService';
 import { compradorService } from '../_services/compradorService';
 import { comentarioService } from '../_services/comentarioService';
 import { calificacionService } from '../_services/calificacionService';
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-producto-comprador',
@@ -31,7 +31,8 @@ export class ProductoCompradorComponent implements OnInit {
   correo : string | any;
 
   productos: Producto[] = [];
-  imagenes : Imagen[] = [];
+  
+  // imagen : Imagen = {id:0};
   comprador : Comprador = {correo: "",nombre: "",apellidos: "",contrasena: "", contrasena2:"",nombreUsuario: "", tipo:"", genero:"", edad:0};
   comentarios: Comentario[] = [];
   calificaciones : Calificacion[] = [];
@@ -53,7 +54,8 @@ export class ProductoCompradorComponent implements OnInit {
 
      // Buscamos el producto
      this.productoService.obtenerProducto(this.nombre).subscribe(data => {
-       this.productos = data;
+        this.productos = data;
+        console.log(this.productos)
      });
 
      // Buscamos el vendedor
@@ -63,17 +65,20 @@ export class ProductoCompradorComponent implements OnInit {
 
      // Buscamos las imagenes
      this.imagenService.obtenerImagenes(this.id).subscribe(data3 => {
-       this.imagenes = data3;
+       console.log(data3)
+      //  this.imagen = data3.imagen;
      });
 
      //  Buscamos los comentarios
      this.comentarioService.obtenerComentarios(this.id).subscribe(data4 => {
        this.comentarios = data4;
+       console.log(this.comentarios);
      })
 
      //  Obtenemos las calificaciones
      this.calificacionService.obtenerCalificaciones(this.id).subscribe(data5 => {
        this.calificaciones = data5;
+       console.log(this.calificaciones);
      })
   }
 
