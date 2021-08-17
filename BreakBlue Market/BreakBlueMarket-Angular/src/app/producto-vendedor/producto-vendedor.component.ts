@@ -85,23 +85,6 @@ export class ProductoVendedorComponent implements OnInit {
     })
   }
 
-  //Borramos un producto dado su id
-  eliminaProducto(id: number) {
-    this.productoService.eliminaProducto(id).subscribe(
-      //Mandamos una alerta para confirmas los cambios
-      respuesta => {
-        console.log(respuesta);
-        this.mensajeBorrar();
-      },
-      //Si falla la conexión o hay un error, mandamos un mensaje
-      error => {
-        console.log('error');
-        this.mensajeError();
-        this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo]);
-      }
-    )
-  }
-
 
   // Alerta que nos saldrá para confirmar la eliminación del producto
   mensajeBorrar(){
@@ -115,6 +98,18 @@ export class ProductoVendedorComponent implements OnInit {
       confirmButtonText: 'Borrar'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.productoService.eliminaProducto(this.id).subscribe(
+          //Mandamos una alerta para confirmas los cambios
+          respuesta => {
+            console.log(respuesta);
+          },
+          //Si falla la conexión o hay un error, mandamos un mensaje
+          error => {
+            console.log('error');
+            this.mensajeError();
+            this._router.navigate(['/informacionVendedor',this.id,this.nombre,this.correo]);
+          }
+        )
         this._router.navigate(['/homeVendedor',this.correo]);
         Swal.fire(
           '¡Producto borrado!',
