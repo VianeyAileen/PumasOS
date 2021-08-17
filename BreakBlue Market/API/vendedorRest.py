@@ -99,6 +99,14 @@ def loginVendedor():
             cursor.close()
             conn.close()
 
+# Método para cerrar la sesión de un vendedor
+@app.route('/cerrarSesion')
+def cerrarSesionVendedor():
+    if 'correo' in session:
+        session.pop('correo', None)
+    return jsonify({'message' : 'Haz salido de la sesión correctamente'})
+
+
 @app.errorhandler(404)
 def not_found(error=None):
     message = {

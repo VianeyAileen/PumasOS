@@ -55,14 +55,6 @@ def mail(correo):
     msg.body = "Haz sido registrado con exito en BreakBlue Market"
     email.send(msg)
 
-# #funcion que nos ayuda a cerrar la sesion del comprador.
-# @app.route("/cerrarsesion")
-# def cerrarsesion():
-#     if 'correo' in session:
-#             session.pop('correo', None)
-#     return jsonify('haz salido de la sesion correctamente')
-
-
 # Método para inicair sesión del comprador
 @app.route('/login', methods=['GET','POST'])
 def loginComprador():
@@ -104,6 +96,13 @@ def loginComprador():
         if cursor and conn:
             cursor.close()
             conn.close() 
+
+# Método para cerrar la sesión de un comprador
+@app.route('/cerrarSesionComprador')
+def cerrarSesionComprador():
+    if 'correo' in session:
+        session.pop('correo', None)
+    return jsonify({'message' : 'Haz salido de la sesión correctamente'})
 
 
 @app.errorhandler(404)
